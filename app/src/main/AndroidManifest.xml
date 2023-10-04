@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         <activity
-            android:name=".WelcomePage"
+            android:name=".WelcomePageActivity"
             android:exported="false" />
         <activity
             android:name=".SpecialtySelectionActivity"
