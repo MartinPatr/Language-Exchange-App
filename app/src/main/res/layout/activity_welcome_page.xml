@@ -12,7 +12,7 @@
         android:layout_height="61dp"
         android:gravity="center"
         android:text="Welcome!"
-        android:textSize="24sp"
+        android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,20 +24,21 @@
         android:layout_width="297dp"
         android:layout_height="61dp"
         android:gravity="center"
-        android:text="You are logged in as <role>."
-        android:textSize="12sp"
+        android:text="You are logged in as role."
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.219" />
+        app:layout_constraintVertical_bias="0.256" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:text="Log Out"
+        android:textSize="20sp"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

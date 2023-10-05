@@ -7,58 +7,70 @@
     tools:context=".SpecialtySelectionActivity">
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/registerAsDoctor"
         android:layout_width="151dp"
         android:layout_height="54dp"
         android:layout_marginBottom="36dp"
         android:text="Register"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="130dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/checkBox6"
         android:layout_width="287dp"
         android:layout_height="70dp"
         android:layout_marginBottom="20dp"
-        android:text="CheckBox"
+        android:text="Family Medicine"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/checkBox7"
-        tools:layout_editor_absoluteX="64dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/checkBox7"
         android:layout_width="287dp"
         android:layout_height="70dp"
         android:layout_marginBottom="20dp"
-        android:text="CheckBox"
+        android:text="Internal Medicine"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/checkBox8"
-        tools:layout_editor_absoluteX="64dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/checkBox8"
         android:layout_width="287dp"
         android:layout_height="70dp"
         android:layout_marginBottom="20dp"
-        android:text="CheckBox"
+        android:text="Pediatrics"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/checkBox9"
-        tools:layout_editor_absoluteX="62dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/checkBox9"
         android:layout_width="287dp"
         android:layout_height="70dp"
         android:layout_marginBottom="20dp"
-        android:text="CheckBox"
+        android:text="Obstetrics"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/checkBox10"
-        tools:layout_editor_absoluteX="64dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/checkBox10"
         android:layout_width="287dp"
         android:layout_height="70dp"
         android:layout_marginBottom="36dp"
-        android:text="CheckBox"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
-        tools:layout_editor_absoluteX="62dp" />
+        android:text="Gynecology"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/registerAsDoctor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
@@ -66,6 +78,7 @@
         android:layout_height="58dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="Select Your Specialties"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/checkBox6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
