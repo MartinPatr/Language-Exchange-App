@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.view.View;
 import android.os.Bundle;
 import android.widget.EditText;
+import java.util.HashMap;
+import java.util.Map;
+import com.example.hamsproject.ValidationUtils;
+
 
 public class DoctorRegisterActivity extends AppCompatActivity {
 
@@ -34,7 +38,8 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
         goToSpecialties.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                if(isValidated()) {
+                Map<String, String> doctorInfo = getDoctorInfo();
+                if(ValidationUtils.isValidated(DoctorRegisterActivity.this, doctorInfo)) {
                     Intent intent = new Intent(DoctorRegisterActivity.this, SpecialtySelectionActivity.class);
                     startActivity(intent);
                 }
@@ -42,22 +47,20 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isValidated(){
-        String doctorFirstName = doctorNameField.getText().toString();
-        String doctorLastName = doctorLastNameField.getText().toString();
-        String doctorEmail = doctorEmailField.getText().toString();
-        String doctorPassword = doctorPasswordField.getText().toString();
-        String doctorPhoneNumber = doctorPhoneField.getText().toString();
-        String doctorAddress = doctorAddressField.getText().toString();
-        String doctorEmployeeNumber = doctorEmployeeNumberField.getText().toString();
-
-        return (!doctorFirstName.isEmpty()
-                && !doctorLastName.isEmpty()
-                && !doctorEmail.isEmpty()
-                && !doctorPassword.isEmpty()
-                && !doctorPhoneNumber.isEmpty()
-                && !doctorAddress.isEmpty()
-                && !doctorEmployeeNumber.isEmpty()
-        );
+    /* 
+     * This method gets all the doctor information from the fields
+     * @return Map<String, String>: Map that contains all the patient information
+     */
+    private Map<String, String> getDoctorInfo(){
+        Map<String, String> doctorInfo = new HashMap<>();
+        doctorInfo.put("FirstName", doctorNameField.getText().toString());
+        doctorInfo.put("LastName", doctorLastNameField.getText().toString());
+        doctorInfo.put("Email", doctorEmailField.getText().toString());
+        doctorInfo.put("Password", doctorPasswordField.getText().toString());
+        doctorInfo.put("Phone", doctorPhoneField.getText().toString());
+        doctorInfo.put("Address", doctorAddressField.getText().toString());
+        doctorInfo.put("EmployeeNumber", doctorEmployeeNumberField.getText().toString());
+        
+        return doctorInfo;
     }
 }

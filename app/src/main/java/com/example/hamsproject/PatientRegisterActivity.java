@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
+import com.example.hamsproject.ValidationUtils;
+
 
 public class PatientRegisterActivity extends AppCompatActivity {
 
@@ -40,7 +42,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
         registerAsPatient.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Map<String, String> patientInfo = getPatientInfo();
-                if(isValidated(patientInfo)){
+                if(ValidationUtils.isValidated(PatientRegisterActivity.this,patientInfo)){
                     Intent intent = new Intent(PatientRegisterActivity.this, WelcomePageActivity.class);
                     startActivity(intent);
                 }
@@ -54,36 +56,13 @@ public class PatientRegisterActivity extends AppCompatActivity {
      */
     private Map<String, String> getPatientInfo(){
         Map<String, String> patientInfo = new HashMap<>();
-        patientInfo.put("patientFirstName", patientNameField.getText().toString());
-        patientInfo.put("patientLastName", patientLastNameField.getText().toString());
-        patientInfo.put("patientEmail", patientEmailField.getText().toString());
-        patientInfo.put("patientPassword", patientPasswordField.getText().toString());
-        patientInfo.put("patientPhoneNumber", patientPhoneField.getText().toString());
-        patientInfo.put("patientAddress", patientAddressField.getText().toString());
-        patientInfo.put("patientHealthCard", editHealthCardNumber.getText().toString());
+        patientInfo.put("FirstName", patientNameField.getText().toString());
+        patientInfo.put("LastName", patientLastNameField.getText().toString());
+        patientInfo.put("Email", patientEmailField.getText().toString());
+        patientInfo.put("Password", patientPasswordField.getText().toString());
+        patientInfo.put("PhoneNumber", patientPhoneField.getText().toString());
+        patientInfo.put("Address", patientAddressField.getText().toString());
+        patientInfo.put("HealthCard", editHealthCardNumber.getText().toString());
         return patientInfo;
-    }
-
-
-    /* 
-     * This method checks if all the fields are filled in and valid
-     * @param patientInfo: Map<String, String> that contains all the patient information
-     * @return boolean: true if all the fields are filled in, false otherwise
-     */
-    private boolean isValidated(Map<String, String> patientInfo){
-        // Iterate through the Map
-        for (String key : patientInfo.keySet()) {
-            // This checks if the field is empty
-            if (patientInfo.get(key).isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please fill the following fields", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            // This checks if the email is valid
-            else if (key.equals("patientEmail") && !patientInfo.get(key).contains("@") && !patientInfo.get(key).contains(".")) {
-                Toast.makeText(getApplicationContext(), "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        }
-        return true;
     }
 }

@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import java.util.HashMap;
+import java.util.Map;
+import com.example.hamsproject.ValidationUtils;
+
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -32,7 +36,8 @@ public class LogInActivity extends AppCompatActivity {
         Button logInButton = findViewById(R.id.logInButton);
         logInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                if(isValidated()){
+                Map<String, String> loginInfo = getLoginInfo();
+                if(ValidationUtils.isValidated(LogInActivity.this,loginInfo)){
                     Intent intent = new Intent(LogInActivity.this, WelcomePageActivity.class);
                     startActivity(intent);
                 }
@@ -40,10 +45,15 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isValidated(){
-        String username = passwordField.getText().toString();
-        String password = usernameField.getText().toString();
-
-        return (!username.isEmpty() && !password.isEmpty());
+    /* 
+     * This method gets all the patient information from the fields
+     * @return Map<String, String>: Map that contains all the login information
+     */
+    private Map<String, String> getLoginInfo(){
+        Map<String, String> loginInfo = new HashMap<>();
+        loginInfo.put("Username", usernameField.getText().toString());
+        loginInfo.put("Password", passwordField.getText().toString());
+        return loginInfo;
     }
+
 }
