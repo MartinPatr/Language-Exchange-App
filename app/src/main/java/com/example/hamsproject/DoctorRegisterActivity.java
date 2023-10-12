@@ -28,19 +28,11 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private EditText doctorAddressField;
     private EditText doctorEmployeeNumberField;
 
-    // Firebase variable declarations
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
-
     //=============================================================================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_register);
-
-        // Initialize Firebase
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Doctor");
 
         // Retrieving TextView and Button Objects.
         Button goToSpecialties = findViewById(R.id.goToSpecialties);
@@ -58,7 +50,15 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                 Map<String, String> doctorInfo = getDoctorInfo();
                 if(ValidationUtils.isValidated(DoctorRegisterActivity.this, doctorInfo)) {
                     Intent intent = new Intent(DoctorRegisterActivity.this, SpecialtySelectionActivity.class);
-                    addToFirebase();
+
+                    intent.putExtra("firstName",doctorInfo.get("FirstName"));
+                    intent.putExtra("lastName",doctorInfo.get("LastName"));
+                    intent.putExtra("email", doctorInfo.get("Email"));
+                    intent.putExtra("password", doctorInfo.get("Password"));
+                    intent.putExtra("phone", doctorInfo.get("Phone"));
+                    intent.putExtra("address", doctorInfo.get("Address"));
+                    intent.putExtra("employeeNum", doctorInfo.get("EmployeeNumber"));
+
                     startActivity(intent);
                 }
             }
@@ -82,27 +82,5 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         return doctorInfo;
     }
 
-    private void addToFirebase(){
-        Doctor doctor = new Doctor();
-        Map<String,String> doctorInfo = getDoctorInfo();
 
-        doctor.setFirstName(doctorInfo.get("FirstName"));
-        doctor.setLastName(doctorInfo.get("LastName"));
-        doctor.setUsername(doctorInfo.get("Email"));
-        doctor.setPassword(doctorInfo.get("Password"));
-        doctor.setPhone(doctorInfo.get("PhoneNumber"));
-        doctor.setAddress(doctorInfo.get("Address"));
-        doctor.setEmployeeNum(doctorInfo.get("EmployeeNumber"));
-
-        // Success and fail messages
-        databaseReference.push().setValue(doctor)
-                .addOnSuccessListener(voidCallback -> {
-                    //databaseReference.setValue(patient);
-                    Toast.makeText(DoctorRegisterActivity.this, "Successfully added to Firebase.", Toast.LENGTH_SHORT).show();
-                })
-
-                .addOnFailureListener(exception ->{
-                    Toast.makeText(DoctorRegisterActivity.this,"Unsuccessfully added to Firebase due to " + exception.getMessage(),Toast.LENGTH_SHORT).show();
-                });
-    }
 }
