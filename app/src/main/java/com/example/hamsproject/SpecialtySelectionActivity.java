@@ -45,18 +45,18 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
 
         // Initialize Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Patient");
+        databaseReference = firebaseDatabase.getReference("Doctor");
 
-        Intent intent = getIntent();
+        Intent intent2 = getIntent();
 
-        if(intent != null){
-            firstName = intent.getStringExtra("firstName");
-            lastName = intent.getStringExtra("lastName");
-            email = intent.getStringExtra("email");
-            password = intent.getStringExtra("password");
-            phone = intent.getStringExtra("phone");
-            address = intent.getStringExtra("address");
-            employeeNum = intent.getStringExtra("employeeNum");
+        if(intent2 != null){
+            firstName = intent2.getStringExtra("firstName");
+            lastName = intent2.getStringExtra("lastName");
+            email = intent2.getStringExtra("email");
+            password = intent2.getStringExtra("password");
+            phone = intent2.getStringExtra("phone");
+            address = intent2.getStringExtra("address");
+            employeeNum = intent2.getStringExtra("employeeNum");
         }
 
         Button registerAsDoctor = findViewById(R.id.registerAsDoctor);
@@ -99,13 +99,13 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
 
         // Success and fail messages
         databaseReference.push().setValue(doctor)
-                .addOnSuccessListener(voidCallback -> {
-                    //databaseReference.setValue(patient);
-                    Toast.makeText(SpecialtySelectionActivity.this, "Successfully added to Firebase.", Toast.LENGTH_SHORT).show();
-                })
+            .addOnSuccessListener(voidCallback -> {
+                //databaseReference.setValue(patient);
+                Toast.makeText(SpecialtySelectionActivity.this, "Successfully added to Firebase.", Toast.LENGTH_SHORT).show();
+            })
 
-                .addOnFailureListener(exception ->{
-                    Toast.makeText(SpecialtySelectionActivity.this,"Unsuccessfully added to Firebase due to " + exception.getMessage(),Toast.LENGTH_SHORT).show();
-                });
+            .addOnFailureListener(exception ->{
+                Toast.makeText(SpecialtySelectionActivity.this,"Unsuccessfully added to Firebase due to " + exception.getMessage(),Toast.LENGTH_SHORT).show();
+            });
     }
 }
