@@ -1,8 +1,10 @@
 package com.example.hamsproject;
 
+import java.util.ArrayList;
+
 public class Doctor extends Account{
     public String employeeNum;
-    public String[] specialties;
+    public ArrayList<String> specialties;
 
     public String getEmployeeNum() {
         return employeeNum;
@@ -10,10 +12,10 @@ public class Doctor extends Account{
     public void setEmployeeNum(String employeeNum) {
         this.employeeNum = employeeNum;
     }
-    public String[] getSpecialties() {
+    public ArrayList<String> getSpecialties() {
         return specialties;
     }
-    public void setSpecialties(String[] specialties) {
+    public void setSpecialties(ArrayList<String> specialties) {
         // fix this
         this.specialties = specialties;
     }

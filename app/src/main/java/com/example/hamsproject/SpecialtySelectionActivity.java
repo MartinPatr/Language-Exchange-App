@@ -17,6 +17,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
 
+import java.util.ArrayList;
+
 public class SpecialtySelectionActivity extends AppCompatActivity {
 
     private CheckBox familyMedicineSpecialty;
@@ -88,6 +90,7 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
 
     private void addToFirebase(){
         Doctor doctor = new Doctor();
+        ArrayList<String> specialities = new ArrayList<>();
 
         doctor.setFirstName(firstName);
         doctor.setLastName(lastName);
@@ -96,6 +99,24 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
         doctor.setPhone(phone);
         doctor.setAddress(address);
         doctor.setEmployeeNum(employeeNum);
+
+        if (familyMedicineSpecialty.isChecked()){
+            specialities.add("Family Medicine");
+        }
+        if (internalMedicineSpecialty.isChecked()){
+            specialities.add("Internal Medicine");
+        }
+        if (pediatricsSpecialty.isChecked()){
+            specialities.add("Pediatrics");
+        }
+        if (obstetricsSpecialty.isChecked()){
+            specialities.add("Obstetrics");
+        }
+        if (gynecologySpecialty.isChecked()){
+            specialities.add("Gynecology");
+        }
+
+        doctor.setSpecialties(specialities);
 
         // Success and fail messages
         databaseReference.push().setValue(doctor)
