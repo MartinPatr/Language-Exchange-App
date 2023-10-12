@@ -1,19 +1,19 @@
 package com.example.hamsproject;
 
 public class Doctor extends Account{
-    public int employeeNum;
+    public String employeeNum;
     public String[] specialties;
 
-    public int getEmployeeNum() {
+    public String getEmployeeNum() {
         return employeeNum;
     }
-    public void setEmployeeNum() {
+    public void setEmployeeNum(String employeeNum) {
         this.employeeNum = employeeNum;
     }
     public String[] getSpecialties() {
         return specialties;
     }
-    public void setSpecialties() {
+    public void setSpecialties(String[] specialties) {
         // fix this
         this.specialties = specialties;
     }
