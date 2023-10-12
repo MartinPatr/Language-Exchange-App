@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class PatientRegisterActivity extends AppCompatActivity {
-
+    // Field variable declarations
     private EditText patientNameField;
     private EditText patientLastNameField;
     private EditText patientEmailField;
@@ -32,29 +32,22 @@ public class PatientRegisterActivity extends AppCompatActivity {
     private EditText patientAddressField;
     private EditText editHealthCardNumber;
 
-    String firstName;
-    String lastName;
-    String email;
-    String password;
-    String phoneNum;
-    String address;
-    String healthCardNum;
+    // Firebase variable declarations
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-
+    //=============================================================================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_register);
 
+        // Initialize Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Patient");
 
-        // Initialize Firebase
-        DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        // Retrieving TextView and Button Objects.
         Button registerAsPatient = findViewById(R.id.logoutButton);
 
         patientNameField = findViewById(R.id.patientNameField);
@@ -65,26 +58,14 @@ public class PatientRegisterActivity extends AppCompatActivity {
         patientAddressField = findViewById(R.id.patientAddressField);
         editHealthCardNumber = findViewById(R.id.editHealthCardNumber);
 
-
-
-
         registerAsPatient.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Map<String, String> patientInfo = getPatientInfo();
                 if(ValidationUtils.isValidated(PatientRegisterActivity.this,patientInfo)){
                     Intent intent = new Intent(PatientRegisterActivity.this, WelcomePageActivity.class);
 
-                    firstName = patientNameField.getText().toString();
-                    lastName = patientLastNameField.getText().toString();
-                    email = patientEmailField.getText().toString();
-                    password = patientPasswordField.getText().toString();
-                    phoneNum = Integer.parseInt(patientPhoneField.getText().toString());
-                    address = patientAddressField.getText().toString();
-                    healthCardNum = Integer.parseInt(editHealthCardNumber.getText().toString());
-
-                    addToFirebase(firstName,lastName, email, password, phoneNum, address,healthCardNum);
+                    addToFirebase();
                     startActivity(intent);
-
                 }
             }
         });
@@ -106,9 +87,14 @@ public class PatientRegisterActivity extends AppCompatActivity {
         return patientInfo;
     }
 
-    private void addToFirebase(String firstName,String lastName,String email,String password, int phone, String address, int healthCardNum){
+    /*
+     *  This method takes all the info in getPatientInfo, puts it into a Patient
+     *  Object and uploads it to Firebase
+     */
+    private void addToFirebase(){
         Patient patient = new Patient();
         Map<String,String> patientInfo = getPatientInfo();
+
         patient.setFirstName(patientInfo.get("FirstName"));
         patient.setLastName(patientInfo.get("LastName"));
         patient.setUsername(patientInfo.get("Email"));
@@ -117,14 +103,15 @@ public class PatientRegisterActivity extends AppCompatActivity {
         patient.setAddress(patientInfo.get("Address"));
         patient.setHealthCardNum(patientInfo.get("HealthCard"));
 
+        // Success and fail messages
         databaseReference.push().setValue(patient)
             .addOnSuccessListener(voidCallback -> {
                 //databaseReference.setValue(patient);
                 Toast.makeText(PatientRegisterActivity.this, "Successfully added to Firebase.", Toast.LENGTH_SHORT).show();
             })
 
-            .addOnFailureListener(e ->{
-                Toast.makeText(PatientRegisterActivity.this,"Unsuccessfully added to Firebase due to " + e.getMessage(),Toast.LENGTH_SHORT).show();
+            .addOnFailureListener(exception ->{
+                Toast.makeText(PatientRegisterActivity.this,"Unsuccessfully added to Firebase due to " + exception.getMessage(),Toast.LENGTH_SHORT).show();
             });
     }
 }

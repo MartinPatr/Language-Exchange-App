@@ -5,7 +5,7 @@ public class Account {
     public String lastName;
     public String username;
     public String password;
-    public int phone;
+    public String phone;
     public String address;
 
     public String getFirstName() {
@@ -32,10 +32,10 @@ public class Account {
     public void setPassword(String password) {
         this.password = password;
     }
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
     public String getAddress() {
