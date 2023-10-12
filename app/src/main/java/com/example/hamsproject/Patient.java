@@ -1,12 +1,12 @@
 package com.example.hamsproject;
 
 public class Patient extends Account{
-    public int healthCardNum;
+    public String healthCardNum;
 
-    public int getHealthCardNum() {
+    public String getHealthCardNum() {
         return healthCardNum;
     }
-    public void setHealthCardNum() {
+    public void setHealthCardNum(String healthCardNum) {
         this.healthCardNum = healthCardNum;
     }
 }

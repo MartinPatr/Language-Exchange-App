@@ -1,51 +1,47 @@
 package com.example.hamsproject;
 
 public class Account {
-
-
     public String firstName;
     public String lastName;
     public String username;
-    public int password;
+    public String password;
     public int phone;
-    public int address;
+    public String address;
 
     public String getFirstName() {
         return firstName;
     }
-    public void setFirstName() {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
     public String getLastName() {
         return lastName;
     }
-    public void setLastName() {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
     public String getUsername() {
         return username;
     }
-    public void setUsername() {
+    public void setUsername(String username) {
         this.username = username;
     }
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
-    public void setPassword() {
+    public void setPassword(String password) {
         this.password = password;
     }
     public int getPhone() {
         return phone;
     }
-    public void setPhone() {
+    public void setPhone(int phone) {
         this.phone = phone;
     }
-    public int getAddress() {
+    public String getAddress() {
         return address;
     }
-    public void setAddress() {
+    public void setAddress(String address) {
         this.address = address;
     }
-
-
 }
