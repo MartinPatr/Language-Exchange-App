@@ -63,7 +63,6 @@ public class PatientRegisterActivity extends AppCompatActivity {
                 Map<String, String> patientInfo = getPatientInfo();
                 if(ValidationUtils.isValidated(PatientRegisterActivity.this,patientInfo)){
                     Intent intent = new Intent(PatientRegisterActivity.this, WelcomePageActivity.class);
-
                     addToFirebase();
                     startActivity(intent);
                 }
