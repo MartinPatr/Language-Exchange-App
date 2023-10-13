@@ -19,16 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class DoctorRegisterActivity extends AppCompatActivity {
-    // Field variable declarations
-    private EditText doctorNameField;
-    private EditText doctorLastNameField;
-    private EditText doctorEmailField;
-    private EditText doctorPasswordField;
-    private EditText doctorPhoneField;
-    private EditText doctorAddressField;
-    private EditText doctorEmployeeNumberField;
-
-    //=============================================================================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,14 +26,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
         // Retrieving TextView and Button Objects.
         Button goToSpecialties = findViewById(R.id.goToSpecialties);
-
-        doctorNameField = findViewById(R.id.doctorNameField);
-        doctorLastNameField = findViewById(R.id.doctorLastNameField);
-        doctorEmailField = findViewById(R.id.doctorEmailField);
-        doctorPasswordField = findViewById(R.id.doctorPasswordField);
-        doctorPhoneField = findViewById(R.id.doctorPhoneField);
-        doctorAddressField = findViewById(R.id.doctorAddressField);
-        doctorEmployeeNumberField = findViewById(R.id.doctorEmployeeNumberField);
 
         goToSpecialties.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
@@ -70,16 +52,25 @@ public class DoctorRegisterActivity extends AppCompatActivity {
      * @return Map<String, String>: Map that contains all the patient information
      */
     private Map<String, String> getDoctorInfo(){
-        Map<String, String> doctorInfo = new HashMap<>();
-        doctorInfo.put("FirstName", doctorNameField.getText().toString());
-        doctorInfo.put("LastName", doctorLastNameField.getText().toString());
-        doctorInfo.put("Email", doctorEmailField.getText().toString());
-        doctorInfo.put("Password", doctorPasswordField.getText().toString());
-        doctorInfo.put("Phone", doctorPhoneField.getText().toString());
-        doctorInfo.put("Address", doctorAddressField.getText().toString());
-        doctorInfo.put("EmployeeNumber", doctorEmployeeNumberField.getText().toString());
-        
-        return doctorInfo;
+    // Field variable declarations
+    EditText doctorNameField = findViewById(R.id.doctorNameField);
+    EditText doctorLastNameField = findViewById(R.id.doctorLastNameField);
+    EditText doctorEmailField = findViewById(R.id.doctorEmailField);
+    EditText doctorPasswordField = findViewById(R.id.doctorPasswordField);
+    EditText doctorPhoneField = findViewById(R.id.doctorPhoneField);
+    EditText doctorAddressField = findViewById(R.id.doctorAddressField);
+    EditText doctorEmployeeNumberField = findViewById(R.id.doctorEmployeeNumberField);
+
+    Map<String, String> doctorInfo = new HashMap<>();
+    doctorInfo.put("FirstName", doctorNameField.getText().toString());
+    doctorInfo.put("LastName", doctorLastNameField.getText().toString());
+    doctorInfo.put("Email", doctorEmailField.getText().toString());
+    doctorInfo.put("Password", doctorPasswordField.getText().toString());
+    doctorInfo.put("Phone", doctorPhoneField.getText().toString());
+    doctorInfo.put("Address", doctorAddressField.getText().toString());
+    doctorInfo.put("EmployeeNumber", doctorEmployeeNumberField.getText().toString());
+    
+    return doctorInfo;
     }
 
 

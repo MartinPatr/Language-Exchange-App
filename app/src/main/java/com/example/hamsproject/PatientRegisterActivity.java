@@ -23,15 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class PatientRegisterActivity extends AppCompatActivity {
-    // Field variable declarations
-    private EditText patientNameField;
-    private EditText patientLastNameField;
-    private EditText patientEmailField;
-    private EditText patientPasswordField;
-    private EditText patientPhoneField;
-    private EditText patientAddressField;
-    private EditText editHealthCardNumber;
-
     // Firebase variable declarations
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -48,14 +39,6 @@ public class PatientRegisterActivity extends AppCompatActivity {
 
         // Retrieving TextView and Button Objects.
         Button registerAsPatient = findViewById(R.id.logoutButton);
-
-        patientNameField = findViewById(R.id.patientNameField);
-        patientLastNameField = findViewById(R.id.patientLastNameField);
-        patientEmailField = findViewById(R.id.patientEmailField);
-        patientPasswordField = findViewById(R.id.patientPasswordField);
-        patientPhoneField = findViewById(R.id.patientPhoneField);
-        patientAddressField = findViewById(R.id.patientAddressField);
-        editHealthCardNumber = findViewById(R.id.editHealthCardNumber);
 
         registerAsPatient.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
@@ -74,6 +57,16 @@ public class PatientRegisterActivity extends AppCompatActivity {
      * @return Map<String, String>: Map that contains all the patient information
      */
     private Map<String, String> getPatientInfo(){
+        // Field variable declarations
+        EditText patientNameField = findViewById(R.id.patientNameField);   
+        EditText patientLastNameField = findViewById(R.id.patientLastNameField);
+        EditText patientEmailField = findViewById(R.id.patientEmailField);
+        EditText patientPasswordField = findViewById(R.id.patientPasswordField);
+        EditText patientPhoneField = findViewById(R.id.patientPhoneField);
+        EditText patientAddressField = findViewById(R.id.patientAddressField);
+        EditText editHealthCardNumber  = findViewById(R.id.editHealthCardNumber);
+
+
         Map<String, String> patientInfo = new HashMap<>();
         patientInfo.put("FirstName", patientNameField.getText().toString());
         patientInfo.put("LastName", patientLastNameField.getText().toString());
