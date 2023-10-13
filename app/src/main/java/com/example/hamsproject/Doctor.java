@@ -1,10 +1,10 @@
 package com.example.hamsproject;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 public class Doctor extends Account{
     public String employeeNum;
-    public ArrayList<String> specialties;
+    public Map<String,Boolean> specialties;
 
     public String getEmployeeNum() {
         return employeeNum;
@@ -12,11 +12,10 @@ public class Doctor extends Account{
     public void setEmployeeNum(String employeeNum) {
         this.employeeNum = employeeNum;
     }
-    public ArrayList<String> getSpecialties() {
+    public Map<String,Boolean> getSpecialties() {
         return specialties;
     }
-    public void setSpecialties(ArrayList<String> specialties) {
-        // fix this
+    public void setSpecialties(Map<String,Boolean> specialties) {
         this.specialties = specialties;
     }
 }

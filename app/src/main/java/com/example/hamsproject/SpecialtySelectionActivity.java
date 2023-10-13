@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import java.util.ArrayList;
@@ -90,7 +91,7 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
 
     private void addToFirebase(){
         Doctor doctor = new Doctor();
-        ArrayList<String> specialities = new ArrayList<>();
+        Map<String,Boolean> specialities = new HashMap<String,Boolean>();
 
         doctor.setFirstName(firstName);
         doctor.setLastName(lastName);
@@ -100,22 +101,11 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
         doctor.setAddress(address);
         doctor.setEmployeeNum(employeeNum);
 
-        if (familyMedicineSpecialty.isChecked()){
-            specialities.add("Family Medicine");
-        }
-        if (internalMedicineSpecialty.isChecked()){
-            specialities.add("Internal Medicine");
-        }
-        if (pediatricsSpecialty.isChecked()){
-            specialities.add("Pediatrics");
-        }
-        if (obstetricsSpecialty.isChecked()){
-            specialities.add("Obstetrics");
-        }
-        if (gynecologySpecialty.isChecked()){
-            specialities.add("Gynecology");
-        }
-
+        specialities.put("familyMedicine", familyMedicineSpecialty.isChecked());
+        specialities.put("internalMedicine", internalMedicineSpecialty.isChecked());
+        specialities.put("pediatrics", pediatricsSpecialty.isChecked());
+        specialities.put("obstetrics", obstetricsSpecialty.isChecked());
+        specialities.put("gynecology", gynecologySpecialty.isChecked());
         doctor.setSpecialties(specialities);
 
         // Success and fail messages
