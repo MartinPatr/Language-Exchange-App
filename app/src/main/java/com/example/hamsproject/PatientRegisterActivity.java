@@ -46,7 +46,6 @@ public class PatientRegisterActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Patient");
 
-
         // Retrieving TextView and Button Objects.
         Button registerAsPatient = findViewById(R.id.logoutButton);
 
@@ -105,7 +104,6 @@ public class PatientRegisterActivity extends AppCompatActivity {
         // Success and fail messages
         databaseReference.push().setValue(patient)
             .addOnSuccessListener(voidCallback -> {
-                //databaseReference.setValue(patient);
                 Toast.makeText(PatientRegisterActivity.this, "Successfully added to Firebase.", Toast.LENGTH_SHORT).show();
             })
 
