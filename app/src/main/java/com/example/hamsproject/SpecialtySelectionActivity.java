@@ -71,7 +71,7 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
         registerAsDoctor.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 if(isValidated()){
-                    Intent intent = new Intent(SpecialtySelectionActivity.this, WelcomePageActivity.class);
+                    Intent intent = new Intent(SpecialtySelectionActivity.this, LogInActivity.class);
                     addToFirebase();
                     startActivity(intent);
                 }
