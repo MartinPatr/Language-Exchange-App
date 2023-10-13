@@ -97,7 +97,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
         // Success and fail messages
         databaseReference.push().setValue(patient)
             .addOnSuccessListener(voidCallback -> {
-                Toast.makeText(PatientRegisterActivity.this, "Successfully added to Firebase.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PatientRegisterActivity.this, "Successfully signed up.", Toast.LENGTH_SHORT).show();
             })
 
             .addOnFailureListener(exception ->{

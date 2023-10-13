@@ -76,6 +76,9 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
                     addToFirebase();
                     startActivity(intent);
                 }
+                else{
+                    Toast.makeText(SpecialtySelectionActivity.this, "Select at least 1 specialty.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -112,11 +115,11 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
         databaseReference.push().setValue(doctor)
             .addOnSuccessListener(voidCallback -> {
                 //databaseReference.setValue(patient);
-                Toast.makeText(SpecialtySelectionActivity.this, "Successfully added to Firebase.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpecialtySelectionActivity.this, "Successfully signed up.", Toast.LENGTH_SHORT).show();
             })
 
             .addOnFailureListener(exception ->{
-                Toast.makeText(SpecialtySelectionActivity.this,"Unsuccessfully added to Firebase due to " + exception.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpecialtySelectionActivity.this,"Unsuccessfully signed up " + exception.getMessage(),Toast.LENGTH_SHORT).show();
             });
     }
 }
