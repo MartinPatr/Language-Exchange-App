@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/logoutButton"
+        android:id="@+id/registerButton"
         android:layout_width="157dp"
         android:layout_height="50dp"
         android:layout_marginBottom="24dp"
@@ -98,7 +98,7 @@
         android:ems="10"
         android:hint="Health Card Number"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/logoutButton"
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

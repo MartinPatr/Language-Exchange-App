@@ -38,7 +38,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference("Patient");
 
         // Retrieving TextView and Button Objects.
-        Button registerAsPatient = findViewById(R.id.logoutButton);
+        Button registerAsPatient = findViewById(R.id.registerButton);
 
         registerAsPatient.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
