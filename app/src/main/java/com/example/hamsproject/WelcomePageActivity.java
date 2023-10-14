@@ -18,10 +18,10 @@ public class WelcomePageActivity extends AppCompatActivity {
 
         Button logoutButton = findViewById(R.id.logoutButton);
 
-        Intent intent2 = getIntent();
+        Intent getPreviousIntent = getIntent();
 
-        if (intent2 != null){
-            userType = intent2.getStringExtra("userType");
+        if (getPreviousIntent != null){
+            userType = getPreviousIntent.getStringExtra("userType");
             userTypeDisplayed = (TextView) findViewById(R.id.yourRoleDisplayed);
             userTypeDisplayed.setText("You are logged in as " + userType);
         }

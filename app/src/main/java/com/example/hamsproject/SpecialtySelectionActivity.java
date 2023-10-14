@@ -50,16 +50,16 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Accounts/Doctor");
 
-        Intent intent2 = getIntent();
+        Intent getPreviousIntents = getIntent();
 
-        if(intent2 != null){
-            firstName = intent2.getStringExtra("firstName");
-            lastName = intent2.getStringExtra("lastName");
-            email = intent2.getStringExtra("email");
-            password = intent2.getStringExtra("password");
-            phone = intent2.getStringExtra("phone");
-            address = intent2.getStringExtra("address");
-            employeeNum = intent2.getStringExtra("employeeNum");
+        if(getPreviousIntents != null){
+            firstName = getPreviousIntents.getStringExtra("firstName");
+            lastName = getPreviousIntents.getStringExtra("lastName");
+            email = getPreviousIntents.getStringExtra("email");
+            password = getPreviousIntents.getStringExtra("password");
+            phone = getPreviousIntents.getStringExtra("phone");
+            address = getPreviousIntents.getStringExtra("address");
+            employeeNum = getPreviousIntents.getStringExtra("employeeNum");
         }
 
         Button registerAsDoctor = findViewById(R.id.registerAsDoctor);
