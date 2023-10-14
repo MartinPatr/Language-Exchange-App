@@ -48,7 +48,7 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
 
         // Initialize Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Doctor");
+        databaseReference = firebaseDatabase.getReference("Accounts/Doctor");
 
         Intent intent2 = getIntent();
 
