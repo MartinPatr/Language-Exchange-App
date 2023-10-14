@@ -31,7 +31,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
 
         // Initialize Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Patient");
+        databaseReference = firebaseDatabase.getReference("Accounts/Patient");
 
         // Retrieving TextView and Button Objects.
         Button registerAsPatient = findViewById(R.id.registerButton);

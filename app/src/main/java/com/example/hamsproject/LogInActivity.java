@@ -65,7 +65,7 @@ public class LogInActivity extends AppCompatActivity {
                             if (success) {
                                 // Authentication successful
                                 Log.i("Authentication", "Successful");
-                                Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+                                Intent intent = new Intent(LogInActivity.this, WelcomePageActivity.class);
                                 startActivity(intent);
                             } else {
                                 // Authentication failed: Display error message
