@@ -10,12 +10,10 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
-import com.example.hamsproject.ValidationUtils;
-import android.content.Context;
+
 import android.widget.Toast;
 import android.util.Log;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.CompletableFuture;
 
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,11 +21,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 
 
 public class LogInActivity extends AppCompatActivity {
+
+    String userType;
 
     // Firebase variable declarations
     FirebaseDatabase firebaseDatabase;
@@ -45,7 +43,7 @@ public class LogInActivity extends AppCompatActivity {
         // Initialize FirebaseAuth
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        TextView register = findViewById(R.id.textView6);
+        TextView register = findViewById(R.id.createAccountButton);
 
         register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
@@ -66,6 +64,7 @@ public class LogInActivity extends AppCompatActivity {
                                 // Authentication successful
                                 Log.i("Authentication", "Successful");
                                 Intent intent = new Intent(LogInActivity.this, WelcomePageActivity.class);
+                                intent.putExtra("userType",userType);
                                 startActivity(intent);
                             } else {
                                 // Authentication failed: Display error message
@@ -132,6 +131,7 @@ public class LogInActivity extends AppCompatActivity {
                                     Log.i("Authentication", "Successful");
                                     authAccount = account;
                                     authenticationSuccessful.set(true);
+                                    userType = accountType;
                                 }
                             }
                         }else{ Log.i("Data snapshot", "Does not exist");}

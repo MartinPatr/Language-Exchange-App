@@ -13,7 +13,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:text="Doctor Registration"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/doctorNameField"
+        app:layout_constraintBottom_toTopOf="@+id/doctorFirstNameField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/doctorNameField"
+        android:id="@+id/doctorFirstNameField"
         android:layout_width="266dp"
         android:layout_height="43dp"
         android:layout_marginBottom="20dp"

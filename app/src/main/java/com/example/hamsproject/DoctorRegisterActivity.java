@@ -53,7 +53,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
      */
     private Map<String, String> getDoctorInfo(){
     // Field variable declarations
-    EditText doctorNameField = findViewById(R.id.doctorNameField);
+    EditText doctorFirstNameField = findViewById(R.id.doctorFirstNameField);
     EditText doctorLastNameField = findViewById(R.id.doctorLastNameField);
     EditText doctorEmailField = findViewById(R.id.doctorEmailField);
     EditText doctorPasswordField = findViewById(R.id.doctorPasswordField);
@@ -62,7 +62,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     EditText doctorEmployeeNumberField = findViewById(R.id.doctorEmployeeNumberField);
 
     Map<String, String> doctorInfo = new HashMap<>();
-    doctorInfo.put("FirstName", doctorNameField.getText().toString());
+    doctorInfo.put("FirstName", doctorFirstNameField.getText().toString());
     doctorInfo.put("LastName", doctorLastNameField.getText().toString());
     doctorInfo.put("Email", doctorEmailField.getText().toString());
     doctorInfo.put("Password", doctorPasswordField.getText().toString());

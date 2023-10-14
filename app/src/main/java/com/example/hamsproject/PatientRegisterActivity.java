@@ -60,7 +60,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
         EditText patientPasswordField = findViewById(R.id.patientPasswordField);
         EditText patientPhoneField = findViewById(R.id.patientPhoneField);
         EditText patientAddressField = findViewById(R.id.patientAddressField);
-        EditText editHealthCardNumber  = findViewById(R.id.editHealthCardNumber);
+        EditText patientHealthCardNumField  = findViewById(R.id.healthCardNumField);
 
 
         Map<String, String> patientInfo = new HashMap<>();
@@ -70,7 +70,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
         patientInfo.put("Password", patientPasswordField.getText().toString());
         patientInfo.put("PhoneNumber", patientPhoneField.getText().toString());
         patientInfo.put("Address", patientAddressField.getText().toString());
-        patientInfo.put("HealthCard", editHealthCardNumber.getText().toString());
+        patientInfo.put("HealthCard", patientHealthCardNumField.getText().toString());
         return patientInfo;
     }
 

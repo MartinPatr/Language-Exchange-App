@@ -63,7 +63,7 @@
         android:ems="10"
         android:hint="Address"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/editHealthCardNumber"
+        app:layout_constraintBottom_toTopOf="@+id/healthCardNumField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -91,7 +91,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editHealthCardNumber"
+        android:id="@+id/healthCardNumField"
         android:layout_width="266dp"
         android:layout_height="43dp"
         android:layout_marginBottom="36dp"
