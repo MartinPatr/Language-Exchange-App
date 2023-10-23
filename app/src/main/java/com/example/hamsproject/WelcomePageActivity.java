@@ -32,5 +32,19 @@ public class WelcomePageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+        TextView toAdmin = findViewById(R.id.clickToContinue);
+
+        toAdmin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent i = new Intent(WelcomePageActivity.this, AdminActivityPending.class);
+                startActivity(i);
+            }
+        });
+
+
+
     }
 }
