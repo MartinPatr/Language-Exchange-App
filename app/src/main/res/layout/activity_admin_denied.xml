@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminPendingActivity">
+    tools:context=".AdminDeniedActivity">
 
     <Button
-        android:id="@+id/deniedButton"
+        android:id="@+id/pendingButton"
         android:layout_width="104dp"
         android:layout_height="51dp"
         android:layout_marginStart="301dp"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="679dp"
-        android:text="Denied"
+        android:text="Pending"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.949"
@@ -40,7 +40,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="253dp"
         android:layout_marginBottom="700dp"
-        android:text="Pending Requests"
+        android:text="Denied Requests"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,20 +61,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"></LinearLayout>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="79dp"
-        android:layout_marginEnd="333dp"
-        android:layout_marginBottom="633dp"
-        android:text="Accept all"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="415dp"
@@ -86,6 +72,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

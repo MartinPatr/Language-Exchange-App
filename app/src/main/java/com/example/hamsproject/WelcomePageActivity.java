@@ -39,7 +39,7 @@ public class WelcomePageActivity extends AppCompatActivity {
 
         toAdmin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent i = new Intent(WelcomePageActivity.this, AdminActivityPending.class);
+                Intent i = new Intent(WelcomePageActivity.this, AdminPendingActivity.class);
                 startActivity(i);
             }
         });

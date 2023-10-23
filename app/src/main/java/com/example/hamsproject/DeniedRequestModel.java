@@ -1,10 +1,10 @@
 package com.example.hamsproject;
 
-public class pendingRequestModel {
+public class DeniedRequestModel {
     String name;
     String userType;
 
-    public pendingRequestModel(String name, String userType) {
+    public DeniedRequestModel(String name, String userType) {
         this.name = name;
         this.userType = userType;
     }

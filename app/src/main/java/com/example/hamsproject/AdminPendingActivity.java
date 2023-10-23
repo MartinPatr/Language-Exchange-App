@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.view.View;
+
 
 import java.util.ArrayList;
 
-public class AdminActivityPending extends AppCompatActivity {
+public class AdminPendingActivity extends AppCompatActivity {
 
-    ArrayList<pendingRequestModel> pendingRequestModels = new ArrayList<>();
+    ArrayList<PendingRequestModel> PendingRequestModels = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,9 +25,18 @@ public class AdminActivityPending extends AppCompatActivity {
 
         setUpPendingRequestModels();
 
-        PendingRequest_RecyclerViewAdapter adapter = new PendingRequest_RecyclerViewAdapter(this, pendingRequestModels);
+        PendingRequest_RecyclerViewAdapter adapter = new PendingRequest_RecyclerViewAdapter(this, PendingRequestModels);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        Button deniedButton = findViewById(R.id.deniedButton);
+        deniedButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminPendingActivity.this, AdminDeniedActivity.class); // del
+                startActivity(intent); // del
+            }
+
+        });
     }
 
     private void setUpPendingRequestModels() {
@@ -30,7 +44,9 @@ public class AdminActivityPending extends AppCompatActivity {
         String[] pendingRequestUserType = getResources().getStringArray(R.array.pending_request_user_type_txt);
 
         for (int i = 0; i < pendingRequestNames.length; i++) {
-            pendingRequestModels.add(new pendingRequestModel(pendingRequestNames[i], pendingRequestUserType[i]));
+            PendingRequestModels.add(new PendingRequestModel(pendingRequestNames[i], pendingRequestUserType[i]));
         }
     }
+
+
 }

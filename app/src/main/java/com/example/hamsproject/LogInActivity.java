@@ -53,6 +53,13 @@ public class LogInActivity extends AppCompatActivity {
         });
         Button logInButton = findViewById(R.id.logInButton);
         logInButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent intent = new Intent(LogInActivity.this, WelcomePageActivity.class); // del
+                startActivity(intent); // del
+            }
+
+            /*
             public void onClick(View v){
                 Map<String, String> loginInfo = getLoginInfo();
 
@@ -74,7 +81,7 @@ public class LogInActivity extends AppCompatActivity {
                     });
                     
                 }
-            }
+            }*/
         });
     }
 

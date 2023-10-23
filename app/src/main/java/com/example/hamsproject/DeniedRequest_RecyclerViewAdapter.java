@@ -11,37 +11,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class PendingRequest_RecyclerViewAdapter extends RecyclerView.Adapter<PendingRequest_RecyclerViewAdapter.MyViewHolder> {
+public class DeniedRequest_RecyclerViewAdapter extends RecyclerView.Adapter<DeniedRequest_RecyclerViewAdapter.MyViewHolder> {
 
     Context context;
-    ArrayList<PendingRequestModel> PendingRequestModels;
+    ArrayList<DeniedRequestModel> deniedRequestModels;
 
 
-    public PendingRequest_RecyclerViewAdapter(Context context, ArrayList<PendingRequestModel> PendingRequestModels) {
+    public DeniedRequest_RecyclerViewAdapter(Context context, ArrayList<DeniedRequestModel> deniedRequestModels) {
         this.context = context;
-        this.PendingRequestModels = PendingRequestModels;
+        this.deniedRequestModels = deniedRequestModels;
     }
     @NonNull
     @Override
-    public PendingRequest_RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DeniedRequest_RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // inflates layout giving look to the rows
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.pending_request_row, parent, false);
-        return new PendingRequest_RecyclerViewAdapter.MyViewHolder(view);
+        View view = inflater.inflate(R.layout.denied_request_row, parent, false);
+        return new DeniedRequest_RecyclerViewAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PendingRequest_RecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DeniedRequest_RecyclerViewAdapter.MyViewHolder holder, int position) {
         // assigning values to views created in recycler_view_row layout file based on position of recycler view
 
-        holder.tvName.setText(PendingRequestModels.get(position).getName());
-        holder.tvUserType.setText(PendingRequestModels.get(position).getUserType());
+        holder.tvName.setText(deniedRequestModels.get(position).getName());
+        holder.tvUserType.setText(deniedRequestModels.get(position).getUserType());
     }
 
     @Override
     public int getItemCount() {
         // necessary for recycler view to know number of items needed to be displayed
-        return PendingRequestModels.size();
+        return deniedRequestModels.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

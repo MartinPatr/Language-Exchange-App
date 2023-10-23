@@ -16,7 +16,10 @@
         android:theme="@style/Theme.HAMSProject"
         tools:targetApi="31">
         <activity
-            android:name=".AdminActivityPending"
+            android:name=".AdminDeniedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminPendingActivity"
             android:exported="false" />
         <activity
             android:name=".UserSelectionActivity"
