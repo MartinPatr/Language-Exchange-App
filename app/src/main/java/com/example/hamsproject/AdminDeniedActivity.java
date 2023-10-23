@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class AdminDeniedActivity extends AppCompatActivity {
+public class AdminDeniedActivity extends AppCompatActivity implements RecyclerViewInterfaceDenied{
 
     ArrayList<DeniedRequestModel> deniedRequestModels = new ArrayList<>();
     @Override
@@ -23,7 +23,8 @@ public class AdminDeniedActivity extends AppCompatActivity {
 
         setUpDeniedRequestModels();
 
-        DeniedRequest_RecyclerViewAdapter adapter = new DeniedRequest_RecyclerViewAdapter(this, deniedRequestModels);
+        DeniedRequest_RecyclerViewAdapter adapter = new DeniedRequest_RecyclerViewAdapter(this, deniedRequestModels,
+                this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -47,4 +48,10 @@ public class AdminDeniedActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(AdminDeniedActivity.this, AdminDeniedInfoActivity.class);
+
+        startActivity(intent);
+    }
 }

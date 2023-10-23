@@ -13,13 +13,17 @@ import java.util.ArrayList;
 
 public class PendingRequest_RecyclerViewAdapter extends RecyclerView.Adapter<PendingRequest_RecyclerViewAdapter.MyViewHolder> {
 
+    private final RecyclerViewInterfacePending recyclerViewInterfacePending;
+
     Context context;
     ArrayList<PendingRequestModel> PendingRequestModels;
 
 
-    public PendingRequest_RecyclerViewAdapter(Context context, ArrayList<PendingRequestModel> PendingRequestModels) {
+    public PendingRequest_RecyclerViewAdapter(Context context, ArrayList<PendingRequestModel> PendingRequestModels,
+                                              RecyclerViewInterfacePending recyclerViewInterfacePending) {
         this.context = context;
         this.PendingRequestModels = PendingRequestModels;
+        this.recyclerViewInterfacePending = recyclerViewInterfacePending;
     }
     @NonNull
     @Override
@@ -27,7 +31,7 @@ public class PendingRequest_RecyclerViewAdapter extends RecyclerView.Adapter<Pen
         // inflates layout giving look to the rows
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.pending_request_row, parent, false);
-        return new PendingRequest_RecyclerViewAdapter.MyViewHolder(view);
+        return new PendingRequest_RecyclerViewAdapter.MyViewHolder(view, recyclerViewInterfacePending);
     }
 
     @Override
@@ -48,12 +52,24 @@ public class PendingRequest_RecyclerViewAdapter extends RecyclerView.Adapter<Pen
         // grabs views from recycler_view_row layout file
 
         TextView tvName, tvUserType;
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewInterfacePending recyclerViewInterfacePending) {
             super(itemView);
 
             tvName = itemView.findViewById(R.id.name);
             tvUserType = itemView.findViewById(R.id.userType);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterfacePending != null) {
+                        int pos = getAdapterPosition();
+
+                        if (pos != RecyclerView.NO_POSITION) {
+                            recyclerViewInterfacePending.onItemClick(pos);
+                        }
+                    }
+                }
+            });
         }
     }
 }

@@ -13,7 +13,9 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class AdminPendingActivity extends AppCompatActivity {
+public class AdminPendingActivity extends AppCompatActivity implements RecyclerViewInterfacePending{
+
+
 
     ArrayList<PendingRequestModel> PendingRequestModels = new ArrayList<>();
     @Override
@@ -25,7 +27,8 @@ public class AdminPendingActivity extends AppCompatActivity {
 
         setUpPendingRequestModels();
 
-        PendingRequest_RecyclerViewAdapter adapter = new PendingRequest_RecyclerViewAdapter(this, PendingRequestModels);
+        PendingRequest_RecyclerViewAdapter adapter = new PendingRequest_RecyclerViewAdapter(this, PendingRequestModels,
+                this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -49,4 +52,10 @@ public class AdminPendingActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(AdminPendingActivity.this, AdminPendingInfoActivity.class);
+
+        startActivity(intent);
+    }
 }

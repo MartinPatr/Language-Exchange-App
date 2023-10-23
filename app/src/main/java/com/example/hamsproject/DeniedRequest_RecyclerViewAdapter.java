@@ -13,13 +13,17 @@ import java.util.ArrayList;
 
 public class DeniedRequest_RecyclerViewAdapter extends RecyclerView.Adapter<DeniedRequest_RecyclerViewAdapter.MyViewHolder> {
 
+    private final RecyclerViewInterfaceDenied recyclerViewInterfaceDenied;
+
     Context context;
     ArrayList<DeniedRequestModel> deniedRequestModels;
 
 
-    public DeniedRequest_RecyclerViewAdapter(Context context, ArrayList<DeniedRequestModel> deniedRequestModels) {
+    public DeniedRequest_RecyclerViewAdapter(Context context, ArrayList<DeniedRequestModel> deniedRequestModels,
+                                             RecyclerViewInterfaceDenied recyclerViewInterfaceDenied) {
         this.context = context;
         this.deniedRequestModels = deniedRequestModels;
+        this.recyclerViewInterfaceDenied = recyclerViewInterfaceDenied;
     }
     @NonNull
     @Override
@@ -27,7 +31,7 @@ public class DeniedRequest_RecyclerViewAdapter extends RecyclerView.Adapter<Deni
         // inflates layout giving look to the rows
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.denied_request_row, parent, false);
-        return new DeniedRequest_RecyclerViewAdapter.MyViewHolder(view);
+        return new DeniedRequest_RecyclerViewAdapter.MyViewHolder(view, recyclerViewInterfaceDenied);
     }
 
     @Override
@@ -48,11 +52,24 @@ public class DeniedRequest_RecyclerViewAdapter extends RecyclerView.Adapter<Deni
         // grabs views from recycler_view_row layout file
 
         TextView tvName, tvUserType;
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewInterfaceDenied recyclerViewInterfaceDenied) {
             super(itemView);
 
             tvName = itemView.findViewById(R.id.name);
             tvUserType = itemView.findViewById(R.id.userType);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterfaceDenied != null) {
+                        int pos = getAdapterPosition();
+
+                        if (pos != RecyclerView.NO_POSITION) {
+                            recyclerViewInterfaceDenied.onItemClick(pos);
+                        }
+                    }
+                }
+            });
 
         }
     }
