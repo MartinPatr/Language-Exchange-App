@@ -53,25 +53,19 @@ public class LogInActivity extends AppCompatActivity {
         });
         Button logInButton = findViewById(R.id.logInButton);
         logInButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent intent = new Intent(LogInActivity.this, WelcomePageActivity.class); // del
-                startActivity(intent); // del
-            }
-
-            /*
             public void onClick(View v){
                 Map<String, String> loginInfo = getLoginInfo();
-
+                // Check if all login fields are filled out correctly
                 if(ValidationUtils.isValidated(LogInActivity.this,loginInfo)){                    
                     attemptLogin(loginInfo, new LoginCallback() {
                         @Override
                         public void onLogin(boolean success) {
+                            // Check if there is an account in the database that matches the login information
                             if (success) {
                                 // Authentication successful
                                 Log.i("Authentication", "Successful");
                                 Intent intent = new Intent(LogInActivity.this, WelcomePageActivity.class);
-                                intent.putExtra("userType",userType);
+                                intent.putExtra("userData",authAccount);
                                 startActivity(intent);
                             } else {
                                 // Authentication failed: Display error message
@@ -81,7 +75,7 @@ public class LogInActivity extends AppCompatActivity {
                     });
                     
                 }
-            }*/
+            }
         });
     }
 
@@ -117,28 +111,31 @@ public class LogInActivity extends AppCompatActivity {
 
         // Boolean to check if authentication is successful
         AtomicBoolean authenticationSuccessful = new AtomicBoolean(false);
-
+        
         // Iterate through the tables
         for (String accountType : accountTypes) {
-            Log.i("Account type", accountType);
             databaseReference.child(accountType).orderByChild("username")
                 .equalTo(loginInfo.get("Email")).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            Log.i("Data snapshot", "Exists");
                             for (DataSnapshot accountSnapshot : dataSnapshot.getChildren()) {
+                                Log.i("Data snapshot", accountSnapshot.toString());
                                 Account account = accountSnapshot.getValue(Account.class);
-                                
-                                Log.i("Email from database", account.getUsername());
-                                Log.i("Password from database", account.getPassword());
+         
                                 // Check if the password matches
                                 if (account != null && account.getPassword().equals(loginInfo.get("Password"))) {
                                     // Authentication successful
-                                    Log.i("Authentication", "Successful");
-                                    authAccount = account;
+                                    Log.i("Authentication", accountType);
+                                    if ("Admin".equals(accountType)) {
+                                        authAccount = (Admin)accountSnapshot.getValue(Admin.class);
+                                    } else if ("Doctor".equals(accountType)) {
+                                       authAccount = (Doctor)accountSnapshot.getValue(Doctor.class);
+                                    } else if ("Patient".equals(accountType)) {
+                                        authAccount = (Patient)accountSnapshot.getValue(Patient.class);
+                                    }
+
                                     authenticationSuccessful.set(true);
-                                    userType = accountType;
                                 }
                             }
                         }else{ Log.i("Data snapshot", "Does not exist");}

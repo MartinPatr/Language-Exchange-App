@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.view.View;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.util.Log;
 
 public class WelcomePageActivity extends AppCompatActivity {
-    String userType;
+    Account userData;
     TextView userTypeDisplayed;
 
     @Override
@@ -21,9 +22,9 @@ public class WelcomePageActivity extends AppCompatActivity {
         Intent getPreviousIntent = getIntent();
 
         if (getPreviousIntent != null){
-            userType = getPreviousIntent.getStringExtra("userType");
+            userData = (Account)getPreviousIntent.getSerializableExtra("userData");
             userTypeDisplayed = (TextView) findViewById(R.id.yourRoleDisplayed);
-            userTypeDisplayed.setText("You are logged in as " + userType);
+            userTypeDisplayed.setText("You are logged in as " + userData.getType());
         }
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -33,18 +34,11 @@ public class WelcomePageActivity extends AppCompatActivity {
             }
         });
 
-
-
-        TextView toAdmin = findViewById(R.id.clickToContinue);
-
-        toAdmin.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                Intent i = new Intent(WelcomePageActivity.this, AdminPendingActivity.class);
-                startActivity(i);
-            }
-        });
-
-
+        // If the user is a admin, send them to the admin pending page
+        if (userData.getType().equals("Admin")){
+            Intent i = new Intent(WelcomePageActivity.this, AdminPendingActivity.class);
+            startActivity(i);            
+        }
 
     }
 }

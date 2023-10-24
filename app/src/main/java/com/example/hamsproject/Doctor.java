@@ -2,9 +2,13 @@ package com.example.hamsproject;
 
 import java.util.Map;
 
-public class Doctor extends Account{
+public class Doctor extends Account {
     public String employeeNum;
     public Map<String,Boolean> specialties;
+
+    public Doctor() {
+        super();
+    }
 
     public String getEmployeeNum() {
         return employeeNum;
@@ -17,5 +21,9 @@ public class Doctor extends Account{
     }
     public void setSpecialties(Map<String,Boolean> specialties) {
         this.specialties = specialties;
+    }
+    @Override
+    public String getType() {
+        return "Doctor";
     }
 }

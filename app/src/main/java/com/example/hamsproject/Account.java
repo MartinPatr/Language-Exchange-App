@@ -1,12 +1,21 @@
 package com.example.hamsproject;
+import java.io.Serializable;
 
-public class Account {
+public class Account implements Serializable{
     public String firstName;
     public String lastName;
     public String username;
     public String password;
     public String phone;
     public String address;
+    public boolean isApproved = false;
+
+    public Account() {
+    }
+    
+    public String getType() {
+        return "Account";
+    }
 
     public String getFirstName() {
         return firstName;
@@ -43,5 +52,11 @@ public class Account {
     }
     public void setAddress(String address) {
         this.address = address;
+    }
+    public boolean getIsApproved() {
+        return isApproved;
+    }
+    public void setIsApproved(boolean isApproved) {
+        this.isApproved = isApproved;
     }
 }
