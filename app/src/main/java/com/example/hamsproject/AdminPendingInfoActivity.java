@@ -2,13 +2,164 @@ package com.example.hamsproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class AdminPendingInfoActivity extends AppCompatActivity {
 
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_pending_info);
+
+        Intent intent = getIntent();
+
+        String accountID = intent.getStringExtra("userInfo");
+        getUserInfo(accountID);
+
+        Button acceptButton = findViewById(R.id.acceptButton);
+        Button rejectButton = findViewById(R.id.rejectButton);
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeStatus(accountID, "Approved");
+                Intent intent = new Intent(AdminPendingInfoActivity.this, AdminPendingActivity.class);
+                startActivity(intent);
+            }
+        });
+        rejectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeStatus(accountID, "Denied");
+                Intent intent = new Intent(AdminPendingInfoActivity.this, AdminPendingActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+    private void getUserInfo(String accountID){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Accounts");
+
+        //This list represents the tables in the Accounts table in the database
+        ArrayList<String> accountTypes = new ArrayList<>();
+        accountTypes.add("Doctor");
+        accountTypes.add("Patient");
+
+        for (String accountType : accountTypes) {
+            DatabaseReference accountTypeRef = databaseReference.child(accountType);
+            accountTypeRef.orderByKey().equalTo(accountID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                            
+                            String firstName = userSnapshot.child("firstName").getValue(String.class);
+                            String lastName = userSnapshot.child("lastName").getValue(String.class);
+                            String username = userSnapshot.child("username").getValue(String.class);
+                            String phone = userSnapshot.child("phone").getValue(String.class);
+                            String address = userSnapshot.child("address").getValue(String.class);
+                            String userType = userSnapshot.child("type").getValue(String.class);
+                            String userNum;
+                            if(userType.equals("Doctor")){
+                                userNum = userSnapshot.child("employeeNum").getValue(String.class);
+                            }
+                            else{
+                                userNum = userSnapshot.child("healthCardNum").getValue(String.class);
+                            }
+
+
+                            TextView firstNameText = findViewById(R.id.textView6);
+                            firstNameText.append(" " + firstName);
+
+                            TextView lastNameText = findViewById(R.id.textView8);
+                            lastNameText.append(" " + lastName);
+
+                            TextView usernameText = findViewById(R.id.textView9);
+                            usernameText.append(" " + username);
+
+                            TextView phoneText = findViewById(R.id.textView10);
+                            phoneText.append(" " + phone);
+
+                            TextView addressText = findViewById(R.id.textView11);
+                            addressText.append(" " + address);
+
+                            TextView userTypeText = findViewById(R.id.textView12);
+                            userTypeText.append(" " + userType);
+
+                            TextView userNumText = findViewById(R.id.textView14);
+                            userNumText.append(" " + userNum);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e("Firebase", "Error: " + databaseError.getMessage());
+                }
+            });
+        }
+    }
+
+    private void changeStatus(String accountID, String status) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Accounts");
+        DatabaseReference pendingRequestsRef = FirebaseDatabase.getInstance().getReference("Requests/PendingRequests");
+        DatabaseReference deniedRequestsRef = FirebaseDatabase.getInstance().getReference("Requests/DeniedRequests");
+
+        ArrayList<String> accountTypes = new ArrayList<>();
+        accountTypes.add("Doctor");
+        accountTypes.add("Patient");
+
+        for (String accountType : accountTypes) {
+            DatabaseReference account = databaseReference.child(accountType);
+            account.orderByKey().equalTo(accountID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                            //Changes the user's registrationStatus from pending
+                            userSnapshot.getRef().child("registrationStatus").setValue(status);
+
+                            if (status.equals("Denied")) {
+                                //Moves the info from PendingRequests to DeniedRequests
+                                pendingRequestsRef.child(accountID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot pendingData) {
+                                        if (pendingData.exists()) {
+                                            deniedRequestsRef.child(accountID).setValue(pendingData.getValue());
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e("Firebase", "Error: " + databaseError.getMessage());
+                                    }
+                                });
+                            }
+                            //Removes info from the PendingRequests part of the database
+                            pendingRequestsRef.child(accountID).removeValue();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e("Firebase", "Error: " + databaseError.getMessage());
+                }
+            });
+        }
     }
 }

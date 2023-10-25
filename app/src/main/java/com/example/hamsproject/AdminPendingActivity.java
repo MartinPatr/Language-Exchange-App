@@ -6,18 +6,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.view.View;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
 
-public class AdminPendingActivity extends AppCompatActivity implements RecyclerViewInterfacePending{
-
-
-
+public class AdminPendingActivity extends AppCompatActivity implements RecyclerViewInterfacePending {
+    private PendingRequest_RecyclerViewAdapter adapter;
     ArrayList<PendingRequestModel> PendingRequestModels = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,37 +30,50 @@ public class AdminPendingActivity extends AppCompatActivity implements RecyclerV
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        setUpPendingRequestModels();
-
-        PendingRequest_RecyclerViewAdapter adapter = new PendingRequest_RecyclerViewAdapter(this, PendingRequestModels,
-                this);
+        // Initialize the adapter
+        adapter = new PendingRequest_RecyclerViewAdapter(this, PendingRequestModels, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        setUpPendingRequestModels();
 
         Button deniedButton = findViewById(R.id.deniedButton);
         deniedButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(AdminPendingActivity.this, AdminDeniedActivity.class); // del
-                startActivity(intent); // del
+                Intent intent = new Intent(AdminPendingActivity.this, AdminDeniedActivity.class);
+                startActivity(intent);
             }
-
         });
     }
 
     private void setUpPendingRequestModels() {
-        String[] pendingRequestNames = getResources().getStringArray(R.array.pending_request_name_txt);
-        String[] pendingRequestUserType = getResources().getStringArray(R.array.pending_request_user_type_txt);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Requests/PendingRequests");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("MyTag", "Data retrieval successful. Number of items: " + dataSnapshot.getChildrenCount());
+                PendingRequestModels.clear();
 
-        for (int i = 0; i < pendingRequestNames.length; i++) {
-            PendingRequestModels.add(new PendingRequestModel(pendingRequestNames[i], pendingRequestUserType[i]));
-        }
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String accountID = snapshot.child("accountId").getValue(String.class);
+                    String userType = snapshot.child("requestDetails").getValue(String.class);
+
+                    PendingRequestModel model = new PendingRequestModel(accountID, userType);
+                    PendingRequestModels.add(model);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
-
 
     @Override
     public void onItemClick(int position) {
+        PendingRequestModel user = PendingRequestModels.get(position);
         Intent intent = new Intent(AdminPendingActivity.this, AdminPendingInfoActivity.class);
-
+        intent.putExtra("userInfo", user.name);
         startActivity(intent);
     }
 }

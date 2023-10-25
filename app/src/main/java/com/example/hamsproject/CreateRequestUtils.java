@@ -29,7 +29,7 @@ public class CreateRequestUtils {
         requestMap.put("requestDetails", requestDetails);
     
         // Push the request to the appropriate location
-        requestsRef.child(requestId).setValue(requestMap)
+        requestsRef.child(accountId).setValue(requestMap)
                 .addOnSuccessListener(voidCallback -> {
                     Toast.makeText(context, "Request added successfully.", Toast.LENGTH_SHORT).show();
                 })
