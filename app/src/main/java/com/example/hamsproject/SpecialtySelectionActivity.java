@@ -111,15 +111,18 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
         specialities.put("gynecology", gynecologySpecialty.isChecked());
         doctor.setSpecialties(specialities);
 
+        // Push the patient to the appropriate location
+        DatabaseReference newDoctorRef = databaseReference.push(); 
+        String newDoctorKey = newDoctorRef.getKey();
+
         // Success and fail messages
-        databaseReference.push().setValue(doctor)
+        newDoctorRef.setValue(doctor)
             .addOnSuccessListener(voidCallback -> {
-                //databaseReference.setValue(patient);
-                Toast.makeText(SpecialtySelectionActivity.this, "Successfully signed up.", Toast.LENGTH_SHORT).show();
+                CreateRequestUtils.addPendingRequest(SpecialtySelectionActivity.this,doctor, newDoctorKey);
             })
 
             .addOnFailureListener(exception ->{
-                Toast.makeText(SpecialtySelectionActivity.this,"Unsuccessfully signed up " + exception.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpecialtySelectionActivity.this,"Unsuccessful due to " + exception.getMessage(),Toast.LENGTH_SHORT).show();
             });
     }
 }

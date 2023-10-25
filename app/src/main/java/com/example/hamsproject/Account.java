@@ -8,7 +8,7 @@ public class Account implements Serializable{
     public String password;
     public String phone;
     public String address;
-    public boolean isApproved = false;
+    public String registrationStatus = "Pending";
 
     public Account() {
     }
@@ -53,10 +53,13 @@ public class Account implements Serializable{
     public void setAddress(String address) {
         this.address = address;
     }
-    public boolean getIsApproved() {
-        return isApproved;
+    public String getRegistrationStatus() {
+        return registrationStatus;
     }
-    public void setIsApproved(boolean isApproved) {
-        this.isApproved = isApproved;
+    public void setRegistrationStatus(String registrationStatus) {
+        if (!(registrationStatus.equals("Pending") || registrationStatus.equals("Approved") || registrationStatus.equals("Denied"))){
+            throw new IllegalArgumentException("registrationStatus must be Pending, Approved, or Denied");
+        }
+        this.registrationStatus = registrationStatus;
     }
 }

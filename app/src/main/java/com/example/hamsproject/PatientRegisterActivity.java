@@ -90,14 +90,17 @@ public class PatientRegisterActivity extends AppCompatActivity {
         patient.setAddress(patientInfo.get("Address"));
         patient.setHealthCardNum(patientInfo.get("HealthCard"));
 
-        // Success and fail messages
-        databaseReference.push().setValue(patient)
-                .addOnSuccessListener(voidCallback -> {
-                    Toast.makeText(PatientRegisterActivity.this, "Successfully signed up.", Toast.LENGTH_SHORT).show();
-                })
+        // Push the patient to the appropriate location
+        DatabaseReference newPatientRef = databaseReference.push(); 
+        String newPatientKey = newPatientRef.getKey(); 
 
+        // Success and fail messages
+        newPatientRef.setValue(patient)
+                .addOnSuccessListener(voidCallback -> {
+                    CreateRequestUtils.addPendingRequest(PatientRegisterActivity.this,patient, newPatientKey);
+                })
                 .addOnFailureListener(exception ->{
-                    Toast.makeText(PatientRegisterActivity.this,"Unsuccessfully added to Firebase due to " + exception.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatientRegisterActivity.this,"Unsuccessful due to " + exception.getMessage(),Toast.LENGTH_SHORT).show();
                 });
     }
 }

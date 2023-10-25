@@ -67,9 +67,8 @@ public class LogInActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LogInActivity.this, WelcomePageActivity.class);
                                 intent.putExtra("userData",authAccount);
                                 startActivity(intent);
-                            } else {
-                                // Authentication failed: Display error message
-                                Toast.makeText(LogInActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                            } else{
+                                authAccount = null;
                             }
                         }
                     });
@@ -120,7 +119,6 @@ public class LogInActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot accountSnapshot : dataSnapshot.getChildren()) {
-                                Log.i("Data snapshot", accountSnapshot.toString());
                                 Account account = accountSnapshot.getValue(Account.class);
          
                                 // Check if the password matches
@@ -141,6 +139,16 @@ public class LogInActivity extends AppCompatActivity {
                         }else{ Log.i("Data snapshot", "Does not exist");}
                         // Invoke the callback if this is the last iteration
                         if (accountTypes.indexOf(accountType) == accountTypes.size() - 1) {
+                            if (authAccount == null) {
+                                Toast.makeText(LogInActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                            } else if (authAccount.getRegistrationStatus().equals("Pending")){
+                                Log.i("HERE", "HERE");
+                                Toast.makeText(LogInActivity.this, "Your account is still pending approval", Toast.LENGTH_SHORT).show();
+                                authenticationSuccessful.set(false);
+                            } else if (authAccount.getRegistrationStatus().equals("Denied")){
+                                Toast.makeText(LogInActivity.this, "Your account has been denied", Toast.LENGTH_SHORT).show();
+                                authenticationSuccessful.set(false);
+                            } 
                             callback.onLogin(authenticationSuccessful.get());
                         }
                     }
