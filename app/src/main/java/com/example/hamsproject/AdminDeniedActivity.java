@@ -29,6 +29,21 @@ public class AdminDeniedActivity extends AppCompatActivity implements RecyclerVi
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recyclerItemSpacing);
+        RecycleItems itemDecoration = new RecycleItems(spacingInPixels, this);
+        recyclerView.addItemDecoration(itemDecoration);
+
+
+
+
+
+
+
+
+
+
+
+
         adapter = new DeniedRequest_RecyclerViewAdapter(this, deniedRequestModels, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

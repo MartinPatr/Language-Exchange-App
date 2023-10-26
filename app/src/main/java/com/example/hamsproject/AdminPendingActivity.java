@@ -29,6 +29,9 @@ public class AdminPendingActivity extends AppCompatActivity implements RecyclerV
         setContentView(R.layout.activity_admin_pending);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recyclerItemSpacing);
+        RecycleItems itemDecoration = new RecycleItems(spacingInPixels, this);
+        recyclerView.addItemDecoration(itemDecoration);
 
         // Initialize the adapter
         adapter = new PendingRequest_RecyclerViewAdapter(this, PendingRequestModels, this);
