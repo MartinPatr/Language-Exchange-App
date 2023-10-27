@@ -37,9 +37,8 @@ public class DeniedRequest_RecyclerViewAdapter extends RecyclerView.Adapter<Deni
     @Override
     public void onBindViewHolder(@NonNull DeniedRequest_RecyclerViewAdapter.MyViewHolder holder, int position) {
         // assigning values to views created in recycler_view_row layout file based on position of recycler view
+        holder.tvName.setText(deniedRequestModels.get(position).getUserType());
 
-        holder.tvName.setText(deniedRequestModels.get(position).getName());
-        holder.tvUserType.setText(deniedRequestModels.get(position).getUserType());
     }
 
     @Override

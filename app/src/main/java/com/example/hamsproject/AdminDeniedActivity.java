@@ -40,12 +40,21 @@ public class AdminDeniedActivity extends AppCompatActivity implements RecyclerVi
         setUpDeniedRequestModels();
 
         Button pendingButton = findViewById(R.id.pendingButton);
+        Button logoutButton = findViewById(R.id.logOutButton);
+
         pendingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(AdminDeniedActivity.this, AdminPendingActivity.class); // del
                 startActivity(intent); // del
             }
 
+        });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent intent = new Intent(AdminDeniedActivity.this, LogInActivity.class);
+                startActivity(intent);
+            }
         });
     }
 
@@ -59,9 +68,7 @@ public class AdminDeniedActivity extends AppCompatActivity implements RecyclerVi
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String accountID = snapshot.child("accountId").getValue(String.class);
-                    String userType = snapshot.child("otherRequestData").getValue(String.class);
-
-
+                    String userType = snapshot.child("requestDetails").getValue(String.class);
 
                     DeniedRequestModel model = new DeniedRequestModel(accountID, userType);
                     deniedRequestModels.add(model);

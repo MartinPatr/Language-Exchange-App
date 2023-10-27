@@ -19,15 +19,16 @@ public class CreateRequestUtils {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference requestsRef = firebaseDatabase.getReference("Requests/PendingRequests");
         String requestDetails = account.getFirstName() + " " + account.getLastName() + " - " + account.getType();
-        
+
+
         // Create a unique request ID
         String requestId = requestsRef.push().getKey();
-    
+
         // Create a map to store the request details
         Map<String, Object> requestMap = new HashMap<>();
         requestMap.put("accountId", accountId);
         requestMap.put("requestDetails", requestDetails);
-    
+
         // Push the request to the appropriate location
         requestsRef.child(accountId).setValue(requestMap)
                 .addOnSuccessListener(voidCallback -> {

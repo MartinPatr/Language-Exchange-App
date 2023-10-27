@@ -47,4 +47,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     implementation("com.google.firebase:firebase-database:20.2.2")
+
+
+
 }

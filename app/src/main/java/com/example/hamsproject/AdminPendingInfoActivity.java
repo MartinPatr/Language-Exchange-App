@@ -1,5 +1,6 @@
 package com.example.hamsproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -33,6 +34,8 @@ public class AdminPendingInfoActivity extends AppCompatActivity {
 
         Button acceptButton = findViewById(R.id.acceptButton);
         Button rejectButton = findViewById(R.id.rejectButton);
+        Button backButton = findViewById(R.id.backButton);
+
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +52,14 @@ public class AdminPendingInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        backButton.setOnClickListener((new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(AdminPendingInfoActivity.this, AdminPendingActivity.class);
+                startActivity(intent);
+            }
+        }));
     }
 
 

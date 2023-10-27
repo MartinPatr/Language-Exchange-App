@@ -17,6 +17,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+
 public class AdminDeniedInfoActivity extends AppCompatActivity {
 
     @Override
@@ -30,6 +43,8 @@ public class AdminDeniedInfoActivity extends AppCompatActivity {
         getUserInfo(accountID);
 
         Button acceptButton = findViewById(R.id.acceptButton);
+        Button backButton = findViewById(R.id.backButton);
+
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,6 +53,14 @@ public class AdminDeniedInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        backButton.setOnClickListener((new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(AdminDeniedInfoActivity.this, AdminDeniedActivity.class);
+                startActivity(intent);
+            }
+        }));
     }
 
 
@@ -139,4 +162,11 @@ public class AdminDeniedInfoActivity extends AppCompatActivity {
             });
         }
     }
+
+
+
+
+
+
+
 }

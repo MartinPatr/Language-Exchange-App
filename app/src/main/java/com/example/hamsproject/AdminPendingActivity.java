@@ -41,9 +41,18 @@ public class AdminPendingActivity extends AppCompatActivity implements RecyclerV
         setUpPendingRequestModels();
 
         Button deniedButton = findViewById(R.id.deniedButton);
+        Button logoutButton = findViewById(R.id.logOutButton);
+
         deniedButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(AdminPendingActivity.this, AdminDeniedActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent intent = new Intent(AdminPendingActivity.this, LogInActivity.class);
                 startActivity(intent);
             }
         });

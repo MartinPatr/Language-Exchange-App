@@ -39,8 +39,7 @@ public class PendingRequest_RecyclerViewAdapter extends RecyclerView.Adapter<Pen
     public void onBindViewHolder(@NonNull PendingRequest_RecyclerViewAdapter.MyViewHolder holder, int position) {
         // assigning values to views created in recycler_view_row layout file based on position of recycler view
 
-        holder.tvName.setText(PendingRequestModels.get(position).getName());
-        holder.tvUserType.setText(PendingRequestModels.get(position).getUserType());
+        holder.tvName.setText(PendingRequestModels.get(position).getUserType());
 
     }
 
