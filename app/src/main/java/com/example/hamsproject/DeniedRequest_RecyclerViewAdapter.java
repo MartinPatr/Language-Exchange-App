@@ -54,8 +54,7 @@ public class DeniedRequest_RecyclerViewAdapter extends RecyclerView.Adapter<Deni
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterfaceDenied recyclerViewInterfaceDenied) {
             super(itemView);
 
-            tvName = itemView.findViewById(R.id.name);
-            tvUserType = itemView.findViewById(R.id.userType);
+            tvName = itemView.findViewById(R.id.infoField);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

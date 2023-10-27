@@ -56,8 +56,7 @@ public class PendingRequest_RecyclerViewAdapter extends RecyclerView.Adapter<Pen
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterfacePending recyclerViewInterfacePending) {
             super(itemView);
 
-            tvName = itemView.findViewById(R.id.name);
-            tvUserType = itemView.findViewById(R.id.userType);
+            tvName = itemView.findViewById(R.id.infoField);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
