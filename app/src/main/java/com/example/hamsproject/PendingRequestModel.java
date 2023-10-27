@@ -1,6 +1,11 @@
 package com.example.hamsproject;
 
-public class PendingRequestModel {
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class PendingRequestModel  {
     String name;
     String userType;
 

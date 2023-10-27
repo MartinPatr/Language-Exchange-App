@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class PendingRequest_RecyclerViewAdapter extends RecyclerView.Adapter<Pen
 
         holder.tvName.setText(PendingRequestModels.get(position).getName());
         holder.tvUserType.setText(PendingRequestModels.get(position).getUserType());
+
     }
 
     @Override

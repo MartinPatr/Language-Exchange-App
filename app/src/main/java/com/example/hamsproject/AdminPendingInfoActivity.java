@@ -83,26 +83,26 @@ public class AdminPendingInfoActivity extends AppCompatActivity {
                             }
 
 
-                            TextView firstNameText = findViewById(R.id.textView6);
-                            firstNameText.append(" " + firstName);
+                            TextView firstNameText = findViewById(R.id.firstNameField);
+                            firstNameText.setText(firstName);
 
-                            TextView lastNameText = findViewById(R.id.textView8);
-                            lastNameText.append(" " + lastName);
+                            TextView lastNameText = findViewById(R.id.lastNameField);
+                            lastNameText.setText(lastName);
 
-                            TextView usernameText = findViewById(R.id.textView9);
-                            usernameText.append(" " + username);
+                            TextView usernameText = findViewById(R.id.emailField);
+                            usernameText.setText(username);
 
-                            TextView phoneText = findViewById(R.id.textView10);
-                            phoneText.append(" " + phone);
+                            TextView phoneText = findViewById(R.id.phoneNumberField);
+                            phoneText.setText(phone);
 
-                            TextView addressText = findViewById(R.id.textView11);
-                            addressText.append(" " + address);
+                            TextView addressText = findViewById(R.id.addressField);
+                            addressText.setText(address);
 
-                            TextView userTypeText = findViewById(R.id.textView12);
-                            userTypeText.append(" " + userType);
+                            TextView userTypeText = findViewById(R.id.userTypeField);
+                            userTypeText.setText(userType);
 
-                            TextView userNumText = findViewById(R.id.textView14);
-                            userNumText.append(" " + userNum);
+                            TextView userNumText = findViewById(R.id.idField);
+                            userNumText.setText(userNum);
                         }
                     }
                 }
