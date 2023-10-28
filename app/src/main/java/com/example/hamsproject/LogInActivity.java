@@ -146,7 +146,7 @@ public class LogInActivity extends AppCompatActivity {
                                 Toast.makeText(LogInActivity.this, "Your account is still pending approval", Toast.LENGTH_SHORT).show();
                                 authenticationSuccessful.set(false);
                             } else if (authAccount.getRegistrationStatus().equals("Denied")){
-                                Toast.makeText(LogInActivity.this, "Your account has been denied", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LogInActivity.this, "Your account has been denied. Please contact 613-123-1234", Toast.LENGTH_SHORT).show();
                                 authenticationSuccessful.set(false);
                             } 
                             callback.onLogin(authenticationSuccessful.get());
