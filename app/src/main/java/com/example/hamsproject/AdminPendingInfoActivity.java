@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.net.URI;
 import java.util.ArrayList;
-
+import java.util.Objects;
 
 
 public class AdminPendingInfoActivity extends AppCompatActivity {
@@ -95,7 +95,7 @@ public class AdminPendingInfoActivity extends AppCompatActivity {
                             String address = userSnapshot.child("address").getValue(String.class);
                             String userType = userSnapshot.child("type").getValue(String.class);
                             String userNum;
-                            String specialties = "";
+                            StringBuilder specialties = new StringBuilder();
                             if(userType.equals("Doctor")){
                                 userNum = userSnapshot.child("employeeNum").getValue(String.class);
                                 //Adds specialties
@@ -105,13 +105,30 @@ public class AdminPendingInfoActivity extends AppCompatActivity {
                                     String specialtyName = specialtySnapshot.getKey();
 
                                     if (specialized) {
-                                        specialties += specialtyName + ", ";
+                                        if (!specialties.toString().equals("")){
+                                            specialties.append(", ");
+                                        }
+                                        if (Objects.equals(specialtyName, "familyMedicine")){
+                                            specialties.append("Family Medicine");
+                                        }
+                                        else if(Objects.equals(specialtyName, "gynecology")){
+                                            specialties.append("Gynecology");
+                                        }
+                                        else if(Objects.equals(specialtyName, "internalMedicine")){
+                                            specialties.append("Internal Medicine");
+                                        }
+                                        else if(Objects.equals(specialtyName, "obstetrics")){
+                                            specialties.append("Obstetrics");
+                                        }
+                                        else if (Objects.equals(specialtyName, "pediatrics")){
+                                            specialties.append("Pediatrics");
+                                        }
                                     }
                                 }
                             }
                             else{
                                 userNum = userSnapshot.child("healthCardNum").getValue(String.class);
-                                specialties = "N/A";
+                                specialties = new StringBuilder("N/A");
                             }
 
 
@@ -136,8 +153,8 @@ public class AdminPendingInfoActivity extends AppCompatActivity {
                             TextView userNumText = findViewById(R.id.idField);
                             userNumText.setText(userNum);
 
-                            TextView specialtiesText = findViewById(R.id.textView15);
-                            specialtiesText.setText(specialties);
+                            TextView specialtiesText = findViewById(R.id.specialtiesField);
+                            specialtiesText.setText(specialties.toString());
                         }
                     }
                 }
