@@ -136,7 +136,7 @@ public class AdminPendingInfoActivity extends AppCompatActivity {
                             TextView userNumText = findViewById(R.id.idField);
                             userNumText.setText(userNum);
 
-                            TextView specialtiesText = findViewById(R.id.specialtyField);
+                            TextView specialtiesText = findViewById(R.id.textView15);
                             specialtiesText.setText(specialties);
                         }
                     }

@@ -133,7 +133,7 @@ public class AdminDeniedInfoActivity extends AppCompatActivity {
                             TextView userNumText = findViewById(R.id.idField);
                             userNumText.setText(userNum);
 
-                            TextView specialtiesText = findViewById(R.id.textView15);
+                            TextView specialtiesText = findViewById(R.id.textView16);
                             specialtiesText.setText(specialties);
                         }
                     }
