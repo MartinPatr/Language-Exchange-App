@@ -63,7 +63,6 @@ public class AdminPendingActivity extends AppCompatActivity implements RecyclerV
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("MyTag", "Data retrieval successful. Number of items: " + dataSnapshot.getChildrenCount());
                 PendingRequestModels.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {

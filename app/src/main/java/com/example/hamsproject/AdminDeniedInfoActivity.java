@@ -88,11 +88,25 @@ public class AdminDeniedInfoActivity extends AppCompatActivity {
                             String address = userSnapshot.child("address").getValue(String.class);
                             String userType = userSnapshot.child("type").getValue(String.class);
                             String userNum;
+                            String specialties = "";
                             if(userType.equals("Doctor")){
+                                //Adds employee number
                                 userNum = userSnapshot.child("employeeNum").getValue(String.class);
+
+                                //Adds specialties
+                                DataSnapshot specialtiesSnapshot = userSnapshot.child("specialties");
+                                for (DataSnapshot specialtySnapshot : specialtiesSnapshot.getChildren()) {
+                                    boolean specialized = specialtySnapshot.getValue(Boolean.class);
+                                    String specialtyName = specialtySnapshot.getKey();
+
+                                    if (specialized) {
+                                        specialties += specialtyName + ", ";
+                                    }
+                                }
                             }
                             else{
                                 userNum = userSnapshot.child("healthCardNum").getValue(String.class);
+                                specialties = "N/A";
                             }
 
 
@@ -118,6 +132,9 @@ public class AdminDeniedInfoActivity extends AppCompatActivity {
 
                             TextView userNumText = findViewById(R.id.idField);
                             userNumText.setText(userNum);
+
+                            TextView specialtiesText = findViewById(R.id.textView15);
+                            specialtiesText.setText(specialties);
                         }
                     }
                 }
