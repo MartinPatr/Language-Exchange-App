@@ -4,11 +4,11 @@ import android.graphics.Rect;
 import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecycleItems extends RecyclerView.ItemDecoration {
+public class RecyclerItemsFormattingActivity extends RecyclerView.ItemDecoration {
     private int spacing;
     private Context context;
 
-    public RecycleItems(int spacing, Context context) {
+    public RecyclerItemsFormattingActivity(int spacing, Context context) {
         this.spacing = spacing;
         this.context = context;
     }

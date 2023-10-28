@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.view.View;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +30,7 @@ public class AdminPendingActivity extends AppCompatActivity implements RecyclerV
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recyclerItemSpacing);
-        RecycleItems itemDecoration = new RecycleItems(spacingInPixels, this);
+        RecyclerItemsFormattingActivity itemDecoration = new RecyclerItemsFormattingActivity(spacingInPixels, this);
         recyclerView.addItemDecoration(itemDecoration);
 
         // Initialize the adapter
