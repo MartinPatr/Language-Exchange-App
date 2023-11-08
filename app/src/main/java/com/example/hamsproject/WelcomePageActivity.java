@@ -33,12 +33,5 @@ public class WelcomePageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        // If the user is a admin, send them to the admin pending page
-        if (userData.getType().equals("Admin")){
-            Intent i = new Intent(WelcomePageActivity.this, AdminPendingActivity.class);
-            startActivity(i);            
-        }
-
     }
 }

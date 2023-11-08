@@ -28,6 +28,7 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
     private CheckBox obstetricsSpecialty;
     private CheckBox gynecologySpecialty;
 
+
     private String firstName;
     private String lastName;
     private String email;
@@ -95,6 +96,7 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
     private void addToFirebase(){
         Doctor doctor = new Doctor();
         Map<String,Boolean> specialities = new HashMap<String,Boolean>();
+        Map<String, Map<String, Integer>> shifts = new HashMap<String, Map<String, Integer>>();
 
         doctor.setFirstName(firstName);
         doctor.setLastName(lastName);
@@ -110,10 +112,12 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
         specialities.put("obstetrics", obstetricsSpecialty.isChecked());
         specialities.put("gynecology", gynecologySpecialty.isChecked());
         doctor.setSpecialties(specialities);
+        doctor.setShifts(shifts);
 
         // Push the patient to the appropriate location
         DatabaseReference newDoctorRef = databaseReference.push(); 
         String newDoctorKey = newDoctorRef.getKey();
+        doctor.setKey(newDoctorKey);
 
         // Success and fail messages
         newDoctorRef.setValue(doctor)

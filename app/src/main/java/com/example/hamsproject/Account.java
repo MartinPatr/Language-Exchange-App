@@ -9,6 +9,7 @@ public class Account implements Serializable{
     public String phone;
     public String address;
     public String registrationStatus = "Pending";
+    public String key;
 
     public Account() {
     }
@@ -55,6 +56,12 @@ public class Account implements Serializable{
     }
     public String getRegistrationStatus() {
         return registrationStatus;
+    }
+    public void setKey(String key){
+        this.key = key;
+    }
+    public String getKey(){
+        return key;
     }
     public void setRegistrationStatus(String registrationStatus) {
         if (!(registrationStatus.equals("Pending") || registrationStatus.equals("Approved") || registrationStatus.equals("Denied"))){

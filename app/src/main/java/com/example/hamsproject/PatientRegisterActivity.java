@@ -93,6 +93,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
         // Push the patient to the appropriate location
         DatabaseReference newPatientRef = databaseReference.push(); 
         String newPatientKey = newPatientRef.getKey(); 
+        patient.setKey(newPatientKey);
 
         // Success and fail messages
         newPatientRef.setValue(patient)

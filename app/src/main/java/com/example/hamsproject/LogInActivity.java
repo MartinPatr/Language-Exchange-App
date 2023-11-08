@@ -62,9 +62,17 @@ public class LogInActivity extends AppCompatActivity {
                         public void onLogin(boolean success) {
                             // Check if there is an account in the database that matches the login information
                             if (success) {
+                                Intent intent;
                                 // Authentication successful
                                 Log.i("Authentication", "Successful");
-                                Intent intent = new Intent(LogInActivity.this, WelcomePageActivity.class);
+                                Log.i("Account Type", authAccount.getType());
+                                if (authAccount.getType().equals("Admin")) {
+                                    intent = new Intent(LogInActivity.this, AdminPendingActivity.class);
+                                }else if (authAccount.getType().equals("Doctor")) {
+                                    intent = new Intent(LogInActivity.this, DoctorPageActivity.class);
+                                }else {
+                                    intent = new Intent(LogInActivity.this, WelcomePageActivity.class);
+                                }
                                 intent.putExtra("userData",authAccount);
                                 startActivity(intent);
                             } else{

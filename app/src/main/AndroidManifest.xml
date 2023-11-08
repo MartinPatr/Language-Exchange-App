@@ -16,6 +16,9 @@
         android:theme="@style/Theme.HAMSProject"
         tools:targetApi="31">
         <activity
+            android:name=".DoctorPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminDeniedInfoActivity"
             android:exported="false" />
         <activity
