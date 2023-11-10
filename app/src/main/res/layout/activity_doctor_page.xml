@@ -10,13 +10,25 @@
         android:id="@+id/viewShiftsButton"
         android:layout_width="179dp"
         android:layout_height="68dp"
+        android:layout_marginBottom="28dp"
         android:text="View Shifts"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.945" />
+        app:layout_constraintTop_toBottomOf="@+id/viewAppointmentsButton"
+        app:layout_constraintVertical_bias="0.777" />
+
+    <Button
+        android:id="@+id/viewAppointmentsButton"
+        android:layout_width="179dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="280dp"
+        android:text="View Appointments"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourRoleDisplayed" />
 
     <Button
         android:id="@+id/acceptAllAppointmentsButton"
