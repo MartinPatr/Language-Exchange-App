@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Doctor extends Account {
     public String employeeNum;
     public Map<String,Boolean> specialties;
-    public Map<String, Map<String, Integer>> shifts;
+    public Map<String, Map<String, Object>> shifts;
     public boolean acceptAllAppointments = false;
 
     public Doctor() {
@@ -25,17 +25,19 @@ public class Doctor extends Account {
     public void setSpecialties(Map<String,Boolean> specialties) {
         this.specialties = specialties;
     }
-    public Map<String, Map<String, Integer>> getShifts(){ return shifts; }
+    public Map<String, Map<String, Object>> getShifts(){ return shifts; }
 
-    public void setShifts(Map<String, Map<String, Integer>> shifts){ this.shifts = shifts; }
+    public void setShifts(Map<String, Map<String, Object>> shifts){ this.shifts = shifts; }
 
-    public void addShift(String date, Integer start, Integer end){
+    public void addShift(String date, int startHour, int endHour, int startMinute, int endMinute){
         if (shifts == null){
             shifts = new HashMap<>();
         }
-        Map<String, Integer> shift = new HashMap<>();
-        shift.put("start", start);
-        shift.put("end", end);
+        Map<String, Object> shift = new HashMap<>();
+        shift.put("startHour", startHour);
+        shift.put("endHour", endHour);
+        shift.put("startMinute", startMinute);
+        shift.put("endMinute", endMinute);
         shifts.put(date, shift);
     }
     public void removeShift(String date){

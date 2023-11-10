@@ -16,6 +16,12 @@
         android:theme="@style/Theme.HAMSProject"
         tools:targetApi="31">
         <activity
+            android:name=".ListOfShiftsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShiftCreationActivity"
+            android:exported="false" />
+        <activity
             android:name=".DoctorPageActivity"
             android:exported="false" />
         <activity

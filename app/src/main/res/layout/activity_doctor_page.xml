@@ -7,6 +7,18 @@
     tools:context=".WelcomePageActivity">
 
     <Button
+        android:id="@+id/viewShiftsButton"
+        android:layout_width="179dp"
+        android:layout_height="68dp"
+        android:text="View Shifts"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.945" />
+
+    <Button
         android:id="@+id/acceptAllAppointmentsButton"
         android:layout_width="120dp"
         android:layout_height="43dp"

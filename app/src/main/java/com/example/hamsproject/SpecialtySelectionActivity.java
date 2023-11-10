@@ -96,7 +96,7 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
     private void addToFirebase(){
         Doctor doctor = new Doctor();
         Map<String,Boolean> specialities = new HashMap<String,Boolean>();
-        Map<String, Map<String, Integer>> shifts = new HashMap<String, Map<String, Integer>>();
+        Map<String, Map<String, Object>> shifts = new HashMap<>();
 
         doctor.setFirstName(firstName);
         doctor.setLastName(lastName);

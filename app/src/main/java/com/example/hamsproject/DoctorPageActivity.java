@@ -28,6 +28,7 @@ public class DoctorPageActivity extends AppCompatActivity {
 
         Button logoutButton = findViewById(R.id.logoutButton);
         Button acceptAllAppointmentsButton = findViewById(R.id.acceptAllAppointmentsButton);
+        Button viewShiftsButton = findViewById(R.id.viewShiftsButton);
 
 
         Intent getPreviousIntent = getIntent();
@@ -41,11 +42,17 @@ public class DoctorPageActivity extends AppCompatActivity {
             acceptAllAppointmentsButton.setBackgroundColor(Color.parseColor("#FF338301"));
         }
 
-        ((Doctor) userData).addShift("11-7-2023",930,1700);
-
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(DoctorPageActivity.this, LogInActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        viewShiftsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent intent = new Intent(DoctorPageActivity.this, ListOfShiftsActivity.class);
+                intent.putExtra("userData",userData);
                 startActivity(intent);
             }
         });
