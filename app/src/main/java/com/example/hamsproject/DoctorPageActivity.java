@@ -29,6 +29,7 @@ public class DoctorPageActivity extends AppCompatActivity {
         Button logoutButton = findViewById(R.id.logoutButton);
         Button acceptAllAppointmentsButton = findViewById(R.id.acceptAllAppointmentsButton);
         Button viewShiftsButton = findViewById(R.id.viewShiftsButton);
+        Button viewAppointments = findViewById(R.id.viewAppointmentsButton);
 
 
         Intent getPreviousIntent = getIntent();
@@ -53,6 +54,13 @@ public class DoctorPageActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent = new Intent(DoctorPageActivity.this, ListOfShiftsActivity.class);
                 intent.putExtra("userData",userData);
+                startActivity(intent);
+            }
+        });
+
+        viewAppointments.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(DoctorPageActivity.this, AppointmentListPendingActivity.class);
                 startActivity(intent);
             }
         });
