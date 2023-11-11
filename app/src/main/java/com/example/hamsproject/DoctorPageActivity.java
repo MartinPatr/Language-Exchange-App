@@ -29,7 +29,7 @@ public class DoctorPageActivity extends AppCompatActivity {
         Button logoutButton = findViewById(R.id.logoutButton);
         Button acceptAllAppointmentsButton = findViewById(R.id.acceptAllAppointmentsButton);
         Button viewShiftsButton = findViewById(R.id.viewShiftsButton);
-        Button viewAppointments = findViewById(R.id.viewAppointmentsButton);
+        Button viewAppointmentsButton = findViewById(R.id.viewAppointmentsButton);
 
 
         Intent getPreviousIntent = getIntent();
@@ -58,10 +58,15 @@ public class DoctorPageActivity extends AppCompatActivity {
             }
         });
 
-        viewAppointments.setOnClickListener(new View.OnClickListener(){
+        viewAppointmentsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(DoctorPageActivity.this, AppointmentListPendingActivity.class);
+                Log.d("DoctorPageActivity", "ViewAppsButton");
+                Intent intent = new Intent(DoctorPageActivity.this, AppointmentListRequestsActivity.class);
+                intent.putExtra("userData",userData);
+
                 startActivity(intent);
+
+
             }
         });
         acceptAllAppointmentsButton.setOnClickListener(new View.OnClickListener() {

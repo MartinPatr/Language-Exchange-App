@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/upcomingButton"
+        android:id="@+id/appointmentRequestsButton"
         android:layout_width="115dp"
         android:layout_height="45dp"
         android:layout_marginStart="15dp"
