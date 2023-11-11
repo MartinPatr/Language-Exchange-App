@@ -63,56 +63,34 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
         recyclerView.setAdapter(appointmentAdapter);
         //========================================================================
 
-        DatabaseReference appointmentsRef = FirebaseDatabase.getInstance()
-                .getReference("Appointments/PendingAppointments");
+        DatabaseReference pendingAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/PendingAppointments");
 
-
-        Query doctorAppointmentsQuery = appointmentsRef.orderByChild("doctorKey").equalTo(userData.getKey());
-
-
-        doctorAppointmentsQuery.addValueEventListener(new ValueEventListener() {
+        pendingAppointmentsRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot appointmentsSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot pendingAppointmentsSnapshot) {
                 List<Appointment> appointmentList = new ArrayList<>();
-
-
-                for(DataSnapshot appointmentIdSnapshot: appointmentsSnapshot.getChildren()){
-                    String appointmentId = appointmentIdSnapshot.getKey();
-                    DatabaseReference singleAppointmentRef = appointmentsRef.child(appointmentId);
-
-                    singleAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot singleAppointmentSnapshot) {
-                            if (singleAppointmentSnapshot.exists()) {
-                                Appointment appointment = singleAppointmentSnapshot.getValue(Appointment.class);
-                                appointmentList.add(appointment);
-                                appointmentAdapter.setAppointmentList(appointmentList);
-                                Log.d("ListOfAppointmentsActivity", "Retrieved Appointment: " + appointment.toString());
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.e("ListOfAppointmentsActivity", "Database error: " + databaseError.getMessage());
-
-                        }
-                    });
+                if (pendingAppointmentsSnapshot.exists() && pendingAppointmentsSnapshot.hasChildren()) {
+                    for (DataSnapshot appointmentSnapshot : pendingAppointmentsSnapshot.getChildren()) {
+                        String appointmentId = appointmentSnapshot.getKey();
+                        Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
+                        Log.d("Test", appointment.getPatientName());
+                        Log.d("ListOfAppointmentsActivity", "First key in PendingAppointments: " + appointmentId);
+                        appointmentList.add(appointment);
+                    }
                 }
-
-
+                else {
+                    Log.d("ListOfShiftsActivity", "No shifts found for the current doctor");
+                }
+                appointmentAdapter.setAppointmentList(appointmentList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                if (databaseError != null) {
-                    Log.e("ListOfAppointmentsActivity", "Database error: " + databaseError.getMessage());
-                } else {
-                    Log.e("ListOfAppointmentsActivity", "Database error: An unknown error occurred");
-                }
+                Log.e("ListOfShiftsActivity", "Database error: " + databaseError.getMessage());
             }
-
-            ;
         });
     };
 }
+
+
+

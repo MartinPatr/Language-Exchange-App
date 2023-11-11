@@ -8,6 +8,8 @@ public class Appointment {
     Integer time;
     String appointmentStatus = "Pending";
 
+    public Appointment() {}
+
     public Appointment(String patientName, String patientKey, String doctorKey, String date, Integer time) {
         this.patientName = patientName;
         this.patientKey = patientKey;

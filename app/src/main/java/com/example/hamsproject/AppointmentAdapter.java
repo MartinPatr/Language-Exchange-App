@@ -1,5 +1,6 @@
 package com.example.hamsproject;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +42,21 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Appointment appointment = appointments.get(position);
 
-        holder.nameField.setText(appointment.getPatientName());
-        holder.timeField.setText(appointment.getTime());
+        //All of this just reformats the String for time to add a colon in the middle. May need to change
+        String time = String.valueOf(appointment.getTime());
+        String newTime = "";
+        for (int i = 0; i < time.length()/2; i++) {
+            char c = time.charAt(i);
+            newTime += c;
+        }
+        newTime += ":";
+        for (int i = 2; i < time.length(); i++) {
+            char c = time.charAt(i);
+            newTime += c;
+        }
+
+        holder.nameField.setText(String.valueOf(appointment.getPatientName()));
+        holder.timeField.setText((appointment.getDate() + " at " + newTime));
     }
 
     @Override
