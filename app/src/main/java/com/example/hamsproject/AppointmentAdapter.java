@@ -32,14 +32,15 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.appointment_row,parent,false);
-        return new ViewHolder(view,onAppointmentItemClickListener);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.appointment_row, parent, false);
+        return new ViewHolder(view, onAppointmentItemClickListener);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Log.d("AppointmentAdapter", "List size: " + appointments.size());
         Appointment appointment = appointments.get(position);
 
         //All of this just reformats the String for time to add a colon in the middle. May need to change
@@ -55,12 +56,16 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             newTime += c;
         }
 
+        Log.d("AppointmentAdapter", "Date: " + appointment.getDate());
+
         holder.nameField.setText(String.valueOf(appointment.getPatientName()));
         holder.timeField.setText((appointment.getDate() + " at " + newTime));
     }
 
     @Override
     public int getItemCount() {
+        Log.d("BINGO: " , String.valueOf(appointments.size()));
+
         return appointments.size();
     }
 
