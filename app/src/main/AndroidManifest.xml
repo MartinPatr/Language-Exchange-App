@@ -68,6 +68,16 @@
             android:name=".AppointmentListRequestsActivity"
             android:exported="false" />
 
+        <activity android:name=".AppointmentListAcceptedActivity"
+            android:exported="false" />
+
+        <activity android:name=".AppointmentListPastActivity"
+            android:exported="false" />
+
+
+
+
+
     </application>
 
 </manifest>

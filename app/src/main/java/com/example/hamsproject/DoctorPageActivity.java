@@ -29,7 +29,9 @@ public class DoctorPageActivity extends AppCompatActivity {
         Button logoutButton = findViewById(R.id.logoutButton);
         Button acceptAllAppointmentsButton = findViewById(R.id.acceptAllAppointmentsButton);
         Button viewShiftsButton = findViewById(R.id.viewShiftsButton);
-        Button viewAppointmentsButton = findViewById(R.id.viewAppointmentsButton);
+        Button viewAcceptedAppointmentsButton = findViewById(R.id.viewAcceptedAppointmentsButton);
+        Button viewRequestedAppointmentsButton = findViewById(R.id.viewRequestedAppointmentsButton);
+        Button viewPastAppointmentsButton = findViewById(R.id.viewPastAppointmentsButton);
 
 
         Intent getPreviousIntent = getIntent();
@@ -58,7 +60,7 @@ public class DoctorPageActivity extends AppCompatActivity {
             }
         });
 
-        viewAppointmentsButton.setOnClickListener(new View.OnClickListener(){
+        viewRequestedAppointmentsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Log.d("DoctorPageActivity", "ViewAppsButton");
                 Intent intent = new Intent(DoctorPageActivity.this, AppointmentListRequestsActivity.class);
@@ -69,6 +71,32 @@ public class DoctorPageActivity extends AppCompatActivity {
 
             }
         });
+
+        viewAcceptedAppointmentsButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Log.d("DoctorPageActivity", "ViewAppsButton");
+                Intent intent = new Intent(DoctorPageActivity.this, AppointmentListPastActivity.class);
+                intent.putExtra("userData",userData);
+
+                startActivity(intent);
+
+
+            }
+        });
+
+        viewPastAppointmentsButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Log.d("DoctorPageActivity", "ViewAppsButton");
+                Intent intent = new Intent(DoctorPageActivity.this, AppointmentListPastActivity.class);
+                intent.putExtra("userData",userData);
+
+                startActivity(intent);
+
+
+            }
+        });
+
+
         acceptAllAppointmentsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 if (((Doctor) userData).getAcceptAllAppointments() == false ){

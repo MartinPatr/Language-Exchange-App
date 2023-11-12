@@ -6,29 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".WelcomePageActivity">
 
+
     <Button
         android:id="@+id/viewShiftsButton"
-        android:layout_width="179dp"
-        android:layout_height="68dp"
-        android:layout_marginBottom="28dp"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="108dp"
         android:text="View Shifts"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewAppointmentsButton"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/viewAppointmentsButton"
-        android:layout_width="179dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="280dp"
-        android:text="View Appointments"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/viewAcceptedAppointmentsButton"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+
+        android:layout_marginTop="10dp"
+        android:text="Accepted"
+        android:textSize="11sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yourRoleDisplayed" />
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <Button
+        android:id="@+id/viewRequestedAppointmentsButton"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Requests"
+        android:textSize="11sp"
+        app:layout_constraintStart_toEndOf="@+id/viewAcceptedAppointmentsButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <Button
+        android:id="@+id/viewPastAppointmentsButton"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Past"
+        android:textSize="11sp"
+        app:layout_constraintStart_toEndOf="@+id/viewRequestedAppointmentsButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <Button
         android:id="@+id/acceptAllAppointmentsButton"
@@ -88,5 +111,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="180dp"
+        android:text="Your Appointments:"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourRoleDisplayed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
