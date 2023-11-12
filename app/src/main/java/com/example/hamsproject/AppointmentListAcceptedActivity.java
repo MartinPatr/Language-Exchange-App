@@ -21,12 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AppointmentListAcceptedActivity extends AppCompatActivity {
+public class AppointmentListAcceptedActivity extends AppCompatActivity implements RecyclerViewInterfaceAppointments{
     Account userData;
-
     private RecyclerView recyclerView;
+    private String appointmentId;
     private AppointmentAdapter appointmentAdapter;
-
+    ArrayList<AppointmentAdapter> appointmentAdapters = new ArrayList<>();
+    List<Appointment> appointmentList;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointments_accepted);
@@ -54,6 +55,7 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity {
         });
 
         recyclerView.setAdapter(appointmentAdapter);
+        appointmentAdapters.add(appointmentAdapter);
 
         //===================================================================================================================
 
@@ -62,11 +64,11 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity {
         acceptedAppointmentsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot pendingAppointmentsSnapshot) {
-                List<Appointment> appointmentList = new ArrayList<>();
+                appointmentList = new ArrayList<>();
 
                 if (pendingAppointmentsSnapshot.exists() && pendingAppointmentsSnapshot.hasChildren()) {
                     for (DataSnapshot appointmentSnapshot : pendingAppointmentsSnapshot.getChildren()) {
-                        String appointmentId = appointmentSnapshot.getKey();
+                        appointmentId = appointmentSnapshot.getKey();
                         Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 
 
@@ -98,5 +100,17 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity {
             }
         });
     };
+
+    DatabaseReference acceptedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
+
+    @Override
+    public void onItemClick(int position) {
+        AppointmentAdapter clickedAdapter = appointmentAdapters.get(position);
+        Intent intent = new Intent(AppointmentListAcceptedActivity.this, AppointmentInfoActivity.class);
+        intent.putExtra("appointmentKey", clickedAdapter.getAppointment(position).getAppointmentKey());
+        startActivity(intent);
+    }
+
+
 }
 

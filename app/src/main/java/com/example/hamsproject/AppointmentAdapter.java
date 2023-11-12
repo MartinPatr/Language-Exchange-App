@@ -21,6 +21,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         onAppointmentItemClickListener = listener;
     }
 
+    public Appointment getAppointment(int position){
+        return this.appointments.get(position);
+    }
+
     public void setAppointmentList(List<Appointment> appointmentList){
         appointments = appointmentList;
         notifyDataSetChanged();
@@ -69,7 +73,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         return appointments.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         TextView nameField;
         TextView timeField;
 
@@ -78,6 +82,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
             nameField = itemView.findViewById(R.id.nameField);
             timeField = itemView.findViewById(R.id.timeField);
+
+
         }
     }
 

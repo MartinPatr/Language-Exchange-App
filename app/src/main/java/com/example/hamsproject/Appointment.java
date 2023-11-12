@@ -1,6 +1,7 @@
 package com.example.hamsproject;
 
 public class Appointment {
+    String appointmentKey;
     String patientName;
     String patientKey;
     String doctorKey;
@@ -10,14 +11,17 @@ public class Appointment {
 
     public Appointment() {}
 
-    public Appointment(String patientName, String patientKey, String doctorKey, String date, Integer time) {
+    public Appointment(String appointmentKey, String patientName, String patientKey, String doctorKey, String date, Integer time) {
+        this.appointmentKey = appointmentKey;
         this.patientName = patientName;
         this.patientKey = patientKey;
         this.doctorKey = doctorKey;
         this.date = date;
         this.time = time;
     }
-
+    public String getAppointmentKey() {
+        return appointmentKey;
+    }
     public String getPatientName() {
         return patientName;
     }
