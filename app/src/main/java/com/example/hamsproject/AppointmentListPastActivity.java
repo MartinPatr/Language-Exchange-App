@@ -26,6 +26,7 @@ public class AppointmentListPastActivity extends AppCompatActivity {
     Account userData;
     private RecyclerView recyclerView;
     private AppointmentAdapter appointmentAdapter;
+    String appointmentId;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -38,6 +39,8 @@ public class AppointmentListPastActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.backButton);
 
+        //===================================================================================================================
+
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(AppointmentListPastActivity.this, DoctorPageActivity.class);
@@ -45,61 +48,50 @@ public class AppointmentListPastActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
-            @Override
-            public void onAppointmentItemClick(Appointment appointment) {}
+            public void onAppointmentItemClick(Appointment appointment) {
+                // Handle item click, for example, start a new activity
+                Intent intent = new Intent(AppointmentListPastActivity.this, AppointmentPastInfoActivity.class);
+                intent.putExtra("appointmentId", appointmentId);
+                intent.putExtra("userData",userData);
+                startActivity(intent);
+            }
         });
 
         recyclerView.setAdapter(appointmentAdapter);
-
         //========================================================================
 
         DatabaseReference pastAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/DeniedAppointments");
 
         pastAppointmentsRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot pastAppointmentsSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot pendingAppointmentsSnapshot) {
+                List<Appointment> appointmentList = new ArrayList<>();
 
-                try {
-                    List<Appointment> appointmentList = new ArrayList<>();
+                if (pendingAppointmentsSnapshot.exists() && pendingAppointmentsSnapshot.hasChildren()) {
+                    for (DataSnapshot appointmentSnapshot : pendingAppointmentsSnapshot.getChildren()) {
+                        appointmentId = appointmentSnapshot.getKey();
+                        Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 
-                    if (pastAppointmentsSnapshot.exists() && pastAppointmentsSnapshot.hasChildren()) {
-                        Log.d("Doctor what",userData.getKey());
-                        for (DataSnapshot appointmentSnapshot : pastAppointmentsSnapshot.getChildren()) {
-                            String appointmentId = appointmentSnapshot.getKey();
-                            Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
+                        String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
 
-                            String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
-
-
-                            Log.d("Appointment DoctorKey","Key:" + appointmentDoctorKey);
-
-                            assert appointment != null;
-                            Log.d("Test", appointment.getPatientName());
-                            Log.d("ListOfAppointmentsActivity", "First key in PastAppointments: " + appointmentId);
-
-                            if(Objects.equals(userData.getKey(), appointmentDoctorKey)){
-                                appointmentList.add(appointment);
-                            }
+                        if(Objects.equals(userData.getKey(), appointmentDoctorKey)){
+                            appointmentList.add(appointment);
                         }
                     }
-                    else {
-                        Log.d("ListOfPastAppointments", "No appointments found for the current doctor");
-                    }
-                    appointmentAdapter.setAppointmentList(appointmentList);
-                } catch (Exception e) {
-                    Log.e("AppointmentListPastActivity", "Error in onDataChange: " + e.getMessage());
-                    e.printStackTrace();
                 }
-
-
-
+                else {
+                    Log.d("ListOfPastAppointments", "No appointments found for the current doctor");
+                }
+                appointmentAdapter.setAppointmentList(appointmentList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("ListOfRequestedAppointments", "Database error: " + databaseError.getMessage());
             }
+
         });
     }
 }

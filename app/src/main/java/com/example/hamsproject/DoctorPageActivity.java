@@ -75,7 +75,7 @@ public class DoctorPageActivity extends AppCompatActivity {
         viewAcceptedAppointmentsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Log.d("DoctorPageActivity", "ViewAppsButton");
-                Intent intent = new Intent(DoctorPageActivity.this, AppointmentListPastActivity.class);
+                Intent intent = new Intent(DoctorPageActivity.this, AppointmentListAcceptedActivity.class);
                 intent.putExtra("userData",userData);
 
                 startActivity(intent);

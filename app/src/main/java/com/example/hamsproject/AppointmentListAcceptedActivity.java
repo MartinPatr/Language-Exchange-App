@@ -51,7 +51,13 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity implement
 
         appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
             @Override
-            public void onAppointmentItemClick(Appointment appointment) {}
+            public void onAppointmentItemClick(Appointment appointment) {
+                // Handle item click, for example, start a new activity
+                Intent intent = new Intent(AppointmentListAcceptedActivity.this, AppointmentRequestInfoActivity.class);
+                intent.putExtra("appointmentId", appointmentId);
+                intent.putExtra("userData",userData);
+                startActivity(intent);
+            }
         });
 
         recyclerView.setAdapter(appointmentAdapter);
@@ -106,7 +112,7 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity implement
     @Override
     public void onItemClick(int position) {
         AppointmentAdapter clickedAdapter = appointmentAdapters.get(position);
-        Intent intent = new Intent(AppointmentListAcceptedActivity.this, AppointmentInfoActivity.class);
+        Intent intent = new Intent(AppointmentListAcceptedActivity.this, AppointmentRequestInfoActivity.class);
         intent.putExtra("appointmentKey", clickedAdapter.getAppointment(position).getAppointmentKey());
         startActivity(intent);
     }

@@ -28,6 +28,7 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
     Account userData;
     private RecyclerView recyclerView;
     private AppointmentAdapter appointmentAdapter;
+    String appointmentId;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -52,7 +53,9 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
         appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
             public void onAppointmentItemClick(Appointment appointment) {
                 // Handle item click, for example, start a new activity
-                Intent intent = new Intent(AppointmentListRequestsActivity.this, AppointmentInfoActivity.class);
+                Intent intent = new Intent(AppointmentListRequestsActivity.this, AppointmentRequestInfoActivity.class);
+                intent.putExtra("appointmentId", appointmentId);
+                intent.putExtra("userData",userData);
                 startActivity(intent);
             }
         });
@@ -69,7 +72,7 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
 
                 if (pendingAppointmentsSnapshot.exists() && pendingAppointmentsSnapshot.hasChildren()) {
                     for (DataSnapshot appointmentSnapshot : pendingAppointmentsSnapshot.getChildren()) {
-                        String appointmentId = appointmentSnapshot.getKey();
+                        appointmentId = appointmentSnapshot.getKey();
                         Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 
                         String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
