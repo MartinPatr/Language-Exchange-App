@@ -73,17 +73,30 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         return appointments.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView nameField;
         TextView timeField;
+        OnAppointmentItemClickListener listener;
 
-        public ViewHolder(@NonNull View itemView, OnAppointmentItemClickListener listener){
+        public ViewHolder(@NonNull View itemView, OnAppointmentItemClickListener listener) {
             super(itemView);
 
             nameField = itemView.findViewById(R.id.nameField);
             timeField = itemView.findViewById(R.id.timeField);
 
+            this.listener = listener;
 
+            // Set click listener on the item view
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION && listener != null) {
+                Appointment clickedAppointment = appointments.get(position);
+                listener.onAppointmentItemClick(clickedAppointment);
+            }
         }
     }
 

@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -49,8 +50,11 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
             }
         });
         appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
-            @Override
-            public void onAppointmentItemClick(Appointment appointment) {}
+            public void onAppointmentItemClick(Appointment appointment) {
+                // Handle item click, for example, start a new activity
+                Intent intent = new Intent(AppointmentListRequestsActivity.this, AppointmentInfoActivity.class);
+                startActivity(intent);
+            }
         });
 
         recyclerView.setAdapter(appointmentAdapter);

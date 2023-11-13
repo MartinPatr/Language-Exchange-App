@@ -70,6 +70,10 @@
 
         <activity android:name=".AppointmentListAcceptedActivity"
             android:exported="false" />
+        <activity
+            android:name=".AppointmentInfoActivity"
+            android:label="Appointment Information">
+        </activity>
 
         <activity android:name=".AppointmentListPastActivity"
             android:exported="false" />
