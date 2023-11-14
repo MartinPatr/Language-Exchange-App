@@ -42,6 +42,7 @@ public class DoctorPageActivity extends AppCompatActivity {
             userTypeDisplayed.setText("You are logged in as " + userData.getType());
         }
 
+        //Used to logout
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(DoctorPageActivity.this, LogInActivity.class);
@@ -49,6 +50,7 @@ public class DoctorPageActivity extends AppCompatActivity {
             }
         });
 
+        //Used to go to the list of shifts
         viewShiftsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(DoctorPageActivity.this, ListOfShiftsActivity.class);
@@ -57,6 +59,7 @@ public class DoctorPageActivity extends AppCompatActivity {
             }
         });
 
+        //Used to go to the requested appointments
         viewRequestedAppointmentsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Log.d("DoctorPageActivity", "ViewAppsButton");
@@ -69,6 +72,7 @@ public class DoctorPageActivity extends AppCompatActivity {
             }
         });
 
+        //Used to go to the accepted appointments
         viewAcceptedAppointmentsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Log.d("DoctorPageActivity", "ViewAppsButton");
@@ -81,6 +85,7 @@ public class DoctorPageActivity extends AppCompatActivity {
             }
         });
 
+        //Used to go to the past appointments
         viewPastAppointmentsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Log.d("DoctorPageActivity", "ViewAppsButton");
@@ -92,27 +97,6 @@ public class DoctorPageActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
-    public void updateSetting( boolean acceptAllAppointments){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Accounts");
-        DatabaseReference account = databaseReference.child("Doctor");
-        account.orderByKey().equalTo(userData.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                        userSnapshot.getRef().child("acceptAllAppointments").setValue(acceptAllAppointments);
-                    }
-                }
-            }
-    
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("Firebase", "Error: " + databaseError.getMessage());
-            }
-        });    
-    }
+
 }

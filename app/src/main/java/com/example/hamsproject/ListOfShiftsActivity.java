@@ -35,7 +35,7 @@ public class ListOfShiftsActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        shiftAdapter = new ShiftAdapter(new ArrayList<>(), new ShiftAdapter.OnShiftItemClickListener() {
+        shiftAdapter = new ShiftAdapter(new ArrayList<>(), new ShiftAdapter.OnShiftItemClickListener(){
             @Override
             public void onShiftItemClick(Shift shift) {}
 
@@ -49,7 +49,8 @@ public class ListOfShiftsActivity extends AppCompatActivity {
 
         Button createShiftButton = findViewById(R.id.createShiftButton);
 
-        createShiftButton.setOnClickListener(new View.OnClickListener() {
+        //Sends the user to the shift creation page
+        createShiftButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(ListOfShiftsActivity.this, ShiftCreationActivity.class);
                 intent.putExtra("userData",userData);
@@ -57,9 +58,9 @@ public class ListOfShiftsActivity extends AppCompatActivity {
             }
         });
 
-        DatabaseReference shiftsRef = FirebaseDatabase.getInstance().getReference("Accounts/Doctor").child(userData.getKey()).child("shifts");
+        DatabaseReference shifts = FirebaseDatabase.getInstance().getReference("Accounts/Doctor").child(userData.getKey()).child("shifts");
 
-        shiftsRef.addValueEventListener(new ValueEventListener() {
+        shifts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot shiftsSnapshot) {
                 List<Shift> doctorShifts = new ArrayList<>();
@@ -70,8 +71,9 @@ public class ListOfShiftsActivity extends AppCompatActivity {
                         Log.d("ListOfShiftsActivity", "Shift info: " + shift.getDate());
                         doctorShifts.add(shift);
                     }
-                } else {
-                    Log.d("ListOfShiftsActivity", "No shifts found for the current doctor");
+                }
+                else {
+                    Log.d("ListOfShiftsActivity", "No Shifts");
                 }
                 shiftAdapter.setShiftList(doctorShifts);
             }
@@ -85,8 +87,8 @@ public class ListOfShiftsActivity extends AppCompatActivity {
 
 
     private void deleteShift(Shift shift) {
-        DatabaseReference shiftsRef = FirebaseDatabase.getInstance().getReference("Accounts/Doctor").child(userData.getKey()).child("shifts");
-        shiftsRef.child(shift.getID()).removeValue().addOnSuccessListener(aVoid -> {});
+        DatabaseReference shifts = FirebaseDatabase.getInstance().getReference("Accounts/Doctor").child(userData.getKey()).child("shifts");
+        shifts.child(shift.getID()).removeValue().addOnSuccessListener(aVoid -> {});
     }
 
 }

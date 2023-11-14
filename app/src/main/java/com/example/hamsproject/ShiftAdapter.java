@@ -78,6 +78,8 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ViewHolder> 
             timeField = itemView.findViewById(R.id.timeField);
             deleteButton = itemView.findViewById(R.id.deleteButton);
 
+
+            //Gives functionality to the delete button for each individual shift
             deleteButton.setOnClickListener(v -> {
                 if (listener != null) {
                     int position = getAdapterPosition();

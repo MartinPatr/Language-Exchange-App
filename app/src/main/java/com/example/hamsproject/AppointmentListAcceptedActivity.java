@@ -39,8 +39,7 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
 
         Button backButton = findViewById(R.id.backButton);
 
-        //===================================================================================================================
-
+        //Sends user back
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(AppointmentListAcceptedActivity.this, DoctorPageActivity.class);
@@ -50,12 +49,9 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
         });
 
 
+        DatabaseReference acceptedAppointments = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
 
-        //===================================================================================================================
-
-        DatabaseReference acceptedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
-
-        acceptedAppointmentsRef.addValueEventListener(new ValueEventListener() {
+        acceptedAppointments.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot requestedAppointmentsSnapshot) {
                 appointmentList = new ArrayList<>();
@@ -78,6 +74,7 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
                         }
                     }
 
+                    //Sends user to info page for the appointment
                     appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener() {
                         @Override
                         public void onAppointmentItemClick(Appointment appointment) {
@@ -90,8 +87,9 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
 
                     recyclerView.setAdapter(appointmentAdapter);
                     appointmentAdapters.add(appointmentAdapter);
-                } else {
-                    Log.d("ListOfAcceptedAppointments", "No appointments found for the current doctor");
+                }
+                else {
+                    Log.d("ListOfAcceptedAppointments", "No appointments");
                 }
 
                 if (appointmentAdapter != null) {

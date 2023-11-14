@@ -9,6 +9,7 @@ public class Shift {
     private int endHour;
     private int endMinute;
 
+    //Database uses this to make a new shift
     public Shift() {}
 
     public Shift(String date, int startHour, int startMinute, int endHour, int endMinute) {

@@ -39,8 +39,7 @@ public class AppointmentListPastActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.backButton);
 
-        //===================================================================================================================
-
+        //Sends user back
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(AppointmentListPastActivity.this, DoctorPageActivity.class);
@@ -49,6 +48,7 @@ public class AppointmentListPastActivity extends AppCompatActivity {
             }
         });
 
+        //Sends user to info page for the appointment
         appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
             public void onAppointmentItemClick(Appointment appointment) {
                 Intent intent = new Intent(AppointmentListPastActivity.this, AppointmentPastInfoActivity.class);
@@ -59,11 +59,10 @@ public class AppointmentListPastActivity extends AppCompatActivity {
         }, appointmentId);
 
         recyclerView.setAdapter(appointmentAdapter);
-        //========================================================================
 
-        DatabaseReference pastAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments");
+        DatabaseReference pastAppointments = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments");
 
-        pastAppointmentsRef.addValueEventListener(new ValueEventListener() {
+        pastAppointments.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot requestedAppointmentsSnapshot) {
                 List<Appointment> appointmentList = new ArrayList<>();
@@ -79,8 +78,9 @@ public class AppointmentListPastActivity extends AppCompatActivity {
                             appointmentList.add(appointment);
                         }
                     }
-                } else {
-                    Log.d("ListOfPastAppointments", "No appointments found for the current doctor");
+                }
+                else {
+                    Log.d("ListOfPastAppointments", "No appointments");
                 }
                 appointmentAdapter.setAppointmentList(appointmentList);
             }

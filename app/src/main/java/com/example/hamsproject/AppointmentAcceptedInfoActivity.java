@@ -63,7 +63,7 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("AppointmentRequestInfoActivity", "Database error: " + databaseError.getMessage());
+                Log.e("AppointmentRequestInfoActivity", "Error: " + databaseError.getMessage());
 
             };
         });
@@ -112,24 +112,20 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
     }
 
     private void changeStatus(String appointmentId, String status){
-        DatabaseReference acceptedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
-        DatabaseReference specificAcceptedAppointmentRef = acceptedAppointmentsRef.child(appointmentId);
+        DatabaseReference acceptedAppointments = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
+        DatabaseReference specificAcceptedAppointment = acceptedAppointments.child(appointmentId);
 
-        specificAcceptedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        specificAcceptedAppointment.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    Appointment appointment = dataSnapshot.getValue(Appointment.class);
-
-
-                    specificAcceptedAppointmentRef.removeValue();
+                    specificAcceptedAppointment.removeValue();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("Firebase", "Error: " + databaseError.getMessage());
-
             }
         });
 }}
