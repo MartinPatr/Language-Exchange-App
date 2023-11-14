@@ -7,7 +7,7 @@ public class Appointment {
     String doctorKey;
     String date;
     Integer time;
-    String appointmentStatus = "Pending";
+    String appointmentStatus = "Requested";
 
     public Appointment() {}
 
@@ -41,10 +41,10 @@ public class Appointment {
         return appointmentStatus;
     }
     public void setAppointmentStatus(String appointmentStatus) {
-        if (appointmentStatus.equals("Pending") || appointmentStatus.equals("Approved") || appointmentStatus.equals("Declined")){
+        if (appointmentStatus.equals("Requested") || appointmentStatus.equals("Accepted") || appointmentStatus.equals("Past")){
             this.appointmentStatus = appointmentStatus;
         }else{
-            throw new IllegalArgumentException("Appointment status must be either Pending, Approved, or Declined");
+            throw new IllegalArgumentException("Appointment status must be either Requested, Accepted, or Past");
         }
     }
 

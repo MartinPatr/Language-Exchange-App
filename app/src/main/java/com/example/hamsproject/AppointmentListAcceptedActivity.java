@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AppointmentListAcceptedActivity extends AppCompatActivity implements RecyclerViewInterfaceAppointments{
+public class AppointmentListAcceptedActivity extends AppCompatActivity{
     Account userData;
     private RecyclerView recyclerView;
     private String appointmentId;
@@ -49,19 +49,7 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity implement
             }
         });
 
-        appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
-            @Override
-            public void onAppointmentItemClick(Appointment appointment) {
-                // Handle item click, for example, start a new activity
-                Intent intent = new Intent(AppointmentListAcceptedActivity.this, AppointmentRequestInfoActivity.class);
-                intent.putExtra("appointmentId", appointmentId);
-                intent.putExtra("userData",userData);
-                startActivity(intent);
-            }
-        });
 
-        recyclerView.setAdapter(appointmentAdapter);
-        appointmentAdapters.add(appointmentAdapter);
 
         //===================================================================================================================
 
@@ -69,35 +57,47 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity implement
 
         acceptedAppointmentsRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot pendingAppointmentsSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot requestedAppointmentsSnapshot) {
                 appointmentList = new ArrayList<>();
 
-                if (pendingAppointmentsSnapshot.exists() && pendingAppointmentsSnapshot.hasChildren()) {
-                    for (DataSnapshot appointmentSnapshot : pendingAppointmentsSnapshot.getChildren()) {
-                        appointmentId = appointmentSnapshot.getKey();
-                        Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
+                if (userData == null) {
+                    Log.e("AppointmentListAcceptedActivity", "userData is null");
+                    return;
+                }
 
+                if (requestedAppointmentsSnapshot.exists() && requestedAppointmentsSnapshot.hasChildren()) {
+                    for (DataSnapshot appointmentSnapshot : requestedAppointmentsSnapshot.getChildren()) {
+                        if (appointmentSnapshot != null){
+                            appointmentId = appointmentSnapshot.getKey();
+                            Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 
-                        String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
-
-
-
-                        Log.d("Doctor DoctorKey",userData.getKey());
-                        Log.d("Appointment DoctorKey","Key:" + appointmentDoctorKey);
-
-                        Log.d("Test", appointment.getPatientName());
-                        Log.d("ListOfAppointmentsActivity", "First key in Accepted: " + appointmentId);
-
-                        if(Objects.equals(userData.getKey(), appointmentDoctorKey)){
-                            appointmentList.add(appointment);
+                            String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
+                            if(Objects.equals(userData.getKey(), appointmentDoctorKey)){
+                                appointmentList.add(appointment);
+                            }
                         }
 
                     }
+                    appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
+                        @Override
+                        public void onAppointmentItemClick(Appointment appointment) {
+                            // Handle item click, for example, start a new activity
+                            Intent intent = new Intent(AppointmentListAcceptedActivity.this, AppointmentAcceptedInfoActivity.class);
+                            intent.putExtra("appointmentId", appointmentId);
+                            intent.putExtra("userData", userData);
+                            startActivity(intent);
+                        }
+                    }, appointmentId);
+
+                    recyclerView.setAdapter(appointmentAdapter);
+                    appointmentAdapters.add(appointmentAdapter);
                 }
                 else {
                     Log.d("ListOfAcceptedAppointments", "No appointments found for the current doctor");
                 }
                 appointmentAdapter.setAppointmentList(appointmentList);
+                appointmentAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -107,15 +107,7 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity implement
         });
     };
 
-    DatabaseReference acceptedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
 
-    @Override
-    public void onItemClick(int position) {
-        AppointmentAdapter clickedAdapter = appointmentAdapters.get(position);
-        Intent intent = new Intent(AppointmentListAcceptedActivity.this, AppointmentRequestInfoActivity.class);
-        intent.putExtra("appointmentKey", clickedAdapter.getAppointment(position).getAppointmentKey());
-        startActivity(intent);
-    }
 
 
 }

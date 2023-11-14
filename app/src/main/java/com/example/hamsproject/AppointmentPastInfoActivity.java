@@ -42,13 +42,18 @@ public class AppointmentPastInfoActivity extends AppCompatActivity{
     }
 
     private void getUserInfo(String accountID) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/DeniedAppointments").child(appointmentId);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments").child(appointmentId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot appointmentSnapshot) {
                 if (appointmentSnapshot.exists() && appointmentSnapshot.hasChildren()) {
                     patientKey = appointmentSnapshot.child("patientKey").getValue(String.class);
                     Log.d("patientSnapshot", "patientKey1: " + patientKey);
 
+                    if (patientKey != null) {
+                        retrievePatientData(patientKey);
+                    } else {
+                        Log.e("AppointmentPastInfoActivity", "PatientKey is null");
+                    }
                 }
             }
 
@@ -60,6 +65,10 @@ public class AppointmentPastInfoActivity extends AppCompatActivity{
 
             ;
         });
+    }
+
+    private void retrievePatientData(String patientKey){
+        Log.d("patientKey", "patientKey " + patientKey);
 
         DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Accounts/Patient");
         databaseReference2.addValueEventListener(new ValueEventListener() {
@@ -105,6 +114,5 @@ public class AppointmentPastInfoActivity extends AppCompatActivity{
                 Log.e("Firebase", "Error: " + databaseError.getMessage());
 
             }
-        });
-    }
-}
+    });
+}}

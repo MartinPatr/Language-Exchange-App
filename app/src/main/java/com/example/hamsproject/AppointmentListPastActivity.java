@@ -57,20 +57,20 @@ public class AppointmentListPastActivity extends AppCompatActivity {
                 intent.putExtra("userData",userData);
                 startActivity(intent);
             }
-        });
+        }, appointmentId);
 
         recyclerView.setAdapter(appointmentAdapter);
         //========================================================================
 
-        DatabaseReference pastAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/DeniedAppointments");
+        DatabaseReference pastAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments");
 
         pastAppointmentsRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot pendingAppointmentsSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot requestedAppointmentsSnapshot) {
                 List<Appointment> appointmentList = new ArrayList<>();
 
-                if (pendingAppointmentsSnapshot.exists() && pendingAppointmentsSnapshot.hasChildren()) {
-                    for (DataSnapshot appointmentSnapshot : pendingAppointmentsSnapshot.getChildren()) {
+                if (requestedAppointmentsSnapshot.exists() && requestedAppointmentsSnapshot.hasChildren()) {
+                    for (DataSnapshot appointmentSnapshot : requestedAppointmentsSnapshot.getChildren()) {
                         appointmentId = appointmentSnapshot.getKey();
                         Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 

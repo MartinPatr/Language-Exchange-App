@@ -70,10 +70,7 @@
 
         <activity android:name=".AppointmentListAcceptedActivity"
             android:exported="false" />
-        <activity
-            android:name=".AppointmentRequestInfoActivity"
-            android:label="Appointment Information">
-        </activity>
+
 
         <activity android:name=".AppointmentListPastActivity"
             android:exported="false" />
@@ -81,8 +78,11 @@
         <activity android:name=".AppointmentPastInfoActivity"
             android:exported="false" />
 
+        <activity android:name=".AppointmentAcceptedInfoActivity"
+            android:exported="false" />
 
-
+        <activity android:name=".AppointmentRequestInfoActivity"
+            android:exported="false" />
 
 
 

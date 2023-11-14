@@ -40,6 +40,15 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        cancelButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                changeStatus(appointmentId, "Rejected");
+                Intent intent = new Intent(AppointmentAcceptedInfoActivity.this, AppointmentListAcceptedActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getUserInfo(String accountID){
@@ -99,4 +108,27 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
 
             }
         });
-    }}
+    }
+
+    private void changeStatus(String appointmentId, String status){
+        DatabaseReference acceptedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
+        DatabaseReference specificAcceptedAppointmentRef = acceptedAppointmentsRef.child(appointmentId);
+
+        specificAcceptedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Appointment appointment = dataSnapshot.getValue(Appointment.class);
+
+
+                    specificAcceptedAppointmentRef.removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Error: " + databaseError.getMessage());
+
+            }
+        });
+}}

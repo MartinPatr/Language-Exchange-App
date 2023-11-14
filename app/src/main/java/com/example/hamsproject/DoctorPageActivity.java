@@ -38,11 +38,15 @@ public class DoctorPageActivity extends AppCompatActivity {
 
         userData = (Account)getPreviousIntent.getSerializableExtra("userData");
         userTypeDisplayed = (TextView) findViewById(R.id.yourRoleDisplayed);
-        userTypeDisplayed.setText("You are logged in as " + userData.getType());
 
+        if (userData != null) {
+            userTypeDisplayed.setText("You are logged in as " + userData.getType());
+        }
 
-        if (((Doctor) userData).getAcceptAllAppointments() == true ){
-            acceptAllAppointmentsButton.setBackgroundColor(Color.parseColor("#FF338301"));
+        if (userData != null){
+            if (((Doctor) userData).getAcceptAllAppointments() == true ){
+                acceptAllAppointmentsButton.setBackgroundColor(Color.parseColor("#FF338301"));
+            }
         }
 
         logoutButton.setOnClickListener(new View.OnClickListener() {

@@ -58,30 +58,35 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
                 intent.putExtra("userData",userData);
                 startActivity(intent);
             }
-        });
+        }, appointmentId);
 
         recyclerView.setAdapter(appointmentAdapter);
         //========================================================================
 
-        DatabaseReference pendingAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/PendingAppointments");
+        DatabaseReference requestedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/RequestedAppointments");
 
-        pendingAppointmentsRef.addValueEventListener(new ValueEventListener() {
+        requestedAppointmentsRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot pendingAppointmentsSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot requestedAppointmentsSnapshot) {
                 List<Appointment> appointmentList = new ArrayList<>();
 
-                if (pendingAppointmentsSnapshot.exists() && pendingAppointmentsSnapshot.hasChildren()) {
-                    for (DataSnapshot appointmentSnapshot : pendingAppointmentsSnapshot.getChildren()) {
-                        appointmentId = appointmentSnapshot.getKey();
-                        Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
+                if (requestedAppointmentsSnapshot.exists() && requestedAppointmentsSnapshot.hasChildren()) {
+                    for (DataSnapshot appointmentSnapshot : requestedAppointmentsSnapshot.getChildren()) {
+                        if(appointmentSnapshot != null) {
+                            appointmentId = appointmentSnapshot.getKey();
+                            Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 
-                        String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
+                            String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
 
-                        Log.d("Test", appointment.getPatientName());
-                        Log.d("ListOfAppointmentsActivity", "First key in PendingAppointments: " + appointmentId);
+                            Log.d("Test", appointment.getPatientName());
+                            Log.d("ListOfAppointmentsActivity", "First key in RequestedAppointments: " + appointmentId);
 
-                        if(Objects.equals(userData.getKey(), appointmentDoctorKey)){
-                            appointmentList.add(appointment);
+                            if(userData != null){
+                                if (Objects.equals(userData.getKey(), appointmentDoctorKey)) {
+                                    appointmentList.add(appointment);
+                                }
+                            }
+
                         }
                     }
                 }

@@ -15,10 +15,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     private List<Appointment> appointments;
     private OnAppointmentItemClickListener onAppointmentItemClickListener;
+    private String appointmentId;
 
-    public AppointmentAdapter(List<Appointment> appointmentList, OnAppointmentItemClickListener listener){
+    public AppointmentAdapter(List<Appointment> appointmentList, OnAppointmentItemClickListener listener, String appointmentId){
         appointments = appointmentList;
         onAppointmentItemClickListener = listener;
+        appointmentId = appointmentId;
     }
 
     public Appointment getAppointment(int position){
