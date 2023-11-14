@@ -58,6 +58,17 @@ public class ListOfShiftsActivity extends AppCompatActivity {
             }
         });
 
+        Button backButton = findViewById(R.id.backButton);
+
+        //Sends user back to main doctor page.
+        backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent intent = new Intent(ListOfShiftsActivity.this, DoctorPageActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
+            }
+        });
+
         DatabaseReference shifts = FirebaseDatabase.getInstance().getReference("Accounts/Doctor").child(userData.getKey()).child("shifts");
 
         shifts.addValueEventListener(new ValueEventListener() {
