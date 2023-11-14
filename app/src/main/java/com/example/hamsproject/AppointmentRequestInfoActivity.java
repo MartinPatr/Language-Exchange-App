@@ -30,6 +30,7 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         appointmentId = intent.getStringExtra("appointmentId");
+        Log.d("ID" , appointmentId);
         Account userData = (Account)getIntent().getSerializableExtra("userData");
 
         getUserInfo(appointmentId);
@@ -50,6 +51,7 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 changeStatus(appointmentId, "Accepted");
                 Intent intent = new Intent(AppointmentRequestInfoActivity.this, AppointmentListRequestsActivity.class);
+                intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         });
@@ -59,6 +61,7 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 changeStatus(appointmentId, "Rejected");
                 Intent intent = new Intent(AppointmentRequestInfoActivity.this, AppointmentListRequestsActivity.class);
+                intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         });
@@ -134,6 +137,7 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                             Appointment appointment = dataSnapshot.getValue(Appointment.class);
+                            appointment.setAppointmentStatus("Accepted");
 
                             acceptedAppointmentsRef.child(appointmentId).setValue(appointment);
 
@@ -154,6 +158,7 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         Appointment appointment = dataSnapshot.getValue(Appointment.class);
+                        appointment.setAppointmentStatus("Rejected");
 
 
                         specificRequestedAppointmentRef.removeValue();

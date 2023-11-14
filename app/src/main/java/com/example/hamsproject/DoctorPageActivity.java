@@ -27,7 +27,6 @@ public class DoctorPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_doctor_page);
 
         Button logoutButton = findViewById(R.id.logoutButton);
-        Button acceptAllAppointmentsButton = findViewById(R.id.acceptAllAppointmentsButton);
         Button viewShiftsButton = findViewById(R.id.viewShiftsButton);
         Button viewAcceptedAppointmentsButton = findViewById(R.id.viewAcceptedAppointmentsButton);
         Button viewRequestedAppointmentsButton = findViewById(R.id.viewRequestedAppointmentsButton);
@@ -41,12 +40,6 @@ public class DoctorPageActivity extends AppCompatActivity {
 
         if (userData != null) {
             userTypeDisplayed.setText("You are logged in as " + userData.getType());
-        }
-
-        if (userData != null){
-            if (((Doctor) userData).getAcceptAllAppointments() == true ){
-                acceptAllAppointmentsButton.setBackgroundColor(Color.parseColor("#FF338301"));
-            }
         }
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -101,19 +94,7 @@ public class DoctorPageActivity extends AppCompatActivity {
         });
 
 
-        acceptAllAppointmentsButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                if (((Doctor) userData).getAcceptAllAppointments() == false ){
-                    updateSetting(true);
-                    acceptAllAppointmentsButton.setBackgroundColor(Color.parseColor("#FF338301"));
-                    ((Doctor) userData).setAcceptAllAppointments(true);
-                } else{
-                    updateSetting(false);
-                    acceptAllAppointmentsButton.setBackgroundColor(Color.parseColor("#9F0101"));
-                    ((Doctor) userData).setAcceptAllAppointments(false);
-                }
-            }
-        });    
+
     }
     public void updateSetting( boolean acceptAllAppointments){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Accounts");

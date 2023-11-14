@@ -67,21 +67,20 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
 
                 if (requestedAppointmentsSnapshot.exists() && requestedAppointmentsSnapshot.hasChildren()) {
                     for (DataSnapshot appointmentSnapshot : requestedAppointmentsSnapshot.getChildren()) {
-                        if (appointmentSnapshot != null){
+                        if (appointmentSnapshot != null) {
                             appointmentId = appointmentSnapshot.getKey();
                             Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 
                             String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
-                            if(Objects.equals(userData.getKey(), appointmentDoctorKey)){
+                            if (Objects.equals(userData.getKey(), appointmentDoctorKey)) {
                                 appointmentList.add(appointment);
                             }
                         }
-
                     }
-                    appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
+
+                    appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener() {
                         @Override
                         public void onAppointmentItemClick(Appointment appointment) {
-                            // Handle item click, for example, start a new activity
                             Intent intent = new Intent(AppointmentListAcceptedActivity.this, AppointmentAcceptedInfoActivity.class);
                             intent.putExtra("appointmentId", appointmentId);
                             intent.putExtra("userData", userData);
@@ -91,13 +90,14 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
 
                     recyclerView.setAdapter(appointmentAdapter);
                     appointmentAdapters.add(appointmentAdapter);
-                }
-                else {
+                } else {
                     Log.d("ListOfAcceptedAppointments", "No appointments found for the current doctor");
                 }
-                appointmentAdapter.setAppointmentList(appointmentList);
-                appointmentAdapter.notifyDataSetChanged();
 
+                if (appointmentAdapter != null) {
+                    appointmentAdapter.setAppointmentList(appointmentList);
+                    appointmentAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override

@@ -6,6 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".AppointmentListRequestsActivity">
 
+    <Button
+        android:id="@+id/acceptAllAppointmentsButton"
+        android:layout_width="120dp"
+        android:layout_height="43dp"
+
+        android:backgroundTint="#9F0101"
+        android:text="Accept All Appointments"
+        android:textColorHighlight="#8F0202"
+        android:textColorLink="#AF0808"
+        android:textSize="10sp"
+        app:cornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.03" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="380dp"

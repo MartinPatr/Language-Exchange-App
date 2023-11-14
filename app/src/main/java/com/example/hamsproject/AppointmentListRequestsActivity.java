@@ -40,6 +40,8 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Button backButton = findViewById(R.id.backButton);
+        Button acceptAllAppointmentsButton = findViewById(R.id.acceptAllAppointmentsButton);
+
 
         //===================================================================================================================
 
@@ -50,12 +52,35 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        acceptAllAppointmentsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DatabaseReference requestedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/RequestedAppointments");
+
+                requestedAppointmentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot requestedAppointmentsSnapshot) {
+                        if (requestedAppointmentsSnapshot.exists() && requestedAppointmentsSnapshot.hasChildren()) {
+                            for (DataSnapshot appointmentSnapshot : requestedAppointmentsSnapshot.getChildren()) {
+                                String appointmentId = appointmentSnapshot.getKey();
+                                changeStatus(appointmentId, "Accepted");
+                            }
+                        } else {
+                            Log.d("ListOfRequestedAppointments", "No appointments found for the current doctor");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("ListOfRequestedAppointments", "Database error: " + databaseError.getMessage());
+                    }
+                });
+            }
+        });
         appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
             public void onAppointmentItemClick(Appointment appointment) {
-                // Handle item click, for example, start a new activity
                 Intent intent = new Intent(AppointmentListRequestsActivity.this, AppointmentRequestInfoActivity.class);
-                intent.putExtra("appointmentId", appointmentId);
-                intent.putExtra("userData",userData);
+                intent.putExtra("appointmentId", appointment.getAppointmentKey());
+                intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         }, appointmentId);
@@ -102,4 +127,58 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
             }
         });
     };
+
+
+    private void changeStatus(String appointmentId, String status){
+        DatabaseReference requestedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/RequestedAppointments");
+        DatabaseReference acceptedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
+        DatabaseReference specificRequestedAppointmentRef = requestedAppointmentsRef.child(appointmentId);
+
+        if (status == "Accepted"){
+
+
+            specificRequestedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Appointment appointment = dataSnapshot.getValue(Appointment.class);
+                        appointment.setAppointmentStatus("Accepted");
+
+                        acceptedAppointmentsRef.child(appointmentId).setValue(appointment);
+
+                        specificRequestedAppointmentRef.removeValue();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Error: " + databaseError.getMessage());
+
+                }
+            });
+        }
+        else if (status == "Rejected"){
+            specificRequestedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Appointment appointment = dataSnapshot.getValue(Appointment.class);
+                        appointment.setAppointmentStatus("Rejected");
+
+
+                        specificRequestedAppointmentRef.removeValue();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Error: " + databaseError.getMessage());
+
+                }
+            });
+        }
+
+
+
+    }
 }

@@ -46,6 +46,7 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 changeStatus(appointmentId, "Rejected");
                 Intent intent = new Intent(AppointmentAcceptedInfoActivity.this, AppointmentListAcceptedActivity.class);
+                intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         });

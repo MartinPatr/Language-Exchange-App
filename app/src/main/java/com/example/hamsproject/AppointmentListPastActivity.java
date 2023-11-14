@@ -51,10 +51,9 @@ public class AppointmentListPastActivity extends AppCompatActivity {
 
         appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
             public void onAppointmentItemClick(Appointment appointment) {
-                // Handle item click, for example, start a new activity
                 Intent intent = new Intent(AppointmentListPastActivity.this, AppointmentPastInfoActivity.class);
-                intent.putExtra("appointmentId", appointmentId);
-                intent.putExtra("userData",userData);
+                intent.putExtra("appointmentId", appointment.getAppointmentKey());
+                intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         }, appointmentId);
@@ -76,12 +75,11 @@ public class AppointmentListPastActivity extends AppCompatActivity {
 
                         String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
 
-                        if(Objects.equals(userData.getKey(), appointmentDoctorKey)){
+                        if (userData != null && Objects.equals(userData.getKey(), appointmentDoctorKey)) {
                             appointmentList.add(appointment);
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("ListOfPastAppointments", "No appointments found for the current doctor");
                 }
                 appointmentAdapter.setAppointmentList(appointmentList);
@@ -91,7 +89,6 @@ public class AppointmentListPastActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("ListOfRequestedAppointments", "Database error: " + databaseError.getMessage());
             }
-
         });
     }
 }
