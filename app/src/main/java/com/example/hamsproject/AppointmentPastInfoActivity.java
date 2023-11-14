@@ -32,6 +32,8 @@ public class AppointmentPastInfoActivity extends AppCompatActivity{
         getUserInfo(appointmentId);
 
         Button backButton = findViewById(R.id.backButton);
+
+        //Sends the user back to the previous page
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(AppointmentPastInfoActivity.this, AppointmentListPastActivity.class);
@@ -47,11 +49,10 @@ public class AppointmentPastInfoActivity extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot appointmentSnapshot) {
                 if (appointmentSnapshot.exists() && appointmentSnapshot.hasChildren()) {
                     patientKey = appointmentSnapshot.child("patientKey").getValue(String.class);
-                    Log.d("patientSnapshot", "patientKey1: " + patientKey);
-
                     if (patientKey != null) {
-                        retrievePatientData(patientKey);
-                    } else {
+                        getPatientInfo(patientKey);
+                    }
+                    else {
                         Log.e("AppointmentPastInfoActivity", "PatientKey is null");
                     }
                 }
@@ -67,7 +68,7 @@ public class AppointmentPastInfoActivity extends AppCompatActivity{
         });
     }
 
-    private void retrievePatientData(String patientKey){
+    private void getPatientInfo(String patientKey){
         Log.d("patientKey", "patientKey " + patientKey);
 
         DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Accounts/Patient");
@@ -77,9 +78,6 @@ public class AppointmentPastInfoActivity extends AppCompatActivity{
                 if (dataSnapshot.exists() && dataSnapshot.hasChildren()) {
                     if (patientKey != null) {
                         DataSnapshot patientSnapshot = dataSnapshot.child(patientKey);
-                        Log.d("patientSnapshot", "appointmentID: " + appointmentId);
-
-                        Log.d("patientSnapshot", "patientSnapshot: " + patientSnapshot);
 
                         String firstName = patientSnapshot.child("firstName").getValue(String.class);
                         String lastName = patientSnapshot.child("lastName").getValue(String.class);

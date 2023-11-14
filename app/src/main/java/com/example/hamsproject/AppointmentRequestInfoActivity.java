@@ -16,9 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
 public class AppointmentRequestInfoActivity extends AppCompatActivity {
     String appointmentId;
     String patientKey;
@@ -38,6 +35,8 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.backButton);
         Button acceptButton = findViewById(R.id.acceptButton);
         Button rejectButton = findViewById(R.id.rejectButton);
+
+        //Takes the user back to the previous page
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(AppointmentRequestInfoActivity.this, AppointmentListRequestsActivity.class);
@@ -46,6 +45,7 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
             }
         });
 
+        //Accepts the appointment
         acceptButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -56,6 +56,7 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
             }
         });
 
+        //Rejects the appointment
         rejectButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -131,7 +132,6 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
 
         if (status == "Accepted"){
 
-
             specificRequestedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -157,10 +157,6 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        Appointment appointment = dataSnapshot.getValue(Appointment.class);
-                        appointment.setAppointmentStatus("Rejected");
-
-
                         specificRequestedAppointmentRef.removeValue();
                     }
                 }
@@ -172,8 +168,6 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
                 }
             });
         }
-
-
 
     }
 }
