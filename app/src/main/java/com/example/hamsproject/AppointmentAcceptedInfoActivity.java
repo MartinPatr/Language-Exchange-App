@@ -124,5 +124,53 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
 
             }
         });
-    }}
+    }
+
+    private void changeStatus(String appointmentId, String status) {
+        DatabaseReference acceptedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
+        DatabaseReference specificAcceptedAppointmentRef = acceptedAppointmentsRef.child(appointmentId);
+        DatabaseReference pastAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments");
+
+        if (status.equals("Rejected")) {
+            specificAcceptedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Appointment appointment = dataSnapshot.getValue(Appointment.class);
+                        specificAcceptedAppointmentRef.removeValue();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Error: " + databaseError.getMessage());
+                }
+            });
+        } else if (status.equals("Past")) {
+            specificAcceptedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Appointment appointment = dataSnapshot.getValue(Appointment.class);
+                        specificAcceptedAppointmentRef.removeValue();
+                        pastAppointmentsRef.child(appointmentId).setValue(appointment);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Error: " + databaseError.getMessage());
+                }
+            });
+        }
+    }
+
+}
+
+
+
+
+
+
+
 
