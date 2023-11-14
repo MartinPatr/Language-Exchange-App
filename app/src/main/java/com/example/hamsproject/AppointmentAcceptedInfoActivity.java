@@ -68,6 +68,7 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
     }
 
     private void getUserInfo(String accountID){
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments").child(appointmentId);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -153,6 +154,10 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
                     if (dataSnapshot.exists()) {
                         Appointment appointment = dataSnapshot.getValue(Appointment.class);
                         specificAcceptedAppointmentRef.removeValue();
+
+                        assert appointment != null;
+                        appointment.setAppointmentStatus("Past");
+
                         pastAppointmentsRef.child(appointmentId).setValue(appointment);
                     }
                 }
