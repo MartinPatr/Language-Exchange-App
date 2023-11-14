@@ -26,6 +26,8 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         appointmentId = intent.getStringExtra("appointmentId");
+        Log.d("AppointmentAcceptedInfoActivity", "AppointmentId Initial: " + appointmentId);
+
         Account userData = (Account)getIntent().getSerializableExtra("userData");
 
         getUserInfo(appointmentId);
@@ -33,6 +35,8 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.backButton);
         Button cancelButton = findViewById(R.id.cancelButton);
+        Button moveToPastButton = findViewById(R.id.moveToPastButton);
+
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(AppointmentAcceptedInfoActivity.this, AppointmentListAcceptedActivity.class);
@@ -45,6 +49,17 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeStatus(appointmentId, "Rejected");
+                Intent intent = new Intent(AppointmentAcceptedInfoActivity.this, AppointmentListAcceptedActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
+            }
+        });
+
+        moveToPastButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                changeStatus(appointmentId, "Past");
+                Log.d("AppointmentAcceptedInfoActivity", "AppointmentId: " + appointmentId);
                 Intent intent = new Intent(AppointmentAcceptedInfoActivity.this, AppointmentListAcceptedActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
@@ -114,22 +129,47 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
     private void changeStatus(String appointmentId, String status){
         DatabaseReference acceptedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
         DatabaseReference specificAcceptedAppointmentRef = acceptedAppointmentsRef.child(appointmentId);
+        DatabaseReference pastAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments");
 
-        specificAcceptedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    Appointment appointment = dataSnapshot.getValue(Appointment.class);
+        if(status == "Rejected"){
+            specificAcceptedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Appointment appointment = dataSnapshot.getValue(Appointment.class);
 
 
-                    specificAcceptedAppointmentRef.removeValue();
+                        specificAcceptedAppointmentRef.removeValue();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Firebase", "Error: " + databaseError.getMessage());
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Error: " + databaseError.getMessage());
 
-            }
-        });
+                }
+            });
+        }
+        else if(status == "Past"){
+            specificAcceptedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Appointment appointment = dataSnapshot.getValue(Appointment.class);
+
+
+                        specificAcceptedAppointmentRef.removeValue();
+                        pastAppointmentsRef.child(appointmentId).setValue(appointment);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Error: " + databaseError.getMessage());
+
+                }
+            });
+        }
+
 }}

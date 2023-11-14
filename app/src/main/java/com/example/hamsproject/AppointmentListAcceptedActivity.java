@@ -24,7 +24,7 @@ import java.util.Objects;
 public class AppointmentListAcceptedActivity extends AppCompatActivity{
     Account userData;
     private RecyclerView recyclerView;
-    private String appointmentId;
+    private String appointmentIdTemp;
     private AppointmentAdapter appointmentAdapter;
     ArrayList<AppointmentAdapter> appointmentAdapters = new ArrayList<>();
     List<Appointment> appointmentList;
@@ -68,7 +68,8 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
                 if (requestedAppointmentsSnapshot.exists() && requestedAppointmentsSnapshot.hasChildren()) {
                     for (DataSnapshot appointmentSnapshot : requestedAppointmentsSnapshot.getChildren()) {
                         if (appointmentSnapshot != null) {
-                            appointmentId = appointmentSnapshot.getKey();
+                            String appointmentId = appointmentSnapshot.getKey();
+                            appointmentIdTemp = appointmentId;
                             Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 
                             String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
@@ -81,12 +82,14 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
                     appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener() {
                         @Override
                         public void onAppointmentItemClick(Appointment appointment) {
+                            Log.d("AppointmentListAcceptedActivity", "AppointmentId in list: " + appointmentIdTemp);
+
                             Intent intent = new Intent(AppointmentListAcceptedActivity.this, AppointmentAcceptedInfoActivity.class);
-                            intent.putExtra("appointmentId", appointmentId);
+                            intent.putExtra("appointmentId", appointment.getAppointmentKey());
                             intent.putExtra("userData", userData);
                             startActivity(intent);
                         }
-                    }, appointmentId);
+                    }, appointmentIdTemp);
 
                     recyclerView.setAdapter(appointmentAdapter);
                     appointmentAdapters.add(appointmentAdapter);
