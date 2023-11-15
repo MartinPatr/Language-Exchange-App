@@ -81,7 +81,6 @@ public class ShiftCreationActivity extends AppCompatActivity {
 
                     Shift newShift = new Shift(date, Integer.parseInt(startHour), Integer.parseInt(startMinute), Integer.parseInt(endHour), Integer.parseInt(endMinute));
 
-                    DatabaseReference shift = FirebaseDatabase.getInstance().getReference().child("Accounts").child("Doctor").child(userData.getKey()).child("shifts").push();
                     shiftOverlapCheck(newShift);
 
                 }
@@ -128,17 +127,16 @@ public class ShiftCreationActivity extends AppCompatActivity {
     }
 
     private void shiftOverlapCheck(Shift newShift) {
-        DatabaseReference shiftsRef = FirebaseDatabase.getInstance().getReference()
-                .child("Accounts")
-                .child("Doctor")
-                .child(userData.getKey())
-                .child("shifts");
+        // checks if new shift conflicts with an existing shifts time slot
+        DatabaseReference shiftsReference = FirebaseDatabase.getInstance().getReference().child("Accounts").child("Doctor").child(userData.getKey()).child("shifts");
 
-        shiftsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        shiftsReference.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 boolean overlap = false;
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    // looping through all existing shifts
                     Shift existingShift = snapshot.getValue(Shift.class);
 
                     if (existingShift != null && existingShift.getDate().equals(newShift.getDate())) {
@@ -149,13 +147,11 @@ public class ShiftCreationActivity extends AppCompatActivity {
                         int scheduledEndHour = existingShift.getEndHour();
                         int scheduledEndMinute = existingShift.getEndMinute();
 
-                        // checking if shifts starting time overlaps with any other shift
-                        boolean startOverlap = (newShift.getStartHour() < scheduledEndHour ||
-                                (newShift.getStartHour() == scheduledEndHour && newShift.getStartMinute() < scheduledEndMinute));
+                        // checking if shifts starting time doesn't overlaps with any other shift or starts at same time as a shift ends
+                        boolean startOverlap = (newShift.getStartHour() < scheduledEndHour || (newShift.getStartHour() == scheduledEndHour && newShift.getStartMinute() < scheduledEndMinute));
 
-                        // checking if shifts ending time overlaps with any other shift or ends at the start of a new shift
-                        boolean endOverlap = (newShift.getEndHour() > scheduledStartHour ||
-                                (newShift.getEndHour() == scheduledStartHour && newShift.getEndMinute() > scheduledStartMinute));
+                        // checking if shifts ending time doesn't overlaps with any other shift or ends at the start of a new shift
+                        boolean endOverlap = (newShift.getEndHour() > scheduledStartHour || (newShift.getEndHour() == scheduledStartHour && newShift.getEndMinute() > scheduledStartMinute));
 
                         if (startOverlap && endOverlap) {
                             overlap = true;
@@ -170,7 +166,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
 
                 } else {
                     // Save new shift to Firebase
-                    DatabaseReference shift = shiftsRef.push();
+                    DatabaseReference shift = shiftsReference.push();
                     shift.setValue(newShift);
 
                     // Sets the key variable in the shift to the key in firebase
@@ -187,7 +183,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors here
+                // Error handling if needed
             }
         });
     }
