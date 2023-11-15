@@ -81,30 +81,13 @@ public class ShiftCreationActivity extends AppCompatActivity {
 
                     Shift newShift = new Shift(date, Integer.parseInt(startHour), Integer.parseInt(startMinute), Integer.parseInt(endHour), Integer.parseInt(endMinute));
 
-
-
-
-                    DatabaseReference shift = FirebaseDatabase.getInstance().getReference().child("Accounts").child("Doctor").child(userData.getKey()).child("shifts").push();;
+                    DatabaseReference shift = FirebaseDatabase.getInstance().getReference().child("Accounts").child("Doctor").child(userData.getKey()).child("shifts").push();
                     shiftOverlapCheck(newShift);
 
-                    // shift.setValue(newShift);
-
-                    // Sets the key variable in the shift to the key in firebase
-
-                    /*
-                    String shiftId = shift.getKey();
-                    newShift.setID(shiftId);
-                    shift.setValue(newShift);
-
-                    Intent intent = new Intent(ShiftCreationActivity.this, ListOfShiftsActivity.class);
-                    intent.putExtra("userData", userData);
-                    startActivity(intent);
-                    */
                 }
             }
         });
     }
-
 
 
     private boolean checkTime(String startHour, String endHour, String startMinute, String endMinute) {
@@ -135,6 +118,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
             return false;
         }
     }
+
     private boolean checkDate(String date){
         if(date == null){
             Toast.makeText(ShiftCreationActivity.this, "Select a Date", Toast.LENGTH_SHORT).show();
@@ -142,8 +126,6 @@ public class ShiftCreationActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
 
     private void shiftOverlapCheck(Shift newShift) {
         DatabaseReference shiftsRef = FirebaseDatabase.getInstance().getReference()
@@ -160,15 +142,18 @@ public class ShiftCreationActivity extends AppCompatActivity {
                     Shift existingShift = snapshot.getValue(Shift.class);
 
                     if (existingShift != null && existingShift.getDate().equals(newShift.getDate())) {
-                        // getting the scheduled shifts for today
+                        // making sure its only checking for shifts on the specific date of the new shift
+
                         int scheduledStartHour = existingShift.getStartHour();
                         int scheduledStartMinute = existingShift.getStartMinute();
                         int scheduledEndHour = existingShift.getEndHour();
                         int scheduledEndMinute = existingShift.getEndMinute();
 
+                        // checking if shifts starting time overlaps with any other shift
                         boolean startOverlap = (newShift.getStartHour() < scheduledEndHour ||
                                 (newShift.getStartHour() == scheduledEndHour && newShift.getStartMinute() < scheduledEndMinute));
 
+                        // checking if shifts ending time overlaps with any other shift or ends at the start of a new shift
                         boolean endOverlap = (newShift.getEndHour() > scheduledStartHour ||
                                 (newShift.getEndHour() == scheduledStartHour && newShift.getEndMinute() > scheduledStartMinute));
 
@@ -180,11 +165,15 @@ public class ShiftCreationActivity extends AppCompatActivity {
                 }
 
                 if (overlap) {
-                    Toast.makeText(ShiftCreationActivity.this, "Shift overlaps with an existing shift. Approval denied.", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(ShiftCreationActivity.this, "Shift overlaps with existing shift", Toast.LENGTH_SHORT).show();
+
                 } else {
-                    // Save the new shift to Firebase
+                    // Save new shift to Firebase
                     DatabaseReference shift = shiftsRef.push();
                     shift.setValue(newShift);
+
+                    // Sets the key variable in the shift to the key in firebase
 
                     String shiftId = shift.getKey();
                     newShift.setID(shiftId);
