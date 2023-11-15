@@ -7,7 +7,7 @@ public class Appointment {
     String doctorKey;
     String date;
     Integer time;
-    String appointmentStatus = "Requested";
+    String appointmentStatus;
 
     public Appointment() {}
 
@@ -18,6 +18,7 @@ public class Appointment {
         this.doctorKey = doctorKey;
         this.date = date;
         this.time = time;
+        appointmentStatus = "Requested";
     }
     public String getAppointmentKey() {
         return appointmentKey;
