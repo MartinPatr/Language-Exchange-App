@@ -33,6 +33,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
     Button saveShiftButton;
     Account userData;
     String date;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +48,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
         endHourText = findViewById(R.id.endHourText);
         endMinuteText = findViewById(R.id.endMinuteText);
         saveShiftButton = findViewById(R.id.saveShiftButton);
-        userData = (Account)getPreviousIntent.getSerializableExtra("userData");
+        userData = (Account) getPreviousIntent.getSerializableExtra("userData");
         date = null;
 
         Log.d("Doctor Info: ", userData.getFirstName());
@@ -62,9 +63,8 @@ public class ShiftCreationActivity extends AppCompatActivity {
                 if (datePicked.before(Calendar.getInstance())) {
                     //If the user tries to pick a date that already happened
                     Toast.makeText(ShiftCreationActivity.this, "Date can't have already passed.", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    date = day + "/" + (month+1) + "/" + year;
+                } else {
+                    date = day + "/" + (month + 1) + "/" + year;
                 }
             }
         });
@@ -101,12 +101,10 @@ public class ShiftCreationActivity extends AppCompatActivity {
             if (sHour < 0 || sHour > 23 || eHour < 0 || eHour > 23) {
                 Toast.makeText(ShiftCreationActivity.this, "Hour Must Be Between 0-23", Toast.LENGTH_SHORT).show();
                 return false;
-            }
-            else if((sMinute != 0 && sMinute != 30) || (eMinute != 0 && eMinute != 30)){
+            } else if ((sMinute != 0 && sMinute != 30) || (eMinute != 0 && eMinute != 30)) {
                 Toast.makeText(ShiftCreationActivity.this, "Shifts Must Be on 30 Minute Intervals", Toast.LENGTH_SHORT).show();
                 return false;
-            }
-            else if((eHour<sHour) || ((eHour == sHour) && (eMinute <= sMinute))){
+            } else if ((eHour < sHour) || ((eHour == sHour) && (eMinute <= sMinute))) {
                 Toast.makeText(ShiftCreationActivity.this, "End Time Must be After Start Time", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -118,8 +116,8 @@ public class ShiftCreationActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkDate(String date){
-        if(date == null){
+    private boolean checkDate(String date) {
+        if (date == null) {
             Toast.makeText(ShiftCreationActivity.this, "Select a Date", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -127,7 +125,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
     }
 
     private void shiftOverlapCheck(Shift newShift) {
-        // checks if new shift conflicts with an existing shifts time slot
+        //checks if new shift conflicts with an existing shifts time slot
         DatabaseReference shiftsReference = FirebaseDatabase.getInstance().getReference().child("Accounts").child("Doctor").child(userData.getKey()).child("shifts");
 
         shiftsReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -136,21 +134,21 @@ public class ShiftCreationActivity extends AppCompatActivity {
                 boolean overlap = false;
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // looping through all existing shifts
+                    //looping through all existing shifts
                     Shift existingShift = snapshot.getValue(Shift.class);
 
                     if (existingShift != null && existingShift.getDate().equals(newShift.getDate())) {
-                        // making sure its only checking for shifts on the specific date of the new shift
+                        //making sure its only checking for shifts on the specific date of the new shift
 
                         int scheduledStartHour = existingShift.getStartHour();
                         int scheduledStartMinute = existingShift.getStartMinute();
                         int scheduledEndHour = existingShift.getEndHour();
                         int scheduledEndMinute = existingShift.getEndMinute();
 
-                        // checking if shifts starting time doesn't overlaps with any other shift or starts at same time as a shift ends
+                        //checking if shifts starting time doesn't overlaps with any other shift or starts at same time as a shift ends
                         boolean startOverlap = (newShift.getStartHour() < scheduledEndHour || (newShift.getStartHour() == scheduledEndHour && newShift.getStartMinute() < scheduledEndMinute));
 
-                        // checking if shifts ending time doesn't overlaps with any other shift or ends at the start of a new shift
+                        //checking if shifts ending time doesn't overlaps with any other shift or ends at the start of a new shift
                         boolean endOverlap = (newShift.getEndHour() > scheduledStartHour || (newShift.getEndHour() == scheduledStartHour && newShift.getEndMinute() > scheduledStartMinute));
 
                         if (startOverlap && endOverlap) {
@@ -165,12 +163,11 @@ public class ShiftCreationActivity extends AppCompatActivity {
                     Toast.makeText(ShiftCreationActivity.this, "Shift overlaps with existing shift", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    // Save new shift to Firebase
+                    //Saves new shift
                     DatabaseReference shift = shiftsReference.push();
                     shift.setValue(newShift);
 
-                    // Sets the key variable in the shift to the key in firebase
-
+                    //Sets the key variable in the shift to the key in firebase
                     String shiftId = shift.getKey();
                     newShift.setID(shiftId);
                     shift.setValue(newShift);
@@ -183,10 +180,8 @@ public class ShiftCreationActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Error handling if needed
+                Log.e("Firebase", "Error: " + databaseError.getMessage());
             }
         });
     }
-
-
 }
