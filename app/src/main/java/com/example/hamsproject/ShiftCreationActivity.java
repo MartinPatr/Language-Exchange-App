@@ -12,8 +12,13 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.ValueEventListener;
+
 
 import java.util.Calendar;
 
@@ -73,12 +78,20 @@ public class ShiftCreationActivity extends AppCompatActivity {
                 String endMinute = endMinuteText.getText().toString();
 
                 if (checkTime(startHour, endHour, startMinute, endMinute) && checkDate(date)) {
+
                     Shift newShift = new Shift(date, Integer.parseInt(startHour), Integer.parseInt(startMinute), Integer.parseInt(endHour), Integer.parseInt(endMinute));
 
-                    DatabaseReference shift = FirebaseDatabase.getInstance().getReference().child("Accounts").child("Doctor").child(userData.getKey()).child("shifts").push();;
-                    shift.setValue(newShift);
 
-                    //Sets the key variable in the shift to the key in firebase
+
+
+                    DatabaseReference shift = FirebaseDatabase.getInstance().getReference().child("Accounts").child("Doctor").child(userData.getKey()).child("shifts").push();;
+                    shiftOverlapCheck(newShift);
+
+                    // shift.setValue(newShift);
+
+                    // Sets the key variable in the shift to the key in firebase
+
+                    /*
                     String shiftId = shift.getKey();
                     newShift.setID(shiftId);
                     shift.setValue(newShift);
@@ -86,6 +99,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
                     Intent intent = new Intent(ShiftCreationActivity.this, ListOfShiftsActivity.class);
                     intent.putExtra("userData", userData);
                     startActivity(intent);
+                    */
                 }
             }
         });
@@ -128,4 +142,66 @@ public class ShiftCreationActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
+
+    private void shiftOverlapCheck(Shift newShift) {
+        DatabaseReference shiftsRef = FirebaseDatabase.getInstance().getReference()
+                .child("Accounts")
+                .child("Doctor")
+                .child(userData.getKey())
+                .child("shifts");
+
+        shiftsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean overlap = false;
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Shift existingShift = snapshot.getValue(Shift.class);
+
+                    if (existingShift != null && existingShift.getDate().equals(newShift.getDate())) {
+                        // getting the scheduled shifts for today
+                        int scheduledStartHour = existingShift.getStartHour();
+                        int scheduledStartMinute = existingShift.getStartMinute();
+                        int scheduledEndHour = existingShift.getEndHour();
+                        int scheduledEndMinute = existingShift.getEndMinute();
+
+                        boolean startOverlap = (newShift.getStartHour() < scheduledEndHour ||
+                                (newShift.getStartHour() == scheduledEndHour && newShift.getStartMinute() < scheduledEndMinute));
+
+                        boolean endOverlap = (newShift.getEndHour() > scheduledStartHour ||
+                                (newShift.getEndHour() == scheduledStartHour && newShift.getEndMinute() > scheduledStartMinute));
+
+                        if (startOverlap && endOverlap) {
+                            overlap = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (overlap) {
+                    Toast.makeText(ShiftCreationActivity.this, "Shift overlaps with an existing shift. Approval denied.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Save the new shift to Firebase
+                    DatabaseReference shift = shiftsRef.push();
+                    shift.setValue(newShift);
+
+                    String shiftId = shift.getKey();
+                    newShift.setID(shiftId);
+                    shift.setValue(newShift);
+
+                    Intent intent = new Intent(ShiftCreationActivity.this, ListOfShiftsActivity.class);
+                    intent.putExtra("userData", userData);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors here
+            }
+        });
+    }
+
+
 }
