@@ -30,7 +30,7 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
     List<Appointment> appointmentList;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appointments_accepted);
+        setContentView(R.layout.activity_doctor_accepted_apps);
 
         userData = (Account)getIntent().getSerializableExtra("userData");
 

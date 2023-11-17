@@ -22,7 +22,7 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appointment_request_info);
+        setContentView(R.layout.activity_doctor_requested_app_info);
 
         Intent intent = getIntent();
 

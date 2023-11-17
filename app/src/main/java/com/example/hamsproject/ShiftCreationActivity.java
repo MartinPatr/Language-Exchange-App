@@ -31,6 +31,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
     EditText endHourText;
     EditText endMinuteText;
     Button saveShiftButton;
+    Button backButton;
     Account userData;
     String date;
 
@@ -48,8 +49,10 @@ public class ShiftCreationActivity extends AppCompatActivity {
         endHourText = findViewById(R.id.endHourText);
         endMinuteText = findViewById(R.id.endMinuteText);
         saveShiftButton = findViewById(R.id.saveShiftButton);
+        backButton = findViewById(R.id.backButton);
         userData = (Account) getPreviousIntent.getSerializableExtra("userData");
         date = null;
+
 
         Log.d("Doctor Info: ", userData.getFirstName());
 
@@ -84,6 +87,14 @@ public class ShiftCreationActivity extends AppCompatActivity {
                     shiftOverlapCheck(newShift);
 
                 }
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent intent = new Intent(ShiftCreationActivity.this, ListOfShiftsActivity.class);
+                intent.putExtra("userData", userData);
+                startActivity(intent);
             }
         });
     }

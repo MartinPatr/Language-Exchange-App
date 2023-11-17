@@ -32,7 +32,7 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appointments_requested);
+        setContentView(R.layout.activity_doctor_requested_apps);
 
         userData = (Account)getIntent().getSerializableExtra("userData");
 
