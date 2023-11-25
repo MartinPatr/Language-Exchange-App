@@ -114,4 +114,3 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
 
 
 }
-

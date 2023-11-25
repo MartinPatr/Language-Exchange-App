@@ -38,4 +38,28 @@ public class PatientPageActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
+        viewUpcomingAppsButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(PatientPageActivity.this, PatientUpcomingAppsActivity.class);
+                intent.putExtra("userData",userData);
+                startActivity(intent);
+            }
+        });
+
+        viewPastAppointmentsButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(PatientPageActivity.this, PatientPastAppsActivity.class);
+                intent.putExtra("userData",userData);
+                startActivity(intent);
+            }
+        });
+
+        bookAppButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(PatientPageActivity.this, BookAppointmentActivity.class);
+                intent.putExtra("userData",userData);
+                startActivity(intent);
+            }
+        });
 }}

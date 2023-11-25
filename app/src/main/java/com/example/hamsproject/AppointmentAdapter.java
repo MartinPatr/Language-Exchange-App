@@ -49,20 +49,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         Log.d("AppointmentAdapter", "List size: " + appointments.size());
         Appointment appointment = appointments.get(position);
 
-        //All of this just reformats the String for time to add a colon in the middle.
-        String time = String.valueOf(appointment.getTime());
-        String newTime = "";
-        for (int i = 0; i < time.length()/2; i++) {
-            char c = time.charAt(i);
-            newTime += c;
-        }
-        newTime += ":";
-        for (int i = 2; i < time.length(); i++) {
-            char c = time.charAt(i);
-            newTime += c;
-        }
+
         holder.nameField.setText(String.valueOf(appointment.getPatientName()));
-        holder.timeField.setText((appointment.getDate() + " at " + newTime));
+        holder.timeField.setText((appointment.getDate() + " at " + appointment.getStartHour() + ":" + appointment.getStartMinute()));
     }
 
     @Override

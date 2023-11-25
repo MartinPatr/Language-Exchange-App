@@ -27,7 +27,6 @@ public class LogInActivity extends AppCompatActivity {
 
     String userType;
 
-    // Firebase variable declarations
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
@@ -71,7 +70,7 @@ public class LogInActivity extends AppCompatActivity {
                                 }else if (authAccount.getType().equals("Doctor")) {
                                     intent = new Intent(LogInActivity.this, DoctorPageActivity.class);
                                 }else {
-                                    intent = new Intent(LogInActivity.this, WelcomePageActivity.class);
+                                    intent = new Intent(LogInActivity.this, PatientPageActivity.class);
                                 }
                                 intent.putExtra("userData",authAccount);
                                 startActivity(intent);

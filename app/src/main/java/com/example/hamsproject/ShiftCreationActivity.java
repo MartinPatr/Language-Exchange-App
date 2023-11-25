@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ShiftCreationActivity extends AppCompatActivity {
@@ -82,9 +83,10 @@ public class ShiftCreationActivity extends AppCompatActivity {
 
                 if (checkTime(startHour, endHour, startMinute, endMinute) && checkDate(date)) {
 
-                    Shift newShift = new Shift(date, Integer.parseInt(startHour), Integer.parseInt(startMinute), Integer.parseInt(endHour), Integer.parseInt(endMinute));
+                    Shift newShift = new Shift(date, Integer.parseInt(startHour), Integer.parseInt(startMinute), Integer.parseInt(endHour), Integer.parseInt(endMinute), userData.getKey(), (userData.getFirstName() + userData.getLastName()));
 
                     shiftOverlapCheck(newShift);
+                    createAppointments(newShift);
 
                 }
             }
@@ -97,6 +99,72 @@ public class ShiftCreationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private ArrayList<Shift> splitShift(Shift shift){
+        ArrayList<Shift> availableAppointments = new ArrayList<>();
+        int startHour = shift.getStartHour();
+        int startMinute = shift.getStartMinute();
+        int endHour = shift.getEndHour();
+        int endMinute = shift.getEndMinute();
+
+        while(true){
+            //Breaks the loop when the start time is equal to the end time
+            if(startHour==endHour && startMinute == endMinute) {
+                break;
+            }
+            else{
+                //If the start minute is 30, it goes to the next hour
+                if(startMinute == 30){
+                    Shift newShift = new Shift(shift.getDate(), startHour, startMinute, startHour+1, 00, shift.getDoctorKey(), shift.getDoctorName());
+                    newShift.setDoctorName(shift.getDoctorName());
+                    startHour = startHour+1;
+                    startMinute = 0;
+
+                    availableAppointments.add(newShift);
+                }
+                //If the start minute is 0, it keeps the same hour but increases 30 minutes
+                else if(startMinute == 00){
+                    Shift newShift = new Shift(shift.getDate(), startHour, startMinute, startHour, 30, shift.getDoctorKey(), shift.getDoctorName());
+                    newShift.setDoctorName(shift.getDoctorName());
+                    startMinute = 30;
+                    availableAppointments.add(newShift);
+                }
+            }
+        }
+        return availableAppointments;
+    }
+
+    private void createAppointments(Shift shift) {
+        ArrayList<Shift> availableAppointments = splitShift(shift);
+
+        DatabaseReference availableAppointmentsReference = FirebaseDatabase.getInstance().getReference("Appointments").child("AvailableAppointments");
+
+        for(Shift availableAppointment : availableAppointments){
+            //Makes a custom id/key for the database reference
+            String customId = availableAppointment.getDoctorName() +
+                    availableAppointment.getDate() +
+                    availableAppointment.getStartHour() +
+                    availableAppointment.getStartMinute();
+
+            //Removes invalid characters
+            customId = customId.replaceAll("[^a-zA-Z0-9]", "_");
+            availableAppointment.setID(customId);
+
+            DatabaseReference appointmentReference = availableAppointmentsReference.child(customId);
+
+            appointmentReference.setValue(availableAppointment, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if(databaseError == null){
+                        Toast.makeText(ShiftCreationActivity.this, "Shift Created", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Log.e("ShiftCreationActivity", "Error: " + databaseError.getMessage());
+                    }
+                }
+            });
+        }
     }
 
 
@@ -181,7 +249,9 @@ public class ShiftCreationActivity extends AppCompatActivity {
                     //Sets the key variable in the shift to the key in firebase
                     String shiftId = shift.getKey();
                     newShift.setID(shiftId);
+                    newShift.setDoctorName(userData.getFirstName() + " " + userData.getLastName());
                     shift.setValue(newShift);
+
 
                     Intent intent = new Intent(ShiftCreationActivity.this, ListOfShiftsActivity.class);
                     intent.putExtra("userData", userData);

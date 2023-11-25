@@ -16,6 +16,18 @@
         android:theme="@style/Theme.HAMSProject"
         tools:targetApi="31">
         <activity
+            android:name=".BookAppointmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PatientAppInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PatientPastAppsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PatientUpcomingAppsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ListOfShiftsActivity"
             android:exported="false" />
         <activity
@@ -61,32 +73,29 @@
             android:name=".PatientRegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".PatientPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".AppointmentListRequestsActivity"
             android:exported="false" />
-
-        <activity android:name=".AppointmentListAcceptedActivity"
+        <activity
+            android:name=".AppointmentListAcceptedActivity"
             android:exported="false" />
-
-
-        <activity android:name=".AppointmentListPastActivity"
+        <activity
+            android:name=".AppointmentListPastActivity"
             android:exported="false" />
-
-        <activity android:name=".AppointmentPastInfoActivity"
+        <activity
+            android:name=".AppointmentPastInfoActivity"
             android:exported="false" />
-
-        <activity android:name=".AppointmentAcceptedInfoActivity"
+        <activity
+            android:name=".AppointmentAcceptedInfoActivity"
             android:exported="false" />
-
-        <activity android:name=".AppointmentRequestInfoActivity"
+        <activity
+            android:name=".AppointmentRequestInfoActivity"
             android:exported="false" />
-
-
-
-
     </application>
 
 </manifest>

@@ -8,21 +8,33 @@ public class Shift {
     private int startMinute;
     private int endHour;
     private int endMinute;
+    private String doctorName;
+    private String doctorKey;
 
     //Database uses this to make a new shift
     public Shift() {}
 
-    public Shift(String date, int startHour, int startMinute, int endHour, int endMinute) {
+    public Shift(String date, int startHour, int startMinute, int endHour, int endMinute, String doctorKey, String doctorName) {
         this.date = date;
         this.startHour = startHour;
         this.startMinute = startMinute;
         this.endHour = endHour;
         this.endMinute = endMinute;
-        id = null;
+        this.doctorKey = doctorKey;
+        this.doctorName = doctorName;
+        id = "hi";
     }
 
     public String getDate(){
         return date;
+    }
+
+    public String getDoctorKey() {
+        return doctorKey;
+    }
+
+    public String getDoctorName(){
+        return doctorName;
     }
     public int getStartHour(){
         return startHour;
@@ -44,6 +56,11 @@ public class Shift {
     public void setDate(String date){
         this.date = date;
     }
+
+    public void setDoctorKey(String doctorKey) {
+        this.doctorKey = doctorKey;
+    }
+
     public void setStartHour(int startHour){
         this.startHour = startHour;
     }
@@ -58,5 +75,8 @@ public class Shift {
     }
     public void setID(String id){
         this.id = id;
+    }
+    public void setDoctorName(String doctorName){
+        this.doctorName = doctorName;
     }
 }

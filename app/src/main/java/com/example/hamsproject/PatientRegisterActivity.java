@@ -2,6 +2,7 @@ package com.example.hamsproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.widget.Button;
 import android.content.Intent;
 import android.view.View;
@@ -39,6 +40,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
         registerAsPatient.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Map<String, String> patientInfo = getPatientInfo();
+                Log.d("PatientRegisterActivity", "Patient Info onClick: " + patientInfo.toString());
                 if(ValidationUtils.isValidated(PatientRegisterActivity.this,patientInfo)){
                     Intent intent = new Intent(PatientRegisterActivity.this, LogInActivity.class);
                     addToFirebase();
@@ -52,7 +54,7 @@ public class PatientRegisterActivity extends AppCompatActivity {
      * This method gets all the patient information from the fields
      * @return Map<String, String>: Map that contains all the patient information
      */
-    private Map<String, String> getPatientInfo(){
+    public Map<String, String> getPatientInfo(){
         // Field variable declarations
         EditText patientNameField = findViewById(R.id.patientNameField);
         EditText patientLastNameField = findViewById(R.id.patientLastNameField);
@@ -71,6 +73,9 @@ public class PatientRegisterActivity extends AppCompatActivity {
         patientInfo.put("PhoneNumber", patientPhoneField.getText().toString());
         patientInfo.put("Address", patientAddressField.getText().toString());
         patientInfo.put("HealthCard", patientHealthCardNumField.getText().toString());
+
+        Log.d("PatientRegisterActivity", "Patient Info getPatientInfo: " + patientInfo.toString());
+
         return patientInfo;
     }
 
