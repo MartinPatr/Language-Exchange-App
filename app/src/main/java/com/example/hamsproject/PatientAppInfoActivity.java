@@ -114,20 +114,22 @@ public class PatientAppInfoActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && dataSnapshot.hasChildren()) {
                     if (appointmentId != null) {
-
                         String date = dataSnapshot.child("date").getValue(String.class);
-                        String time = dataSnapshot.child("time").getValue(String.class);
 
-                        String hours = time.substring(0, 2);
-                        String minutes = time.substring(2, 4);
-                        String timeActual = hours + ":" + minutes;
+                        String startHour = String.valueOf(dataSnapshot.child("startHour").getValue(Long.class));
+                        String startMinute = String.valueOf(dataSnapshot.child("startMinute").getValue(Long.class));
+                        String endHour = String.valueOf(dataSnapshot.child("endHour").getValue(Long.class));
+                        String endMinute = String.valueOf(dataSnapshot.child("endMinute").getValue(Long.class));
+
+
+                        String time = startHour + ":" + startMinute + " - " + endHour + ":" + endMinute;
 
 
                         TextView dateField = findViewById(R.id.dateField);
                         dateField.setText(date);
 
                         TextView timeField = findViewById(R.id.timeField);
-                        timeField.setText(timeActual);
+                        timeField.setText(time);
                     }
                 }
             }
