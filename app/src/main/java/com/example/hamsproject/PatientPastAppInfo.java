@@ -83,7 +83,7 @@ public class PatientPastAppInfo extends AppCompatActivity {
 
                         String firstName = doctorSnapshot.child("firstName").getValue(String.class);
                         String lastName = doctorSnapshot.child("lastName").getValue(String.class);
-                        
+
 
                         TextView firstNameField = findViewById(R.id.firstNameField);
                         TextView lastNameField = findViewById(R.id.lastNameField);
