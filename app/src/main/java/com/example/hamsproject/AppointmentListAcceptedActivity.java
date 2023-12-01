@@ -36,7 +36,6 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         Button backButton = findViewById(R.id.backButton);
 
         //===================================================================================================================
@@ -48,8 +47,6 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
-
-
 
         //===================================================================================================================
 

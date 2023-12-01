@@ -62,9 +62,7 @@ public class AppointmentPastInfoActivity extends AppCompatActivity{
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("AppointmentPastInfoActivity", "Database error: " + databaseError.getMessage());
 
-            }
-
-            ;
+            };
         });
     }
 

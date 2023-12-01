@@ -27,7 +27,10 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         appointmentId = intent.getStringExtra("appointmentId");
-        Log.d("ID" , appointmentId);
+
+        if (appointmentId == null){
+            Log.d("App ID" , "appointmentID is null");
+        }
         Account userData = (Account)getIntent().getSerializableExtra("userData");
 
         getUserInfo(appointmentId);
@@ -68,19 +71,22 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
         });
 }
     private void getUserInfo(String accountID){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/RequestedAppointments").child(appointmentId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            public void onDataChange(@NonNull DataSnapshot appointmentSnapshot) {
-                if (appointmentSnapshot.exists() && appointmentSnapshot.hasChildren()) {
-                    patientKey = appointmentSnapshot.child("patientKey").getValue(String.class);
+        if(appointmentId != null){
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/RequestedAppointments").child(appointmentId);
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                public void onDataChange(@NonNull DataSnapshot appointmentSnapshot) {
+                    if (appointmentSnapshot.exists() && appointmentSnapshot.hasChildren()) {
+                        patientKey = appointmentSnapshot.child("patientKey").getValue(String.class);
+                    }
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("AppointmentRequestInfoActivity", "Database error: " + databaseError.getMessage());
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("AppointmentRequestInfoActivity", "Database error: " + databaseError.getMessage());
 
-            };
-        });
+                };
+            });
+        }
+
 
         DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Accounts/Patient");
         databaseReference2.addValueEventListener(new ValueEventListener() {
@@ -130,7 +136,7 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
         DatabaseReference acceptedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
         DatabaseReference specificRequestedAppointmentRef = requestedAppointmentsRef.child(appointmentId);
 
-        if (status == "Accepted"){
+        if (status.equals("Accepted")){
 
             specificRequestedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -152,7 +158,7 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
                 }
             });
         }
-        else if (status == "Rejected"){
+        else if (status.equals("Rejected")){
             specificRequestedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
