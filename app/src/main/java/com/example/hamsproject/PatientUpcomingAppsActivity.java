@@ -39,10 +39,9 @@ public class PatientUpcomingAppsActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Button backButton = findViewById(R.id.backButton);
 
         //===================================================================================================================
-
+        Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(PatientUpcomingAppsActivity.this, PatientPageActivity.class);
@@ -85,7 +84,7 @@ public class PatientUpcomingAppsActivity extends AppCompatActivity {
                         public void onAppointmentItemClick(Appointment appointment) {
                             Log.d("PatientUpComingAppsActivity", "AppointmentId in list: " + appointmentIdTemp);
 
-                            Intent intent = new Intent(PatientUpcomingAppsActivity.this, PatientAppInfoActivity.class);
+                            Intent intent = new Intent(PatientUpcomingAppsActivity.this, PatientUpcomingAppInfoActivity.class);
                             intent.putExtra("appointmentId", appointment.getAppointmentKey());
                             intent.putExtra("userData", userData);
                             startActivity(intent);
@@ -94,7 +93,8 @@ public class PatientUpcomingAppsActivity extends AppCompatActivity {
 
                     recyclerView.setAdapter(appointmentAdapter);
                     appointmentAdapters.add(appointmentAdapter);
-                } else {
+                }
+                else {
                     Log.d("ListOfAcceptedAppointments", "No appointments found for the current doctor");
                 }
 

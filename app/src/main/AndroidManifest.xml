@@ -19,7 +19,7 @@
             android:name=".BookAppointmentActivity"
             android:exported="false" />
         <activity
-            android:name=".PatientAppInfoActivity"
+            android:name=".PatientUpcomingAppInfoActivity"
             android:exported="false" />
         <activity
             android:name=".PatientPastAppsActivity"
@@ -96,6 +96,11 @@
         <activity
             android:name=".AppointmentRequestInfoActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".PatientPastAppInfo"
+            android:exported="false" />
+
     </application>
 
 </manifest>

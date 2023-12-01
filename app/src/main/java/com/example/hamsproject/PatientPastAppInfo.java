@@ -16,14 +16,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class PatientAppInfoActivity extends AppCompatActivity {
+public class PatientPastAppInfo extends AppCompatActivity {
     String appointmentId;
     String doctorKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_app_info);
+        setContentView(R.layout.activity_patient_past_app_info);
 
         Intent intent = getIntent();
 
@@ -38,7 +38,7 @@ public class PatientAppInfoActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(PatientAppInfoActivity.this, PatientUpcomingAppsActivity.class);
+                Intent intent = new Intent(PatientPastAppInfo.this, PatientPastAppsActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }
@@ -46,17 +46,9 @@ public class PatientAppInfoActivity extends AppCompatActivity {
         //===================================================================================================================
     }
 
-
     // Gets the doctor key given the appointment ID
     private void getUserInfo(String appointmentId) {
-
-
-
-
-
-
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments").child(appointmentId);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments").child(appointmentId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot appointmentSnapshot) {
                 if (appointmentSnapshot.exists() && appointmentSnapshot.hasChildren()) {
@@ -91,6 +83,7 @@ public class PatientAppInfoActivity extends AppCompatActivity {
 
                         String firstName = doctorSnapshot.child("firstName").getValue(String.class);
                         String lastName = doctorSnapshot.child("lastName").getValue(String.class);
+                        
 
                         TextView firstNameField = findViewById(R.id.firstNameField);
                         TextView lastNameField = findViewById(R.id.lastNameField);
@@ -109,7 +102,7 @@ public class PatientAppInfoActivity extends AppCompatActivity {
     }
 
     private void getAppointmentInfo(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments").child(appointmentId);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments").child(appointmentId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && dataSnapshot.hasChildren()) {
@@ -141,5 +134,4 @@ public class PatientAppInfoActivity extends AppCompatActivity {
             }
         });
     }
-
 }
