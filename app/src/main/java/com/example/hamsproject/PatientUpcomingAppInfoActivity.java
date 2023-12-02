@@ -40,7 +40,6 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
 
         getUserInfo(appointmentId);
 
-
         //===================================================================================================================
         //Sends the user back to the previous page
 
@@ -168,7 +167,7 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
                         int startMinute = (int) startMinuteRetrieval;
 
                         String dateInput = dataSnapshot.child("date").getValue(String.class);
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                         Date parsedDate;
 
                         try{
@@ -204,12 +203,10 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
                             if(minutesDifference < 60){
                                 Log.d("Echo", "<60 MINS: TRUE");
 
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getApplicationContext(), "Cannot cancel appointment in 60 mins or less.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }, 3000);
+
+                                Toast.makeText(getApplicationContext(), "Cannot cancel appointment in 60 mins or less.", Toast.LENGTH_SHORT).show();
+
+
                             }
                             else{
                                 cancelAppointment(appointmentId);
