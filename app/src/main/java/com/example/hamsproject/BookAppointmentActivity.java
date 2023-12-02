@@ -135,6 +135,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Patien
     public void onBookButtonClick(Shift shift) {
         //Makes an appointment to add to RequestedAppointments in the database
         Appointment appointment = new Appointment();
+        appointment.setAppointmentKey(shift.getID());
         appointment.setPatientName(userData.getFirstName() + " " + userData.getLastName());
         appointment.setDate(shift.getDate());
         appointment.setStartHour(shift.getStartHour());
@@ -149,8 +150,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Patien
         DatabaseReference appointments = FirebaseDatabase.getInstance().getReference("Appointments");
 
         //Moves appointment to RequestedAppointments
-        DatabaseReference requestedAppointments = appointments.child("RequestedAppointments").push();
-        requestedAppointments.setValue(appointment);
+        DatabaseReference requestedAppointmentSpot = appointments.child("RequestedAppointments").child(shift.getID());
+        requestedAppointmentSpot.setValue(appointment);
 
         //Deletes shift from AvailableAppointments
         DatabaseReference availableAppointments = appointments.child("AvailableAppointments").child(shift.getID());
