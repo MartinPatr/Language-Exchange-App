@@ -51,7 +51,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements Patien
 
         //Adds specialties to the dropdown menu
         String[] items = new String[]{"Select Specialty", "familyMedicine", "internalMedicine", "pediatrics", "obstetrics", "gynecology"};
-        ArrayAdapter<String> menuAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        String[] itemsForDisplay = new String[]{"Select Specialty", "Family Medicine", "Internal Medicine", "Pediatrics", "Obstetrics", "Gynecology"};
+
+        ArrayAdapter<String> menuAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsForDisplay);
         specialtyMenu.setAdapter(menuAdapter);
         specialtyMenu.setSelection(0, false);
 
