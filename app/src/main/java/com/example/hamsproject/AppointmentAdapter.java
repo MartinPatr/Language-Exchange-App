@@ -51,7 +51,21 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
 
         holder.nameField.setText(String.valueOf(appointment.getPatientName()));
-        holder.timeField.setText((appointment.getDate() + " at " + appointment.getStartHour() + ":" + appointment.getStartMinute()));
+
+        String startHour = String.valueOf(appointment.getStartHour());
+        String startMinute = String.valueOf(appointment.getStartMinute());
+
+        String endHour = String.valueOf(appointment.getEndHour());
+        String endMinute = String.valueOf(appointment.getEndMinute());
+
+        if (startMinute.equals("0")){
+            startMinute = "00";
+        }
+        if (endMinute.equals("0")){
+            endMinute = "00";
+        }
+
+        holder.timeField.setText(appointment.getDate() + " at " + startHour + ":" + startMinute + " - " + endHour + ":" + endMinute);
     }
 
     @Override
