@@ -114,6 +114,12 @@ public class PatientPastAppInfo extends AppCompatActivity {
                         String endHour = String.valueOf(dataSnapshot.child("endHour").getValue(Long.class));
                         String endMinute = String.valueOf(dataSnapshot.child("endMinute").getValue(Long.class));
 
+                        if(startMinute.equals("0")){
+                            startMinute = "00";
+                        }
+                        if(endMinute.equals("0")){
+                            endMinute = "00";
+                        }
 
                         String time = startHour + ":" + startMinute + " - " + endHour + ":" + endMinute;
 

@@ -134,6 +134,12 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
                         String endHour = String.valueOf(dataSnapshot.child("endHour").getValue(Long.class));
                         String endMinute = String.valueOf(dataSnapshot.child("endMinute").getValue(Long.class));
 
+                        if(startMinute.equals("0")){
+                            startMinute = "00";
+                        }
+                        if(endMinute.equals("0")){
+                            endMinute = "00";
+                        }
 
                         String time = startHour + ":" + startMinute + " - " + endHour + ":" + endMinute;
 
@@ -189,8 +195,7 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
                         int appointmentMonth = currentTime.get(Calendar.MONTH);
                         int appointmentDay = currentTime.get(Calendar.DAY_OF_MONTH);
 
-                        Log.d("Charlie", String.valueOf(currentYear) + " " + String.valueOf(currentMonth) + " " + String.valueOf(currentDay));
-                        Log.d("Charlie", appointmentYear + " " + appointmentMonth + " " + appointmentDay);
+
 
                         if (currentYear == appointmentYear && currentMonth == appointmentMonth && currentDay == appointmentDay){
                             Log.d("Alpha", "Same day:TRUE");
@@ -204,7 +209,7 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
                                 Log.d("Echo", "<60 MINS: TRUE");
 
 
-                                Toast.makeText(getApplicationContext(), "Cannot cancel appointment in 60 mins or less.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Cannot cancel appointment in 60 minutes or less.", Toast.LENGTH_SHORT).show();
 
 
                             }

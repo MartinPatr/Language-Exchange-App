@@ -68,7 +68,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
                     //If the user tries to pick a date that already happened
                     Toast.makeText(ShiftCreationActivity.this, "Date can't have already passed.", Toast.LENGTH_SHORT).show();
                 } else {
-                    date = day + "/" + (month + 1) + "/" + year;
+                    date =  (month + 1) + "/" + day + "/" + year;
                 }
             }
         });
