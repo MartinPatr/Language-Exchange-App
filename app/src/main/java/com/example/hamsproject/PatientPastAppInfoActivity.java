@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class PatientPastAppInfo extends AppCompatActivity {
+public class PatientPastAppInfoActivity extends AppCompatActivity {
     String appointmentId;
     String doctorKey;
 
@@ -38,7 +38,7 @@ public class PatientPastAppInfo extends AppCompatActivity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(PatientPastAppInfo.this, PatientPastAppsActivity.class);
+                Intent intent = new Intent(PatientPastAppInfoActivity.this, PatientPastAppsActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }

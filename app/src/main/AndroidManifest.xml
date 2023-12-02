@@ -98,7 +98,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".PatientPastAppInfo"
+            android:name=".PatientPastAppInfoActivity"
             android:exported="false" />
 
     </application>

@@ -53,14 +53,17 @@ public class Shift {
     }
 
 
-    public void setDate(String date){
-        this.date = date;
+
+    public void setDoctorName(String doctorName){
+        this.doctorName = doctorName;
     }
 
     public void setDoctorKey(String doctorKey) {
         this.doctorKey = doctorKey;
     }
-
+    public void setDate(String date){
+        this.date = date;
+    }
     public void setStartHour(int startHour){
         this.startHour = startHour;
     }
@@ -75,8 +78,5 @@ public class Shift {
     }
     public void setID(String id){
         this.id = id;
-    }
-    public void setDoctorName(String doctorName){
-        this.doctorName = doctorName;
     }
 }

@@ -85,7 +85,7 @@ public class PatientPastAppsActivity extends AppCompatActivity {
                         public void onAppointmentItemClick(Appointment appointment) {
                             Log.d("PatientPastAppsActivity", "AppointmentId in list: " + appointmentIdTemp);
 
-                            Intent intent = new Intent(PatientPastAppsActivity.this, PatientPastAppInfo.class);
+                            Intent intent = new Intent(PatientPastAppsActivity.this, PatientPastAppInfoActivity.class);
                             intent.putExtra("appointmentId", appointment.getAppointmentKey());
                             intent.putExtra("userData", userData);
                             startActivity(intent);

@@ -33,10 +33,15 @@ public class Appointment {
     public String getAppointmentKey() {
         return appointmentKey;
     }
+    public String getAppointmentStatus() {
+        return appointmentStatus;
+    }
+    public String getDate() {
+        return date;
+    }
     public Integer getStartHour(){
         return startHour;
     }
-    public String getDoctorName(){ return doctorName;}
     public Integer getStartMinute(){
         return startMinute;
     }public Integer getEndHour(){
@@ -50,15 +55,16 @@ public class Appointment {
     public String getPatientKey() {
         return patientKey;
     }
+    public String getDoctorName(){ return doctorName;}
     public String getDoctorKey() {
         return doctorKey;
     }
-    public String getDate() {
-        return date;
+
+
+    public void setAppointmentKey(String appointmentKey) {
+        this.appointmentKey = appointmentKey;
     }
-    public String getAppointmentStatus() {
-        return appointmentStatus;
-    }
+
     public void setAppointmentStatus(String appointmentStatus) {
         if (appointmentStatus.equals("Requested") || appointmentStatus.equals("Accepted") || appointmentStatus.equals("Past")){
             this.appointmentStatus = appointmentStatus;
@@ -71,14 +77,20 @@ public class Appointment {
         this.date = date;
     }
 
-    public void setAppointmentKey(String appointmentKey) {
-        this.appointmentKey = appointmentKey;
+    public void setStartHour(Integer startHour) {
+        this.startHour = startHour;
+    }
+    public void setStartMinute(Integer startMinute) {
+        this.startMinute = startMinute;
     }
 
-    public void setDoctorKey(String doctorKey) {
-        this.doctorKey = doctorKey;
+    public void setEndHour(Integer endHour) {
+        this.endHour = endHour;
     }
-    public void setDoctorName(String doctorName){ this.doctorName = doctorName;}
+
+    public void setEndMinute(Integer endMinute) {
+        this.endMinute = endMinute;
+    }
 
     public void setPatientName(String patientName) {
         this.patientName = patientName;
@@ -88,19 +100,9 @@ public class Appointment {
         this.patientKey = patientKey;
     }
 
-    public void setStartHour(Integer startHour) {
-        this.startHour = startHour;
-    }
+    public void setDoctorName(String doctorName){ this.doctorName = doctorName;}
 
-    public void setEndMinute(Integer endMinute) {
-        this.endMinute = endMinute;
-    }
-
-    public void setEndHour(Integer endHour) {
-        this.endHour = endHour;
-    }
-
-    public void setStartMinute(Integer startMinute) {
-        this.startMinute = startMinute;
+    public void setDoctorKey(String doctorKey) {
+        this.doctorKey = doctorKey;
     }
 }
