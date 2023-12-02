@@ -137,7 +137,6 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        Appointment appointment = dataSnapshot.getValue(Appointment.class);
                         specificAcceptedAppointmentRef.removeValue();
                     }
                 }

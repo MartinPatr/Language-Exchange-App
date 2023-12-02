@@ -5,16 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
     String appointmentId;
@@ -32,6 +40,7 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
 
         getUserInfo(appointmentId);
 
+
         //===================================================================================================================
         //Sends the user back to the previous page
 
@@ -43,26 +52,31 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //===================================================================================================================
+        Button cancelButton = findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkTime(appointmentId);
+
+                Intent intent = new Intent(PatientUpcomingAppInfoActivity.this, PatientUpcomingAppsActivity.class);
+                intent.putExtra("userData",userData);
+                startActivity(intent);
+            }
+        });
+
         //===================================================================================================================
     }
 
-
     // Gets the doctor key given the appointment ID
     private void getUserInfo(String appointmentId) {
-
-
-
-
-
-
-
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments").child(appointmentId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot appointmentSnapshot) {
                 if (appointmentSnapshot.exists() && appointmentSnapshot.hasChildren()) {
                     doctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
                     if (doctorKey != null) {
-                        Log.d("Zelo", doctorKey);
                         getPatientInfo(doctorKey);
                     }
                     else {
@@ -142,4 +156,97 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
         });
     }
 
+    private void checkTime(String appointmentId){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments").child(appointmentId);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && dataSnapshot.hasChildren()) {
+                    if (appointmentId != null) {
+                        long startHourRetrieval = dataSnapshot.child("startHour").getValue(Long.class);
+                        long startMinuteRetrieval = dataSnapshot.child("startMinute").getValue(Long.class);
+                        int startHour = (int) startHourRetrieval;
+                        int startMinute = (int) startMinuteRetrieval;
+
+                        String dateInput = dataSnapshot.child("date").getValue(String.class);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+                        Date parsedDate;
+
+                        try{
+                            parsedDate = dateFormat.parse(dateInput);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+
+                        Calendar currentTime = Calendar.getInstance();
+                        Calendar appointmentTime = Calendar.getInstance();
+                        appointmentTime.setTime(parsedDate);
+
+                        int currentYear = currentTime.get(Calendar.YEAR);
+                        int currentMonth = currentTime.get(Calendar.MONTH);
+                        int currentDay = currentTime.get(Calendar.DAY_OF_MONTH);
+
+                        int appointmentYear = currentTime.get(Calendar.YEAR);
+                        int appointmentMonth = currentTime.get(Calendar.MONTH);
+                        int appointmentDay = currentTime.get(Calendar.DAY_OF_MONTH);
+
+                        Log.d("Charlie", String.valueOf(currentYear) + " " + String.valueOf(currentMonth) + " " + String.valueOf(currentDay));
+                        Log.d("Charlie", appointmentYear + " " + appointmentMonth + " " + appointmentDay);
+
+                        if (currentYear == appointmentYear && currentMonth == appointmentMonth && currentDay == appointmentDay){
+                            Log.d("Alpha", "Same day:TRUE");
+                            appointmentTime.set(Calendar.HOUR_OF_DAY,startHour);
+                            appointmentTime.set(Calendar.MINUTE,startMinute);
+
+                            long millisDifference = appointmentTime.getTimeInMillis() - currentTime.getTimeInMillis();
+                            long minutesDifference = TimeUnit.MILLISECONDS.toMinutes(millisDifference);
+
+                            if(minutesDifference < 60){
+                                Log.d("Echo", "<60 MINS: TRUE");
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "Cannot cancel appointment in 60 mins or less.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }, 3000);
+                            }
+                            else{
+                                cancelAppointment(appointmentId);
+                            }
+                        }
+                        else{
+                            cancelAppointment(appointmentId);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Error: " + databaseError.getMessage());
+            }
+        });
+    }
+
+    public void cancelAppointment(String appointmentId){
+        DatabaseReference acceptedAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
+        DatabaseReference specificAcceptedAppointmentRef = acceptedAppointmentsRef.child(appointmentId);
+
+        specificAcceptedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    specificAcceptedAppointmentRef.removeValue();
+                }
+                else{
+                    Log.d("PatientUpcomingAppInfoActivity",  "Appointment wasn't cancelled");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Error: " + databaseError.getMessage());
+            }
+        });
+    }
 }
