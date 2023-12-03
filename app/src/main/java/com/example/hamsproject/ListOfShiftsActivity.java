@@ -229,9 +229,4 @@ public class ListOfShiftsActivity extends AppCompatActivity {
 
         return isConflict;
     }
-
-
-
-
-
 }

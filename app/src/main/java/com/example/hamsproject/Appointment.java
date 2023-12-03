@@ -12,6 +12,7 @@ public class Appointment {
     Integer endHour;
     Integer endMinute;
     String appointmentStatus;
+    Boolean isRated = false;
 
     public Appointment() {
         appointmentStatus = "Requested";
@@ -104,5 +105,11 @@ public class Appointment {
 
     public void setDoctorKey(String doctorKey) {
         this.doctorKey = doctorKey;
+    }
+    public Boolean getIsRated() {
+        return isRated;
+    }
+    public void setIsRated(Boolean isRated) {
+        this.isRated = isRated;
     }
 }
