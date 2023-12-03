@@ -79,15 +79,16 @@ public class AppointmentListRequestsActivity extends AppCompatActivity {
         });
 
         //Sends the user to the info page for the appointment
-        appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener(){
+        appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener() {
             public void onAppointmentItemClick(Appointment appointment) {
-                Log.d("appointmentID: " , appointmentId);
+                Log.d("appointmentID: ", appointment.getAppointmentKey());
                 Intent intent = new Intent(AppointmentListRequestsActivity.this, AppointmentRequestInfoActivity.class);
-                intent.putExtra("appointmentId", appointmentId);
+                intent.putExtra("appointmentId", appointment.getAppointmentKey());
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         }, appointmentId);
+
 
         recyclerView.setAdapter(appointmentAdapter);
 
