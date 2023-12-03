@@ -55,7 +55,6 @@ public class PatientRegisterActivity extends AppCompatActivity {
      * @return Map<String, String>: Map that contains all the patient information
      */
     public Map<String, String> getPatientInfo(){
-        // Field variable declarations
         EditText patientNameField = findViewById(R.id.patientNameField);
         EditText patientLastNameField = findViewById(R.id.patientLastNameField);
         EditText patientEmailField = findViewById(R.id.patientEmailField);

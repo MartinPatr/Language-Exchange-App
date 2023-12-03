@@ -5,15 +5,11 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
-
-import android.util.Log;
-import android.widget.EditText;
-
-import androidx.test.core.app.ActivityScenario;
 import androidx.test.rule.ActivityTestRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 
 import java.util.Map;
 
@@ -43,7 +39,7 @@ public class PatientRegisterTest {
 
             Map<String, String> patientInfo = patientRegisterActivity.getPatientInfo();
 
-            //Checks the EditText filed values
+            //Checks the EditText filled values
             assertEquals("John", patientInfo.get("FirstName"));
             assertEquals("Doe", patientInfo.get("LastName"));
             assertEquals("john.doe@email.com", patientInfo.get("Email"));
