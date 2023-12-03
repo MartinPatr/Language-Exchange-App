@@ -97,15 +97,8 @@ public class ListOfShiftsActivity extends AppCompatActivity {
         });
     }
 
-    /*
     private void deleteShift(Shift shift) {
-        DatabaseReference shifts = FirebaseDatabase.getInstance().getReference("Accounts/Doctor").child(userData.getKey()).child("shifts");
-        shifts.child(shift.getID()).removeValue().addOnSuccessListener(aVoid -> {});
 
-    }
-    */
-
-    private void deleteShift(Shift shift) {
         DatabaseReference shiftsRef = FirebaseDatabase.getInstance()
                 .getReference("Accounts/Doctor")
                 .child(userData.getKey())
@@ -115,16 +108,14 @@ public class ListOfShiftsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String doctorKey = userData.getKey(); // Assuming doctorKey is available in userData
+                    String doctorKey = userData.getKey();
 
                     int shiftStartHour = dataSnapshot.child("startHour").getValue(Integer.class);
                     int shiftStartMinute = dataSnapshot.child("startMinute").getValue(Integer.class);
                     int shiftEndHour = dataSnapshot.child("endHour").getValue(Integer.class);
                     int shiftEndMinute = dataSnapshot.child("endMinute").getValue(Integer.class);
-                    String shiftDate = dataSnapshot.child("date").getValue(String.class); // Replace "date" with your Firebase date field name
+                    String shiftDate = dataSnapshot.child("date").getValue(String.class);
 
-                    Log.d("ListOfShiftsActivity", "Shift Data - Start: " + shiftStartHour + ":" + shiftStartMinute +
-                            " - End: " + shiftEndHour + ":" + shiftEndMinute);
 
                     DatabaseReference appointmentsRef = FirebaseDatabase.getInstance()
                             .getReference("Appointments")
@@ -140,16 +131,14 @@ public class ListOfShiftsActivity extends AppCompatActivity {
                                 int appointmentStartMinute = appointmentSnapshot.child("startMinute").getValue(Integer.class);
                                 int appointmentEndHour = appointmentSnapshot.child("endHour").getValue(Integer.class);
                                 int appointmentEndMinute = appointmentSnapshot.child("endMinute").getValue(Integer.class);
-                                String appointmentDate = appointmentSnapshot.child("date").getValue(String.class); // Replace "date" with your Firebase date field name
+                                String appointmentDate = appointmentSnapshot.child("date").getValue(String.class);
 
-                                Log.d("ListOfShiftsActivity", "Appointment Data - Start: " + appointmentStartHour + ":" +
-                                        appointmentStartMinute + " - End: " + appointmentEndHour + ":" + appointmentEndMinute);
 
                                 if (doctorKey.equals(appointmentDoctorKey)) {
-                                    // Check if appointment conflicts with the shift
+                                    // Check if appointment conflicts with the shift that dr wants to del
                                     if (shiftAppointmentConflictCheck(shiftStartHour, shiftStartMinute, shiftEndHour, shiftEndMinute, shiftDate,
                                             appointmentStartHour, appointmentStartMinute, appointmentEndHour, appointmentEndMinute, appointmentDate)) {
-                                        // Appointment found within shift time and date, prevent deletion
+                                        // Appointment found within shift time and date -> prevent deletion
                                         canDelete = false;
                                         Toast.makeText(ListOfShiftsActivity.this, "You have an appointment already booked during this shift.", Toast.LENGTH_SHORT).show();
                                         break;
@@ -158,37 +147,36 @@ public class ListOfShiftsActivity extends AppCompatActivity {
                             }
 
                             if (canDelete) {
-                                // No conflicting appointments found, delete the shift
+                                // No conflicting appointments found -> delete shift
                                 shiftsRef.child(shift.getID()).removeValue()
                                         .addOnSuccessListener(aVoid -> {
-                                            // Shift deleted successfully
-                                            Log.d("ListOfShiftsActivity", "Shift deleted successfully");
+                                            Toast.makeText(ListOfShiftsActivity.this, "Shift deleted.", Toast.LENGTH_SHORT).show();
+
                                         })
                                         .addOnFailureListener(e -> {
-                                            // Handle failure in shift deletion
+
                                             Log.e("ListOfShiftsActivity", "Error deleting shift: " + e.getMessage());
                                         });
                             } else {
-                                // Inform user that there are conflicting appointments, and deletion is not allowed
-                                // For instance, show a toast message or provide a UI notification
+
                             }
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-                            // Handle error in reading appointments
+
                             Log.e("ListOfShiftsActivity", "Database error: " + databaseError.getMessage());
                         }
                     });
                 } else {
-                    // Shift doesn't exist or already deleted
+
                     Log.d("ListOfShiftsActivity", "Shift doesn't exist or already deleted");
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Handle error in reading doctor shifts
+                // error in reading doctor shifts
                 Log.e("ListOfShiftsActivity", "Database error: " + databaseError.getMessage());
             }
         });
@@ -198,40 +186,33 @@ public class ListOfShiftsActivity extends AppCompatActivity {
                                                   String shiftDate,
                                                   int appointmentStartHour, int appointmentStartMinute, int appointmentEndHour, int appointmentEndMinute,
                                                   String appointmentDate) {
-        // Parse the shift and appointment dates
+
         String[] shiftDateParts = shiftDate.split("/");
-        int shiftDateMonth = Integer.parseInt(shiftDateParts[0]); // Month
-        int shiftDateDay = Integer.parseInt(shiftDateParts[1]); // Day
-        int shiftDateYear = Integer.parseInt(shiftDateParts[2]); // Year
+        int shiftDateMonth = Integer.parseInt(shiftDateParts[0]);
+        int shiftDateDay = Integer.parseInt(shiftDateParts[1]);
+        int shiftDateYear = Integer.parseInt(shiftDateParts[2]);
 
         String[] appointmentDateParts = appointmentDate.split("/");
-        int appointmentDateMonth = Integer.parseInt(appointmentDateParts[0]); // Month
-        int appointmentDateDay = Integer.parseInt(appointmentDateParts[1]); // Day
-        int appointmentDateYear = Integer.parseInt(appointmentDateParts[2]); // Year
+        int appointmentDateMonth = Integer.parseInt(appointmentDateParts[0]);
+        int appointmentDateDay = Integer.parseInt(appointmentDateParts[1]);
+        int appointmentDateYear = Integer.parseInt(appointmentDateParts[2]);
 
-        // Handle the case where appointment starts or ends at the same time as the shift and on the same date
+
         if ((shiftStartHour == appointmentStartHour && shiftStartMinute == appointmentStartMinute && shiftDateYear == appointmentDateYear && shiftDateMonth == appointmentDateMonth && shiftDateDay == appointmentDateDay) ||
                 (shiftEndHour == appointmentEndHour && shiftEndMinute == appointmentEndMinute && shiftDateYear == appointmentDateYear && shiftDateMonth == appointmentDateMonth && shiftDateDay == appointmentDateDay)) {
-            return true; // Consider this as a conflicting appointment
+            return true; // conflicting appointment
         }
 
-        // Perform the comparison for overlapping time slots and on the same date
         int appointmentStart = appointmentStartHour * 60 + appointmentStartMinute;
         int appointmentEnd = appointmentEndHour * 60 + appointmentEndMinute;
         int shiftStart = shiftStartHour * 60 + shiftStartMinute;
         int shiftEnd = shiftEndHour * 60 + shiftEndMinute;
 
-        // Check for conflict by comparing the time ranges and on the same date
+
         boolean isConflict = !(appointmentEnd <= shiftStart || appointmentStart >= shiftEnd) &&
                 (shiftDateYear == appointmentDateYear && shiftDateMonth == appointmentDateMonth && shiftDateDay == appointmentDateDay);
 
-        Log.d("ConflictCheck", "Conflict Result: " + isConflict);
-
         return isConflict;
     }
-
-
-
-
 
 }
