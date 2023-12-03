@@ -132,7 +132,36 @@ public class BookAppointmentActivity extends AppCompatActivity implements Patien
     }
 
     @Override
-    public void onItemClick(Shift shift){}
+    public void onItemClick(Shift shift) {
+    }
+
+    public interface DoctorNameCallback {
+        void onDoctorNameReceived(String doctorName);
+    }
+
+    public void getDoctorName(String doctorKey, DoctorNameCallback callback) {
+        DatabaseReference doctors = FirebaseDatabase.getInstance().getReference("Accounts").child("Doctor").child(doctorKey);
+
+        doctors.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot doctorSnapshot) {
+                String firstName = doctorSnapshot.child("firstName").getValue(String.class);
+                String lastName = doctorSnapshot.child("lastName").getValue(String.class);
+                String doctorName = firstName + " " + lastName;
+
+                // Call the callback with the result
+                callback.onDoctorNameReceived(doctorName);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("BookAppointmentActivity", "Database error: " + databaseError.getMessage());
+
+                // Call the callback with a default or error value
+                callback.onDoctorNameReceived("Error");
+            }
+        });
+    }
 
     public void onBookButtonClick(Shift shift) {
         //Makes an appointment to add to RequestedAppointments in the database

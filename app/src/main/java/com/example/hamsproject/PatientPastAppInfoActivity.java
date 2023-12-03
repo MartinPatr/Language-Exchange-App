@@ -9,13 +9,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
 
+import android.widget.RatingBar;
 public class PatientPastAppInfoActivity extends AppCompatActivity {
     String appointmentId;
     String doctorKey;
@@ -38,7 +44,7 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(PatientPastAppInfoActivity.this, PatientPastAppsActivity.class);
+                Intent intent = new Intent(PatientPastAppInfoActivity.this, PatientPastAppsActivity.class);                
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }
@@ -120,6 +126,7 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
                         if(endMinute.equals("0")){
                             endMinute = "00";
                         }
+                        
 
                         String time = startHour + ":" + startMinute + " - " + endHour + ":" + endMinute;
 
@@ -129,6 +136,33 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
 
                         TextView timeField = findViewById(R.id.timeField);
                         timeField.setText(time);
+                        Log.i("Test", String.valueOf(dataSnapshot.child("isRated").getValue(Boolean.class)));
+                        TextView ratingText = findViewById(R.id.rateText);
+                        Button rateButton =  findViewById(R.id.rateButton);
+                        RatingBar ratingBar = findViewById(R.id.ratingBar);
+                        if (dataSnapshot.child("isRated").getValue(Boolean.class) != null && dataSnapshot.child("isRated").getValue(Boolean.class)) {
+                            // Set button and widgets to invisible if they have already submitted a review
+                            ratingText.setText("You have already rated this appointment");
+                            rateButton.setVisibility(View.INVISIBLE);
+                            ratingBar.setVisibility(View.INVISIBLE);
+                        } else {
+                            if (dataSnapshot.child("isRated").getValue(Boolean.class) == null) {
+                                dataSnapshot.child("isRated").getRef().setValue(false);
+                            }
+                            ratingText.setText("Give your appointment a score from 1 to 5");
+                            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                                    rateButton.setOnClickListener(new View.OnClickListener() {
+                                        public void onClick(View v){
+                                            Double doubleRating = Double.valueOf(rating); // Using valueOf method
+                                            updateRating(doubleRating);
+                                            Toast.makeText(PatientPastAppInfoActivity.this, "You have given this appointment a " + rating, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            });
+
+                        } 
                     }
                 }
             }
@@ -140,4 +174,67 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void updateRating(Double rating) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments").child(appointmentId);
+        databaseReference.child("isRated").setValue(true);
+    
+        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Accounts/Doctor").child(doctorKey);
+
+        DatabaseReference numRatingsRef = databaseReference2.child("numRatings");
+        numRatingsRef.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                Integer numRatings = mutableData.getValue(Integer.class);
+                if (numRatings == null) {
+                    // If the value is null, initialize it to 1
+                    mutableData.setValue(1);
+                } else {
+                    // Increment the existing value
+                    mutableData.setValue(numRatings + 1);
+                }
+                return Transaction.success(mutableData);
+            }
+    
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, boolean committed, @Nullable DataSnapshot currentData) {
+                if (committed && databaseError == null) {
+                    // Transaction successful
+                    Toast.makeText(PatientPastAppInfoActivity.this, "Rating updated successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Transaction failed
+                    Toast.makeText(PatientPastAppInfoActivity.this, "Failed to update rating", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        DatabaseReference RatingRef = databaseReference2.child("rating");
+        RatingRef.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                Double ratingDB = mutableData.getValue(Double.class);
+                if (ratingDB == null) {
+                    // If the value is null, initialize it to the rating
+                    mutableData.setValue(rating);
+                } else {
+                    // Increment the existing value
+                    mutableData.setValue(ratingDB + rating);
+                }
+                return Transaction.success(mutableData);
+            }
+    
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, boolean committed, @Nullable DataSnapshot currentData) {
+                if (committed && databaseError == null) {
+                    Toast.makeText(PatientPastAppInfoActivity.this, "Rating updated successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(PatientPastAppInfoActivity.this, "Failed to update rating", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    
+
 }
