@@ -19,10 +19,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class DoctorRegisterActivity extends AppCompatActivity {
+    public EditText doctorFirstNameField;
+    public EditText doctorLastNameField;
+    public EditText doctorEmailField;
+    public EditText doctorPasswordField;
+    public EditText doctorPhoneField;
+    public EditText doctorAddressField;
+    public EditText doctorEmployeeNumberField;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_register);
+
+        doctorFirstNameField = findViewById(R.id.doctorFirstNameField);
+        doctorLastNameField = findViewById(R.id.doctorLastNameField);
+        doctorEmailField = findViewById(R.id.doctorEmailField);
+        doctorPasswordField = findViewById(R.id.doctorPasswordField);
+        doctorPhoneField = findViewById(R.id.doctorPhoneField);
+        doctorAddressField = findViewById(R.id.doctorAddressField);
+        doctorEmployeeNumberField = findViewById(R.id.doctorEmployeeNumberField);
 
         // Retrieving TextView and Button Objects.
         Button goToSpecialties = findViewById(R.id.goToSpecialties);
@@ -47,19 +62,21 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         });
     }
 
+
+
     /* 
      * This method gets all the doctor information from the fields
      * @return Map<String, String>: Map that contains all the patient information
      */
-    private Map<String, String> getDoctorInfo(){
+    public Map<String, String> getDoctorInfo(){
     // Field variable declarations
-    EditText doctorFirstNameField = findViewById(R.id.doctorFirstNameField);
-    EditText doctorLastNameField = findViewById(R.id.doctorLastNameField);
-    EditText doctorEmailField = findViewById(R.id.doctorEmailField);
-    EditText doctorPasswordField = findViewById(R.id.doctorPasswordField);
-    EditText doctorPhoneField = findViewById(R.id.doctorPhoneField);
-    EditText doctorAddressField = findViewById(R.id.doctorAddressField);
-    EditText doctorEmployeeNumberField = findViewById(R.id.doctorEmployeeNumberField);
+    doctorFirstNameField = findViewById(R.id.doctorFirstNameField);
+    doctorLastNameField = findViewById(R.id.doctorLastNameField);
+    doctorEmailField = findViewById(R.id.doctorEmailField);
+    doctorPasswordField = findViewById(R.id.doctorPasswordField);
+    doctorPhoneField = findViewById(R.id.doctorPhoneField);
+    doctorAddressField = findViewById(R.id.doctorAddressField);
+    doctorEmployeeNumberField = findViewById(R.id.doctorEmployeeNumberField);
 
     Map<String, String> doctorInfo = new HashMap<>();
     doctorInfo.put("FirstName", doctorFirstNameField.getText().toString());
