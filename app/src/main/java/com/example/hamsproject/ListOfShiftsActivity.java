@@ -72,19 +72,19 @@ public class ListOfShiftsActivity extends AppCompatActivity {
 
         DatabaseReference shifts = FirebaseDatabase.getInstance().getReference("Accounts/Doctor").child(userData.getKey()).child("shifts");
 
-        shifts.addValueEventListener(new ValueEventListener() {
+        shifts.addValueEventListener(new ValueEventListener(){
             @Override
-            public void onDataChange(@NonNull DataSnapshot shiftsSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot shiftsSnapshot){
                 List<Shift> doctorShifts = new ArrayList<>();
 
-                if (shiftsSnapshot.exists() && shiftsSnapshot.hasChildren()) {
-                    for (DataSnapshot shiftSnapshot : shiftsSnapshot.getChildren()) {
+                if (shiftsSnapshot.exists() && shiftsSnapshot.hasChildren()){
+                    for (DataSnapshot shiftSnapshot : shiftsSnapshot.getChildren()){
                         Shift shift = shiftSnapshot.getValue(Shift.class);
                         Log.d("ListOfShiftsActivity", "Shift info: " + shift.getDate());
                         doctorShifts.add(shift);
                     }
                 }
-                else {
+                else{
                     Log.d("ListOfShiftsActivity", "No Shifts");
                 }
                 shiftAdapter.setShiftList(doctorShifts);
@@ -157,8 +157,8 @@ public class ListOfShiftsActivity extends AppCompatActivity {
 
                                             Log.e("ListOfShiftsActivity", "Error deleting shift: " + e.getMessage());
                                         });
-                            } else {
-
+                            }
+                            else {
                             }
                         }
 
@@ -168,7 +168,8 @@ public class ListOfShiftsActivity extends AppCompatActivity {
                             Log.e("ListOfShiftsActivity", "Database error: " + databaseError.getMessage());
                         }
                     });
-                } else {
+                }
+                else {
 
                     Log.d("ListOfShiftsActivity", "Shift doesn't exist or already deleted");
                 }
@@ -176,7 +177,6 @@ public class ListOfShiftsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // error in reading doctor shifts
                 Log.e("ListOfShiftsActivity", "Database error: " + databaseError.getMessage());
             }
         });

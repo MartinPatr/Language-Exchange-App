@@ -169,7 +169,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
 
 
     private boolean checkTime(String startHour, String endHour, String startMinute, String endMinute) {
-        try {
+        try{
 
             int sHour = Integer.parseInt(startHour);
             int eHour = Integer.parseInt(endHour);
@@ -180,23 +180,26 @@ public class ShiftCreationActivity extends AppCompatActivity {
             if (sHour < 0 || sHour > 23 || eHour < 0 || eHour > 23) {
                 Toast.makeText(ShiftCreationActivity.this, "Hour Must Be Between 0-23", Toast.LENGTH_SHORT).show();
                 return false;
-            } else if ((sMinute != 0 && sMinute != 30) || (eMinute != 0 && eMinute != 30)) {
+            }
+            else if ((sMinute != 0 && sMinute != 30) || (eMinute != 0 && eMinute != 30)) {
                 Toast.makeText(ShiftCreationActivity.this, "Shifts Must Be on 30 Minute Intervals", Toast.LENGTH_SHORT).show();
                 return false;
-            } else if ((eHour < sHour) || ((eHour == sHour) && (eMinute <= sMinute))) {
+            }
+            else if ((eHour < sHour) || ((eHour == sHour) && (eMinute <= sMinute))) {
                 Toast.makeText(ShiftCreationActivity.this, "End Time Must be After Start Time", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             return true;
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        }
+        catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             Toast.makeText(ShiftCreationActivity.this, "Invalid Time", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
 
-    private boolean checkDate(String date) {
-        if (date == null) {
+    private boolean checkDate(String date){
+        if (date == null){
             Toast.makeText(ShiftCreationActivity.this, "Select a Date", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -237,11 +240,12 @@ public class ShiftCreationActivity extends AppCompatActivity {
                     }
                 }
 
-                if (overlap) {
+                if (overlap){
 
                     Toast.makeText(ShiftCreationActivity.this, "Shift overlaps with existing shift", Toast.LENGTH_SHORT).show();
 
-                } else {
+                }
+                else{
                     //Saves new shift
                     DatabaseReference shift = shiftsReference.push();
                     shift.setValue(newShift);

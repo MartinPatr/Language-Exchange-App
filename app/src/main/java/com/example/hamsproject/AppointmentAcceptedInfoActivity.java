@@ -146,7 +146,8 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
                     Log.e("Firebase", "Error: " + databaseError.getMessage());
                 }
             });
-        } else if (status.equals("Past")) {
+        }
+        else if (status.equals("Past")){
             specificAcceptedAppointmentRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

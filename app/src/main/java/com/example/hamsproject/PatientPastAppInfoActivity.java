@@ -38,9 +38,7 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
 
         getUserInfo(appointmentId);
 
-        //===================================================================================================================
         //Sends the user back to the previous page
-
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
@@ -49,21 +47,20 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //===================================================================================================================
     }
 
-    // Gets the doctor key given the appointment ID
+    //Gets the doctor key given the appointment ID
     private void getUserInfo(String appointmentId) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments").child(appointmentId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener(){
             public void onDataChange(@NonNull DataSnapshot appointmentSnapshot) {
                 if (appointmentSnapshot.exists() && appointmentSnapshot.hasChildren()) {
                     doctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
-                    if (doctorKey != null) {
+                    if (doctorKey != null){
                         Log.d("Zelo", doctorKey);
                         getPatientInfo(doctorKey);
                     }
-                    else {
+                    else{
                         Log.e("AppointmentPastInfoActivity", "doctorKey is null");
                     }
                 }
@@ -76,7 +73,7 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
         });
     }
 
-    // Gets the doctor's details given the doctor key found previously.
+    //Gets the doctor's details given the doctor key found previously.
     private void getPatientInfo(String doctorKey){
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Accounts/Doctor");
@@ -141,7 +138,7 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
                         Button rateButton =  findViewById(R.id.rateButton);
                         RatingBar ratingBar = findViewById(R.id.ratingBar);
                         if (dataSnapshot.child("isRated").getValue(Boolean.class) != null && dataSnapshot.child("isRated").getValue(Boolean.class)) {
-                            // Set button and widgets to invisible if they have already submitted a review
+                            //Sets button and widgets invisible if the user has already submitted a review
                             ratingText.setText("You have already rated this appointment");
                             rateButton.setVisibility(View.INVISIBLE);
                             ratingBar.setVisibility(View.INVISIBLE);
@@ -154,7 +151,7 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
                                 public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                                     rateButton.setOnClickListener(new View.OnClickListener() {
                                         public void onClick(View v){
-                                            Double doubleRating = Double.valueOf(rating); // Using valueOf method
+                                            Double doubleRating = Double.valueOf(rating);
                                             updateRating(doubleRating);
                                             Toast.makeText(PatientPastAppInfoActivity.this, "You have given this appointment a " + rating, Toast.LENGTH_SHORT).show();
                                         }
@@ -188,10 +185,9 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
                 Integer numRatings = mutableData.getValue(Integer.class);
                 if (numRatings == null) {
-                    // If the value is null, initialize it to 1
+                    //Sets to 1 if null
                     mutableData.setValue(1);
                 } else {
-                    // Increment the existing value
                     mutableData.setValue(numRatings + 1);
                 }
                 return Transaction.success(mutableData);
@@ -200,10 +196,8 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, boolean committed, @Nullable DataSnapshot currentData) {
                 if (committed && databaseError == null) {
-                    // Transaction successful
                     Toast.makeText(PatientPastAppInfoActivity.this, "Rating updated successfully", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Transaction failed
                     Toast.makeText(PatientPastAppInfoActivity.this, "Failed to update rating", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -216,10 +210,8 @@ public class PatientPastAppInfoActivity extends AppCompatActivity {
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
                 Double ratingDB = mutableData.getValue(Double.class);
                 if (ratingDB == null) {
-                    // If the value is null, initialize it to the rating
                     mutableData.setValue(rating);
                 } else {
-                    // Increment the existing value
                     mutableData.setValue(ratingDB + rating);
                 }
                 return Transaction.success(mutableData);

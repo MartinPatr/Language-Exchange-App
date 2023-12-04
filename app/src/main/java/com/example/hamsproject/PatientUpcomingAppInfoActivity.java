@@ -40,9 +40,7 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
 
         getUserInfo(appointmentId);
 
-        //===================================================================================================================
         //Sends the user back to the previous page
-
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
@@ -52,7 +50,6 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
             }
         });
 
-        //===================================================================================================================
         Button cancelButton = findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,11 +61,9 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        //===================================================================================================================
     }
 
-    // Gets the doctor key given the appointment ID
+    //Gets the doctor key given the appointment ID
     private void getUserInfo(String appointmentId) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments").child(appointmentId);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -91,7 +86,7 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
         });
     }
 
-    // Gets the doctor's details given the doctor key found previously.
+    //Gets the doctor's details given the doctor key found previously.
     private void getPatientInfo(String doctorKey){
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Accounts/Doctor");

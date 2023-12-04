@@ -40,17 +40,14 @@ public class PatientUpcomingAppsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //===================================================================================================================
         Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(PatientUpcomingAppsActivity.this, PatientPageActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         });
-
-        //===================================================================================================================
 
         DatabaseReference upcomingAppsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
 
