@@ -8,6 +8,8 @@ public class Doctor extends Account {
     public Map<String,Boolean> specialties;
     public Map<String, Map<String, Object>> shifts;
     public boolean acceptAllAppointments = false;
+    public Integer numRatings = 0;
+    public Double totalRating = 0.0;
 
     public Doctor() {
         super();
@@ -51,6 +53,18 @@ public class Doctor extends Account {
     }
     public boolean getAcceptAllAppointments() {
         return acceptAllAppointments;
+    }
+    public void setNumRatings(Integer numRatings) {
+        this.numRatings = numRatings;
+    }
+    public Integer getNumRatings() {
+        return numRatings;
+    }
+    public void setTotalRating(Double totalRating) {
+        this.totalRating = totalRating;
+    }
+    public Double getTotalRating() {
+        return totalRating;
     }
     @Override
     public String getType() {
