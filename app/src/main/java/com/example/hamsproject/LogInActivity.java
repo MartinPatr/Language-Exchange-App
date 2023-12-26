@@ -68,9 +68,9 @@ public class LogInActivity extends AppCompatActivity {
                                 if (authAccount.getType().equals("Admin")) {
                                     intent = new Intent(LogInActivity.this, AdminPendingActivity.class);
                                 }else if (authAccount.getType().equals("Doctor")) {
-                                    intent = new Intent(LogInActivity.this, DoctorPageActivity.class);
+                                    intent = new Intent(LogInActivity.this, TeacherPageActivity.class);
                                 }else {
-                                    intent = new Intent(LogInActivity.this, PatientPageActivity.class);
+                                    intent = new Intent(LogInActivity.this, UserPageActivity.class);
                                 }
                                 intent.putExtra("userData",authAccount);
                                 startActivity(intent);
@@ -86,7 +86,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     /* 
-     * This method gets all the patient information from the fields
+     * This method gets all the User information from the fields
      * @return Map<String, String>: Map that contains all the login information
      */
     private Map<String, String> getLoginInfo(){
@@ -113,7 +113,7 @@ public class LogInActivity extends AppCompatActivity {
         
         // Create a list of all the possible types of accounts
         ArrayList<String> accountTypes = new ArrayList<>();
-        accountTypes.add("Admin"); accountTypes.add("Doctor"); accountTypes.add("Patient");
+        accountTypes.add("Admin"); accountTypes.add("Doctor"); accountTypes.add("User");
 
         // Boolean to check if authentication is successful
         AtomicBoolean authenticationSuccessful = new AtomicBoolean(false);
@@ -135,9 +135,9 @@ public class LogInActivity extends AppCompatActivity {
                                     if ("Admin".equals(accountType)) {
                                         authAccount = (Admin)accountSnapshot.getValue(Admin.class);
                                     } else if ("Doctor".equals(accountType)) {
-                                       authAccount = (Doctor)accountSnapshot.getValue(Doctor.class);
-                                    } else if ("Patient".equals(accountType)) {
-                                        authAccount = (Patient)accountSnapshot.getValue(Patient.class);
+                                       authAccount = (Teacher)accountSnapshot.getValue(Teacher.class);
+                                    } else if ("User".equals(accountType)) {
+                                        authAccount = (User)accountSnapshot.getValue(User.class);
                                     }
 
                                     authenticationSuccessful.set(true);

@@ -28,12 +28,12 @@ public class DoctorRegisterTest {
     public void testGetDoctorInfo() throws InterruptedException {
 
         //Set the EditText fields with test data using Espresso
-        onView(withId(R.id.doctorFirstNameField)).perform(typeText("John"), closeSoftKeyboard());
-        onView(withId(R.id.doctorLastNameField)).perform(typeText("Doe"), closeSoftKeyboard());
-        onView(withId(R.id.doctorEmailField)).perform(typeText("john.doe@email.com"), closeSoftKeyboard());
-        onView(withId(R.id.doctorPasswordField)).perform(typeText("12345"), closeSoftKeyboard());
-        onView(withId(R.id.doctorPhoneField)).perform(typeText("1234567890"), closeSoftKeyboard());
-        onView(withId(R.id.doctorAddressField)).perform(typeText("123 Main St"), closeSoftKeyboard());
+        onView(withId(R.id.teacherFirstNameField)).perform(typeText("John"), closeSoftKeyboard());
+        onView(withId(R.id.teacherLastNameField)).perform(typeText("Doe"), closeSoftKeyboard());
+        onView(withId(R.id.teacherEmailField)).perform(typeText("john.doe@email.com"), closeSoftKeyboard());
+        onView(withId(R.id.teacherPasswordField)).perform(typeText("12345"), closeSoftKeyboard());
+        onView(withId(R.id.teacherPhoneField)).perform(typeText("1234567890"), closeSoftKeyboard());
+        onView(withId(R.id.teacherAddressField)).perform(typeText("123 Main St"), closeSoftKeyboard());
         onView(withId(R.id.doctorEmployeeNumberField)).perform(typeText("12345"), closeSoftKeyboard());
 
         Map<String, String> doctorInfo = doctorRegisterActivity.getDoctorInfo();

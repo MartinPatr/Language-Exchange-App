@@ -20,19 +20,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.FirebaseDatabase;
-import com.example.hamsproject.PatientShiftAdapter;
+import com.example.hamsproject.UserShiftAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class BookAppointmentActivity extends AppCompatActivity implements PatientShiftAdapter.OnItemClickListener {
+public class BookAppointmentActivity extends AppCompatActivity implements UserShiftAdapter.OnItemClickListener {
 
     Account userData;
     private RecyclerView recyclerView;
     private List<Shift> availableShifts = new ArrayList<>();
-    PatientShiftAdapter adapter = new PatientShiftAdapter(availableShifts, this);
+    UserShiftAdapter adapter = new UserShiftAdapter(availableShifts, this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Patien
         //Sets up the back button
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(BookAppointmentActivity.this, PatientPageActivity.class);
+                Intent intent = new Intent(BookAppointmentActivity.this, UserPageActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }
@@ -82,18 +82,18 @@ public class BookAppointmentActivity extends AppCompatActivity implements Patien
                             for (DataSnapshot appointmentSnapshot : dataSnapshot.getChildren()) {
                                 Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
                                 if (appointment != null) {
-                                    String doctorKey = appointment.getDoctorKey();
+                                    String teacherKey = appointment.getTeacherKey();
 
-                                    DatabaseReference doctors = FirebaseDatabase.getInstance().getReference("Accounts").child("Doctor").child(doctorKey);
+                                    DatabaseReference teachers = FirebaseDatabase.getInstance().getReference("Accounts").child("Teacher").child(teacherKey);
 
-                                    doctors.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    teachers.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
-                                        public void onDataChange(@NonNull DataSnapshot doctorSnapshot) {
+                                        public void onDataChange(@NonNull DataSnapshot teacherSnapshot) {
 
                                             //Checks for the selected specialty
-                                            if(doctorSnapshot.child("specialties").child(selectedSpecialty).getValue(Boolean.class) != null && doctorSnapshot.child("specialties").child(selectedSpecialty).getValue(Boolean.class)) {
+                                            if(teacherSnapshot.child("specialties").child(selectedSpecialty).getValue(Boolean.class) != null && teacherSnapshot.child("specialties").child(selectedSpecialty).getValue(Boolean.class)) {
 
-                                                Shift shift = new Shift(appointment.getDate(), appointment.getStartHour(), appointment.getStartMinute(), appointment.getEndHour(), appointment.getEndMinute(), appointment.getDoctorKey(), appointment.getDoctorName());
+                                                Shift shift = new Shift(appointment.getDate(), appointment.getStartHour(), appointment.getStartMinute(), appointment.getEndHour(), appointment.getEndMinute(), appointment.getTeacherKey(), appointment.getTeacherName());
                                                 shift.setID(appointmentSnapshot.getKey());
 
                                                 availableShifts.add(shift);
@@ -135,22 +135,22 @@ public class BookAppointmentActivity extends AppCompatActivity implements Patien
     public void onItemClick(Shift shift) {
     }
 
-    public interface DoctorNameCallback {
-        void onDoctorNameReceived(String doctorName);
+    public interface TeacherNameCallback {
+        void onTeacherNameReceived(String teacherName);
     }
 
-    public void getDoctorName(String doctorKey, DoctorNameCallback callback) {
-        DatabaseReference doctors = FirebaseDatabase.getInstance().getReference("Accounts").child("Doctor").child(doctorKey);
+    public void getTeacherName(String teacherKey, TeacherNameCallback callback) {
+        DatabaseReference teachers = FirebaseDatabase.getInstance().getReference("Accounts").child("Teacher").child(teacherKey);
 
-        doctors.addListenerForSingleValueEvent(new ValueEventListener() {
+        teachers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot doctorSnapshot) {
-                String firstName = doctorSnapshot.child("firstName").getValue(String.class);
-                String lastName = doctorSnapshot.child("lastName").getValue(String.class);
-                String doctorName = firstName + " " + lastName;
+            public void onDataChange(@NonNull DataSnapshot teacherSnapshot) {
+                String firstName = teacherSnapshot.child("firstName").getValue(String.class);
+                String lastName = teacherSnapshot.child("lastName").getValue(String.class);
+                String teacherName = firstName + " " + lastName;
 
                 // Call the callback with the result
-                callback.onDoctorNameReceived(doctorName);
+                callback.onTeacherNameReceived(teacherName);
             }
 
             @Override
@@ -158,7 +158,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Patien
                 Log.e("BookAppointmentActivity", "Database error: " + databaseError.getMessage());
 
                 // Call the callback with a default or error value
-                callback.onDoctorNameReceived("Error");
+                callback.onTeacherNameReceived("Error");
             }
         });
     }
@@ -167,14 +167,14 @@ public class BookAppointmentActivity extends AppCompatActivity implements Patien
         //Makes an appointment to add to RequestedAppointments in the database
         Appointment appointment = new Appointment();
         appointment.setAppointmentKey(shift.getID());
-        appointment.setPatientName(userData.getFirstName() + " " + userData.getLastName());
+        appointment.setUserName(userData.getFirstName() + " " + userData.getLastName());
         appointment.setDate(shift.getDate());
         appointment.setStartHour(shift.getStartHour());
         appointment.setStartMinute(shift.getStartMinute());
         appointment.setEndHour(shift.getEndHour());
         appointment.setEndMinute(shift.getEndMinute());
-        appointment.setPatientKey(userData.getKey());
-        appointment.setDoctorKey(shift.getDoctorKey());
+        appointment.setUserKey(userData.getKey());
+        appointment.setTeacherKey(shift.getTeacherKey());
 
         Log.d("id", shift.getID());
 

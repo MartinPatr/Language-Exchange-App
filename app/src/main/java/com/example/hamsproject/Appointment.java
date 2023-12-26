@@ -2,10 +2,10 @@ package com.example.hamsproject;
 
 public class Appointment {
     String appointmentKey;
-    String patientName;
-    String patientKey;
-    String doctorKey;
-    String doctorName;
+    String userName;
+    String userKey;
+    String teacherKey;
+    String teacherName;
     String date;
     Integer startHour;
     Integer startMinute;
@@ -18,17 +18,17 @@ public class Appointment {
         appointmentStatus = "Requested";
     }
 
-    public Appointment(String appointmentKey, String patientName, String patientKey, String doctorKey, String date, Integer startHour, Integer startMinute, Integer endHour, Integer endMinute, String doctorName) {
+    public Appointment(String appointmentKey, String userName, String userKey, String teacherKey, String date, Integer startHour, Integer startMinute, Integer endHour, Integer endMinute, String teacherName) {
         this.appointmentKey = appointmentKey;
-        this.patientName = patientName;
-        this.patientKey = patientKey;
-        this.doctorKey = doctorKey;
+        this.userName = userName;
+        this.userKey = userKey;
+        this.teacherKey = teacherKey;
         this.date = date;
         this.startHour = startHour;
         this.startMinute = startMinute;
         this.endHour = endHour;
         this.endMinute = endMinute;
-        this.doctorName = doctorName;
+        this.teacherName = teacherName;
         appointmentStatus = "Requested";
     }
     public String getAppointmentKey() {
@@ -50,15 +50,15 @@ public class Appointment {
     }public Integer getEndMinute(){
         return endMinute;
     }
-    public String getPatientName() {
-        return patientName;
+    public String getUserName() {
+        return userName;
     }
-    public String getPatientKey() {
-        return patientKey;
+    public String getUserKey() {
+        return userKey;
     }
-    public String getDoctorName(){ return doctorName;}
-    public String getDoctorKey() {
-        return doctorKey;
+    public String getTeacherName(){ return teacherName;}
+    public String getTeacherKey() {
+        return teacherKey;
     }
 
 
@@ -93,18 +93,18 @@ public class Appointment {
         this.endMinute = endMinute;
     }
 
-    public void setPatientName(String patientName) {
-        this.patientName = patientName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setPatientKey(String patientKey) {
-        this.patientKey = patientKey;
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
     }
 
-    public void setDoctorName(String doctorName){ this.doctorName = doctorName;}
+    public void setTeacherName(String teacherName){ this.teacherName = teacherName;}
 
-    public void setDoctorKey(String doctorKey) {
-        this.doctorKey = doctorKey;
+    public void setTeacherKey(String teacherKey) {
+        this.teacherKey = teacherKey;
     }
     public Boolean getIsRated() {
         return isRated;

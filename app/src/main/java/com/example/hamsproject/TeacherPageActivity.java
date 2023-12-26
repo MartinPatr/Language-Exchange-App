@@ -7,16 +7,9 @@ import android.view.View;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.util.Log;
-import android.graphics.Color;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
-public class DoctorPageActivity extends AppCompatActivity {
+public class TeacherPageActivity extends AppCompatActivity {
     Account userData;
 
     TextView userTypeDisplayed;
@@ -24,7 +17,7 @@ public class DoctorPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_page);
+        setContentView(R.layout.activity_teacher_page);
 
         Button logoutButton = findViewById(R.id.logoutButton);
         Button viewShiftsButton = findViewById(R.id.viewShiftsButton);
@@ -45,7 +38,7 @@ public class DoctorPageActivity extends AppCompatActivity {
         //Used to logout
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(DoctorPageActivity.this, LogInActivity.class);
+                Intent intent = new Intent(TeacherPageActivity.this, LogInActivity.class);
                 startActivity(intent);
             }
         });
@@ -53,7 +46,7 @@ public class DoctorPageActivity extends AppCompatActivity {
         //Used to go to the list of shifts
         viewShiftsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(DoctorPageActivity.this, ListOfShiftsActivity.class);
+                Intent intent = new Intent(TeacherPageActivity.this, ListOfShiftsActivity.class);
                 intent.putExtra("userData",userData);
                 startActivity(intent);
             }
@@ -62,8 +55,8 @@ public class DoctorPageActivity extends AppCompatActivity {
         //Used to go to the requested appointments
         viewRequestedAppointmentsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Log.d("DoctorPageActivity", "ViewAppsButton");
-                Intent intent = new Intent(DoctorPageActivity.this, AppointmentListRequestsActivity.class);
+                Log.d("TeacherPageActivity", "ViewAppsButton");
+                Intent intent = new Intent(TeacherPageActivity.this, AppointmentListRequestsActivity.class);
                 intent.putExtra("userData",userData);
 
                 startActivity(intent);
@@ -75,8 +68,8 @@ public class DoctorPageActivity extends AppCompatActivity {
         //Used to go to the accepted appointments
         viewAcceptedAppointmentsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Log.d("DoctorPageActivity", "ViewAppsButton");
-                Intent intent = new Intent(DoctorPageActivity.this, AppointmentListAcceptedActivity.class);
+                Log.d("TeacherPageActivity", "ViewAppsButton");
+                Intent intent = new Intent(TeacherPageActivity.this, AppointmentListAcceptedActivity.class);
                 intent.putExtra("userData",userData);
 
                 startActivity(intent);
@@ -88,8 +81,8 @@ public class DoctorPageActivity extends AppCompatActivity {
         //Used to go to the past appointments
         viewPastAppointmentsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Log.d("DoctorPageActivity", "ViewAppsButton");
-                Intent intent = new Intent(DoctorPageActivity.this, AppointmentListPastActivity.class);
+                Log.d("TeacherPageActivity", "ViewAppsButton");
+                Intent intent = new Intent(TeacherPageActivity.this, AppointmentListPastActivity.class);
                 intent.putExtra("userData",userData);
 
                 startActivity(intent);

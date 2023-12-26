@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PatientPageActivity extends AppCompatActivity{
+public class UserPageActivity extends AppCompatActivity{
     Account userData;
 
     TextView userTypeDisplayed;
@@ -16,7 +16,7 @@ public class PatientPageActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_page);
+        setContentView(R.layout.activity_user_page);
 
         Button logoutButton = findViewById(R.id.logoutButton);
         Button viewUpcomingAppsButton = findViewById(R.id.viewUpcomingAppsButton);
@@ -34,14 +34,14 @@ public class PatientPageActivity extends AppCompatActivity{
         //Used to logout
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(PatientPageActivity.this, LogInActivity.class);
+                Intent intent = new Intent(UserPageActivity.this, LogInActivity.class);
                 startActivity(intent);
             }
         });
 
         viewUpcomingAppsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(PatientPageActivity.this, PatientUpcomingAppsActivity.class);
+                Intent intent = new Intent(UserPageActivity.this, UserUpcomingAppsActivity.class);
                 intent.putExtra("userData",userData);
                 startActivity(intent);
             }
@@ -49,7 +49,7 @@ public class PatientPageActivity extends AppCompatActivity{
 
         viewPastAppointmentsButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(PatientPageActivity.this, PatientPastAppsActivity.class);
+                Intent intent = new Intent(UserPageActivity.this, UserPastAppsActivity.class);
                 intent.putExtra("userData",userData);
                 startActivity(intent);
             }
@@ -57,7 +57,7 @@ public class PatientPageActivity extends AppCompatActivity{
 
         bookAppButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(PatientPageActivity.this, BookAppointmentActivity.class);
+                Intent intent = new Intent(UserPageActivity.this, BookAppointmentActivity.class);
                 intent.putExtra("userData",userData);
                 startActivity(intent);
             }

@@ -30,7 +30,7 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
     List<Appointment> appointmentList;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_accepted_apps);
+        setContentView(R.layout.activity_teacher_accepted_apps);
 
         userData = (Account)getIntent().getSerializableExtra("userData");
 
@@ -42,7 +42,7 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
 
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(AppointmentListAcceptedActivity.this, DoctorPageActivity.class);
+                Intent intent = new Intent(AppointmentListAcceptedActivity.this, TeacherPageActivity.class);
                 intent.putExtra("userData",userData);
                 startActivity(intent);
             }
@@ -69,8 +69,8 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
                             appointmentIdTemp = appointmentId;
                             Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 
-                            String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
-                            if (Objects.equals(userData.getKey(), appointmentDoctorKey)) {
+                            String appointmentTeacherKey = appointmentSnapshot.child("teacherKey").getValue(String.class);
+                            if (Objects.equals(userData.getKey(), appointmentTeacherKey)) {
                                 appointmentList.add(appointment);
                             }
                         }
@@ -91,7 +91,7 @@ public class AppointmentListAcceptedActivity extends AppCompatActivity{
                     recyclerView.setAdapter(appointmentAdapter);
                     appointmentAdapters.add(appointmentAdapter);
                 } else {
-                    Log.d("ListOfAcceptedAppointments", "No appointments found for the current doctor");
+                    Log.d("ListOfAcceptedAppointments", "No appointments found for the current teacher");
                 }
 
                 if (appointmentAdapter != null) {

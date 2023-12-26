@@ -49,7 +49,7 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
 
         // Initialize Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Accounts/Doctor");
+        databaseReference = firebaseDatabase.getReference("Accounts/Teacher");
 
         Intent getPreviousIntents = getIntent();
 
@@ -63,14 +63,14 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
             employeeNum = getPreviousIntents.getStringExtra("employeeNum");
         }
 
-        Button registerAsDoctor = findViewById(R.id.registerAsDoctor);
+        Button registerAsTeacher = findViewById(R.id.registerAsTeacher);
         familyMedicineSpecialty = findViewById(R.id.familyMedicineSpecialty);
         internalMedicineSpecialty = findViewById(R.id.internalMedicineSpecialty);
         pediatricsSpecialty = findViewById(R.id.pediatricsSpecialty);
         obstetricsSpecialty = findViewById(R.id.obstetricsSpecialty);
         gynecologySpecialty = findViewById(R.id.gynecologySpecialty);
 
-        registerAsDoctor.setOnClickListener(new View.OnClickListener() {
+        registerAsTeacher.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 if(isValidated()){
                     Intent intent = new Intent(SpecialtySelectionActivity.this, LogInActivity.class);
@@ -94,35 +94,34 @@ public class SpecialtySelectionActivity extends AppCompatActivity {
     }
 
     private void addToFirebase(){
-        Doctor doctor = new Doctor();
+        Teacher teacher = new Teacher();
         Map<String,Boolean> specialities = new HashMap<String,Boolean>();
         Map<String, Map<String, Object>> shifts = new HashMap<>();
 
-        doctor.setFirstName(firstName);
-        doctor.setLastName(lastName);
-        doctor.setUsername(email);
-        doctor.setPassword(password);
-        doctor.setPhone(phone);
-        doctor.setAddress(address);
-        doctor.setEmployeeNum(employeeNum);
+        teacher.setFirstName(firstName);
+        teacher.setLastName(lastName);
+        teacher.setUsername(email);
+        teacher.setPassword(password);
+        teacher.setPhone(phone);
+        teacher.setAddress(address);
 
         specialities.put("familyMedicine", familyMedicineSpecialty.isChecked());
         specialities.put("internalMedicine", internalMedicineSpecialty.isChecked());
         specialities.put("pediatrics", pediatricsSpecialty.isChecked());
         specialities.put("obstetrics", obstetricsSpecialty.isChecked());
         specialities.put("gynecology", gynecologySpecialty.isChecked());
-        doctor.setSpecialties(specialities);
-        doctor.setShifts(shifts);
+        teacher.setSpecialties(specialities);
+        teacher.setShifts(shifts);
 
-        // Push the patient to the appropriate location
-        DatabaseReference newDoctorRef = databaseReference.push(); 
-        String newDoctorKey = newDoctorRef.getKey();
-        doctor.setKey(newDoctorKey);
+        // Push the user to the appropriate location
+        DatabaseReference newTeacherRef = databaseReference.push(); 
+        String newTeacherKey = newTeacherRef.getKey();
+        teacher.setKey(newTeacherKey);
 
         // Success and fail messages
-        newDoctorRef.setValue(doctor)
+        newTeacherRef.setValue(teacher)
             .addOnSuccessListener(voidCallback -> {
-                CreateRequestUtils.addPendingRequest(SpecialtySelectionActivity.this,doctor, newDoctorKey);
+                CreateRequestUtils.addPendingRequest(SpecialtySelectionActivity.this,teacher, newTeacherKey);
             })
 
             .addOnFailureListener(exception ->{

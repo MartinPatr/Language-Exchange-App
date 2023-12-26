@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,27 +23,27 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
+public class UserUpcomingAppInfoActivity extends AppCompatActivity {
     String appointmentId;
-    String doctorKey;
+    String teacherKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_upcoming_app_info);
+        setContentView(R.layout.activity_user_upcoming_app_info);
 
         Intent intent = getIntent();
 
         appointmentId = intent.getStringExtra("appointmentId");
         Account userData = (Account)getIntent().getSerializableExtra("userData");
 
-        getUserInfo(appointmentId);
+        getInfo(appointmentId);
 
         //Sends the user back to the previous page
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(PatientUpcomingAppInfoActivity.this, PatientUpcomingAppsActivity.class);
+                Intent intent = new Intent(UserUpcomingAppInfoActivity.this, UserUpcomingAppsActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }
@@ -56,25 +55,25 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 checkTime(appointmentId);
 
-                Intent intent = new Intent(PatientUpcomingAppInfoActivity.this, PatientUpcomingAppsActivity.class);
+                Intent intent = new Intent(UserUpcomingAppInfoActivity.this, UserUpcomingAppsActivity.class);
                 intent.putExtra("userData",userData);
                 startActivity(intent);
             }
         });
     }
 
-    //Gets the doctor key given the appointment ID
-    private void getUserInfo(String appointmentId) {
+    //Gets the teacher key given the appointment ID
+    private void getInfo(String appointmentId) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments").child(appointmentId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot appointmentSnapshot) {
                 if (appointmentSnapshot.exists() && appointmentSnapshot.hasChildren()) {
-                    doctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
-                    if (doctorKey != null) {
-                        getPatientInfo(doctorKey);
+                    teacherKey = appointmentSnapshot.child("teacherKey").getValue(String.class);
+                    if (teacherKey != null) {
+                        getUserInfo(teacherKey);
                     }
                     else {
-                        Log.e("AppointmentPastInfoActivity", "doctorKey is null");
+                        Log.e("AppointmentPastInfoActivity", "teacherKey is null");
                     }
                 }
             }
@@ -86,19 +85,19 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
         });
     }
 
-    //Gets the doctor's details given the doctor key found previously.
-    private void getPatientInfo(String doctorKey){
+    //Gets the teacher's details given the teacher key found previously.
+    private void getUserInfo(String teacherKey){
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Accounts/Doctor");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Accounts/Teacher");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && dataSnapshot.hasChildren()) {
-                    if (doctorKey != null) {
-                        DataSnapshot doctorSnapshot = dataSnapshot.child(doctorKey);
+                    if (teacherKey != null) {
+                        DataSnapshot teacherSnapshot = dataSnapshot.child(teacherKey);
 
-                        String firstName = doctorSnapshot.child("firstName").getValue(String.class);
-                        String lastName = doctorSnapshot.child("lastName").getValue(String.class);
+                        String firstName = teacherSnapshot.child("firstName").getValue(String.class);
+                        String lastName = teacherSnapshot.child("lastName").getValue(String.class);
 
                         TextView firstNameField = findViewById(R.id.firstNameField);
                         TextView lastNameField = findViewById(R.id.lastNameField);
@@ -236,7 +235,7 @@ public class PatientUpcomingAppInfoActivity extends AppCompatActivity {
                     specificAcceptedAppointmentRef.removeValue();
                 }
                 else{
-                    Log.d("PatientUpcomingAppInfoActivity",  "Appointment wasn't cancelled");
+                    Log.d("UserUpcomingAppInfoActivity",  "Appointment wasn't cancelled");
                 }
             }
 

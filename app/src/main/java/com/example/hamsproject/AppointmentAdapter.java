@@ -39,7 +39,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.doctor_app_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.teacher_app_row, parent, false);
         return new ViewHolder(view, onAppointmentItemClickListener);
     }
 
@@ -50,7 +50,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         Appointment appointment = appointments.get(position);
 
 
-        holder.nameField.setText(String.valueOf(appointment.getPatientName()));
+        holder.nameField.setText(String.valueOf(appointment.getUserName()));
 
         String startHour = String.valueOf(appointment.getStartHour());
         String startMinute = String.valueOf(appointment.getStartMinute());

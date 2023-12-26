@@ -10,7 +10,7 @@ public class ValidationUtils {
     /* 
      * This method checks if all the fields are filled in and valid
      * @param context: Context of the activity
-     * @param info: Map<String, String> that contains all the patient information
+     * @param info: Map<String, String> that contains all the user information
      * @return boolean: true if all the fields are filled in, false otherwise
      */
     public static boolean isValidated(Context context, Map<String, String> info) {

@@ -18,11 +18,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AppointmentRequestInfoActivity extends AppCompatActivity {
     String appointmentId;
-    String patientKey;
+    String userKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_requested_app_info);
+        setContentView(R.layout.activity_teacher_requested_app_info);
 
         Intent intent = getIntent();
 
@@ -76,22 +76,22 @@ public class AppointmentRequestInfoActivity extends AppCompatActivity {
             databaseReference.addValueEventListener(new ValueEventListener() {
                 public void onDataChange(@NonNull DataSnapshot appointmentSnapshot) {
                     if (appointmentSnapshot.exists() && appointmentSnapshot.hasChildren()) {
-                        patientKey = appointmentSnapshot.child("patientKey").getValue(String.class);
+                        userKey = appointmentSnapshot.child("userKey").getValue(String.class);
 
-                        if (patientKey != null) {
-                            DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Accounts/Patient");
+                        if (userKey != null) {
+                            DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Accounts/User");
                             databaseReference2.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists() && dataSnapshot.hasChildren()) {
-                                        DataSnapshot patientSnapshot = dataSnapshot.child(patientKey);
+                                        DataSnapshot userSnapshot = dataSnapshot.child(userKey);
 
-                                        String firstName = patientSnapshot.child("firstName").getValue(String.class);
-                                        String lastName = patientSnapshot.child("lastName").getValue(String.class);
-                                        String username = patientSnapshot.child("username").getValue(String.class);
-                                        String phone = patientSnapshot.child("phone").getValue(String.class);
-                                        String address = patientSnapshot.child("address").getValue(String.class);
-                                        String healthCardNumber = patientSnapshot.child("healthCardNum").getValue(String.class);
+                                        String firstName = userSnapshot.child("firstName").getValue(String.class);
+                                        String lastName = userSnapshot.child("lastName").getValue(String.class);
+                                        String username = userSnapshot.child("username").getValue(String.class);
+                                        String phone = userSnapshot.child("phone").getValue(String.class);
+                                        String address = userSnapshot.child("address").getValue(String.class);
+                                        String healthCardNumber = userSnapshot.child("healthCardNum").getValue(String.class);
 
                                         TextView firstNameText = findViewById(R.id.firstNameField);
                                         firstNameText.setText(firstName);

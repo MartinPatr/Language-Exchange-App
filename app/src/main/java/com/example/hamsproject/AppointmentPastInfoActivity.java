@@ -18,18 +18,18 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AppointmentPastInfoActivity extends AppCompatActivity{
     String appointmentId;
-    String patientKey;
+    String userKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_past_app_info);
+        setContentView(R.layout.activity_teacher_past_app_info);
 
         Intent intent = getIntent();
 
         appointmentId = intent.getStringExtra("appointmentId");
         Account userData = (Account)getIntent().getSerializableExtra("userData");
 
-        getUserInfo(appointmentId);
+        getInfo(appointmentId);
 
         Button backButton = findViewById(R.id.backButton);
 
@@ -43,17 +43,17 @@ public class AppointmentPastInfoActivity extends AppCompatActivity{
         });
     }
 
-    private void getUserInfo(String accountID) {
+    private void getInfo(String accountID) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments").child(appointmentId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot appointmentSnapshot) {
                 if (appointmentSnapshot.exists() && appointmentSnapshot.hasChildren()) {
-                    patientKey = appointmentSnapshot.child("patientKey").getValue(String.class);
-                    if (patientKey != null) {
-                        getPatientInfo(patientKey);
+                    userKey = appointmentSnapshot.child("userKey").getValue(String.class);
+                    if (userKey != null) {
+                        getUserInfo(userKey);
                     }
                     else {
-                        Log.e("AppointmentPastInfoActivity", "PatientKey is null");
+                        Log.e("AppointmentPastInfoActivity", "UserKey is null");
                     }
                 }
             }
@@ -66,23 +66,23 @@ public class AppointmentPastInfoActivity extends AppCompatActivity{
         });
     }
 
-    private void getPatientInfo(String patientKey){
-        Log.d("patientKey", "patientKey " + patientKey);
+    private void getUserInfo(String userKey){
+        Log.d("userKey", "userKey " + userKey);
 
-        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Accounts/Patient");
+        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Accounts/User");
         databaseReference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && dataSnapshot.hasChildren()) {
-                    if (patientKey != null) {
-                        DataSnapshot patientSnapshot = dataSnapshot.child(patientKey);
+                    if (userKey != null) {
+                        DataSnapshot userSnapshot = dataSnapshot.child(userKey);
 
-                        String firstName = patientSnapshot.child("firstName").getValue(String.class);
-                        String lastName = patientSnapshot.child("lastName").getValue(String.class);
-                        String username = patientSnapshot.child("username").getValue(String.class);
-                        String phone = patientSnapshot.child("phone").getValue(String.class);
-                        String address = patientSnapshot.child("address").getValue(String.class);
-                        String healthCardNumber = patientSnapshot.child("healthCardNum").getValue(String.class);
+                        String firstName = userSnapshot.child("firstName").getValue(String.class);
+                        String lastName = userSnapshot.child("lastName").getValue(String.class);
+                        String username = userSnapshot.child("username").getValue(String.class);
+                        String phone = userSnapshot.child("phone").getValue(String.class);
+                        String address = userSnapshot.child("address").getValue(String.class);
+                        String healthCardNumber = userSnapshot.child("healthCardNum").getValue(String.class);
 
                         TextView firstNameText = findViewById(R.id.firstNameField);
                         firstNameText.setText(firstName);

@@ -70,8 +70,8 @@ public class AdminDeniedInfoActivity extends AppCompatActivity {
 
         //This list represents the tables in the Accounts table in the database
         ArrayList<String> accountTypes = new ArrayList<>();
-        accountTypes.add("Doctor");
-        accountTypes.add("Patient");
+        accountTypes.add("Teacher");
+        accountTypes.add("User");
 
         for (String accountType : accountTypes) {
             DatabaseReference accountTypeRef = databaseReference.child(accountType);
@@ -90,7 +90,7 @@ public class AdminDeniedInfoActivity extends AppCompatActivity {
                             String userType = userSnapshot.child("type").getValue(String.class);
                             String userNum;
                             StringBuilder specialties = new StringBuilder();
-                            if(userType.equals("Doctor")){
+                            if(userType.equals("Teacher")){
                                 //Adds employee number
                                 userNum = userSnapshot.child("employeeNum").getValue(String.class);
 
@@ -170,8 +170,8 @@ public class AdminDeniedInfoActivity extends AppCompatActivity {
         DatabaseReference deniedRequestsRef = FirebaseDatabase.getInstance().getReference("Requests/DeniedRequests");
 
         ArrayList<String> accountTypes = new ArrayList<>();
-        accountTypes.add("Doctor");
-        accountTypes.add("Patient");
+        accountTypes.add("Teacher");
+        accountTypes.add("User");
 
         for (String accountType : accountTypes) {
             DatabaseReference account = databaseReference.child(accountType);

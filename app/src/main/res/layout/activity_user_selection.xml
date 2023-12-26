@@ -14,25 +14,25 @@
         android:gravity="center_horizontal|center_vertical"
         android:text="Select Account Type"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/doctorButton"
+        app:layout_constraintBottom_toTopOf="@+id/teacherButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/doctorButton"
+        android:id="@+id/teacherButton"
         android:layout_width="223dp"
         android:layout_height="54dp"
         android:layout_marginBottom="20dp"
         android:text="Doctor"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/patientButton"
+        app:layout_constraintBottom_toTopOf="@+id/userButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/patientButton"
+        android:id="@+id/userButton"
         android:layout_width="223dp"
         android:layout_height="54dp"
         android:layout_marginBottom="252dp"

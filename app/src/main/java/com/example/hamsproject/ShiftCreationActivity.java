@@ -55,7 +55,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
         date = null;
 
 
-        Log.d("Doctor Info: ", userData.getFirstName());
+        Log.d("Teacher Info: ", userData.getFirstName());
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -116,8 +116,8 @@ public class ShiftCreationActivity extends AppCompatActivity {
             else{
                 //If the start minute is 30, it goes to the next hour
                 if(startMinute == 30){
-                    Shift newShift = new Shift(shift.getDate(), startHour, startMinute, startHour+1, 00, shift.getDoctorKey(), shift.getDoctorName());
-                    newShift.setDoctorName(shift.getDoctorName());
+                    Shift newShift = new Shift(shift.getDate(), startHour, startMinute, startHour+1, 00, shift.getTeacherKey(), shift.getTeacherName());
+                    newShift.setTeacherName(shift.getTeacherName());
                     startHour = startHour+1;
                     startMinute = 0;
 
@@ -125,8 +125,8 @@ public class ShiftCreationActivity extends AppCompatActivity {
                 }
                 //If the start minute is 0, it keeps the same hour but increases 30 minutes
                 else if(startMinute == 00){
-                    Shift newShift = new Shift(shift.getDate(), startHour, startMinute, startHour, 30, shift.getDoctorKey(), shift.getDoctorName());
-                    newShift.setDoctorName(shift.getDoctorName());
+                    Shift newShift = new Shift(shift.getDate(), startHour, startMinute, startHour, 30, shift.getTeacherKey(), shift.getTeacherName());
+                    newShift.setTeacherName(shift.getTeacherName());
                     startMinute = 30;
                     availableAppointments.add(newShift);
                 }
@@ -142,7 +142,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
 
         for(Shift availableAppointment : availableAppointments){
             //Makes a custom id/key for the database reference
-            String customId = availableAppointment.getDoctorName() +
+            String customId = availableAppointment.getTeacherName() +
                     availableAppointment.getDate() +
                     availableAppointment.getStartHour() +
                     availableAppointment.getStartMinute();
@@ -208,7 +208,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
 
     private void shiftOverlapCheck(Shift newShift) {
         //checks if new shift conflicts with an existing shifts time slot
-        DatabaseReference shiftsReference = FirebaseDatabase.getInstance().getReference().child("Accounts").child("Doctor").child(userData.getKey()).child("shifts");
+        DatabaseReference shiftsReference = FirebaseDatabase.getInstance().getReference().child("Accounts").child("Teacher").child(userData.getKey()).child("shifts");
 
         shiftsReference.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -253,7 +253,7 @@ public class ShiftCreationActivity extends AppCompatActivity {
                     //Sets the key variable in the shift to the key in firebase
                     String shiftId = shift.getKey();
                     newShift.setID(shiftId);
-                    newShift.setDoctorName(userData.getFirstName() + " " + userData.getLastName());
+                    newShift.setTeacherName(userData.getFirstName() + " " + userData.getLastName());
                     shift.setValue(newShift);
 
 

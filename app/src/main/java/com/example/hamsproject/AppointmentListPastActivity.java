@@ -30,7 +30,7 @@ public class AppointmentListPastActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_past_apps);
+        setContentView(R.layout.activity_teacher_past_apps);
 
         userData = (Account)getIntent().getSerializableExtra("userData");
 
@@ -42,7 +42,7 @@ public class AppointmentListPastActivity extends AppCompatActivity {
         //Sends user back
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(AppointmentListPastActivity.this, DoctorPageActivity.class);
+                Intent intent = new Intent(AppointmentListPastActivity.this, TeacherPageActivity.class);
                 intent.putExtra("userData",userData);
                 startActivity(intent);
             }
@@ -72,9 +72,9 @@ public class AppointmentListPastActivity extends AppCompatActivity {
                         appointmentId = appointmentSnapshot.getKey();
                         Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 
-                        String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
+                        String appointmentTeacherKey = appointmentSnapshot.child("teacherKey").getValue(String.class);
 
-                        if (userData != null && Objects.equals(userData.getKey(), appointmentDoctorKey)) {
+                        if (userData != null && Objects.equals(userData.getKey(), appointmentTeacherKey)) {
                             appointmentList.add(appointment);
                         }
                     }

@@ -13,17 +13,17 @@ public class UserSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_selection);
 
-        Button doctorButton = findViewById(R.id.doctorButton);
-        Button patientButton = findViewById(R.id.patientButton);
-        doctorButton.setOnClickListener(new View.OnClickListener() {
+        Button teacherButton = findViewById(R.id.teacherButton);
+        Button userButton = findViewById(R.id.userButton);
+        teacherButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(UserSelectionActivity.this, DoctorRegisterActivity.class);
+                Intent intent = new Intent(UserSelectionActivity.this, TeacherRegisterActivity.class);
                 startActivity(intent);
             }
         });
-        patientButton.setOnClickListener(new View.OnClickListener() {
+        userButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(UserSelectionActivity.this, PatientRegisterActivity.class);
+                Intent intent = new Intent(UserSelectionActivity.this, UserRegisterActivity.class);
                 startActivity(intent);
             }
         });

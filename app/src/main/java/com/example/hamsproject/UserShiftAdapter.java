@@ -1,6 +1,5 @@
 package com.example.hamsproject;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import android.widget.Button;
 
-public class PatientShiftAdapter extends RecyclerView.Adapter<PatientShiftAdapter.PatientShiftViewHolder> {
+public class UserShiftAdapter extends RecyclerView.Adapter<UserShiftAdapter.UserShiftViewHolder> {
 
     private static List<Shift> shifts;
     private OnItemClickListener onItemClickListener;
 
-    public PatientShiftAdapter(List<Shift> patientShifts, OnItemClickListener onItemClickListener) {
+    public UserShiftAdapter(List<Shift> userShifts, OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
-        this.shifts = patientShifts;
+        this.shifts = userShifts;
     }
 
     public interface OnItemClickListener {
@@ -28,9 +27,9 @@ public class PatientShiftAdapter extends RecyclerView.Adapter<PatientShiftAdapte
 
     @NonNull
     @Override
-    public PatientShiftViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_shift_row, parent, false);
-        return new PatientShiftViewHolder(itemView, onItemClickListener);
+    public UserShiftViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_shift_row, parent, false);
+        return new UserShiftViewHolder(itemView, onItemClickListener);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -38,12 +37,12 @@ public class PatientShiftAdapter extends RecyclerView.Adapter<PatientShiftAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PatientShiftViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UserShiftViewHolder holder, int position) {
 
         Shift shift = shifts.get(position);
 
         //Adds the date and time to the shift view
-        holder.dateField.setText("Dr. " + shift.getDoctorName());
+        holder.dateField.setText("Dr. " + shift.getTeacherName());
 
         //Formats the way the time is displayed
         if (Integer.toString(shift.getEndMinute()).equals("0") && Integer.toString(shift.getStartMinute()).equals("0")) {
@@ -62,12 +61,12 @@ public class PatientShiftAdapter extends RecyclerView.Adapter<PatientShiftAdapte
         return shifts.size();
     }
 
-    public static class PatientShiftViewHolder extends RecyclerView.ViewHolder {
+    public static class UserShiftViewHolder extends RecyclerView.ViewHolder {
         TextView dateField;
         TextView timeField;
         Button bookButton;
 
-        public PatientShiftViewHolder(@NonNull View itemView, OnItemClickListener listener) {
+        public UserShiftViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
             dateField = itemView.findViewById(R.id.dateField);
             timeField = itemView.findViewById(R.id.timeField);

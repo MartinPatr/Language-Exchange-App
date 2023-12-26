@@ -1,9 +1,9 @@
 package com.example.hamsproject;
 
-public class Patient extends Account {
+public class User extends Account {
     public String healthCardNum;
 
-    public Patient() {
+    public User() {
         super();
     }
 
@@ -15,6 +15,6 @@ public class Patient extends Account {
     }
     @Override
     public String getType() {
-        return "Patient";
+        return "User";
     }
 }

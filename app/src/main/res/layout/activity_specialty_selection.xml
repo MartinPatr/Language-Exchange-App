@@ -7,7 +7,7 @@
     tools:context=".SpecialtySelectionActivity">
 
     <Button
-        android:id="@+id/registerAsDoctor"
+        android:id="@+id/registerAsTeacher"
         android:layout_width="151dp"
         android:layout_height="54dp"
         android:layout_marginBottom="36dp"
@@ -68,7 +68,7 @@
         android:layout_marginBottom="36dp"
         android:text="Gynecology"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/registerAsDoctor"
+        app:layout_constraintBottom_toTopOf="@+id/registerAsTeacher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -13,78 +13,78 @@
         android:gravity="center_horizontal|center_vertical"
         android:text="Doctor Registration"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/doctorFirstNameField"
+        app:layout_constraintBottom_toTopOf="@+id/teacherFirstNameField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/doctorLastNameField"
+        android:id="@+id/teacherLastNameField"
         android:layout_width="266dp"
         android:layout_height="43dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Last Name"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/doctorEmailField"
+        app:layout_constraintBottom_toTopOf="@+id/teacherEmailField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/doctorFirstNameField"
+        android:id="@+id/teacherFirstNameField"
         android:layout_width="266dp"
         android:layout_height="43dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="First Name"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/doctorLastNameField"
+        app:layout_constraintBottom_toTopOf="@+id/teacherLastNameField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/doctorEmailField"
+        android:id="@+id/teacherEmailField"
         android:layout_width="266dp"
         android:layout_height="43dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/doctorPasswordField"
+        app:layout_constraintBottom_toTopOf="@+id/teacherPasswordField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/doctorPasswordField"
+        android:id="@+id/teacherPasswordField"
         android:layout_width="266dp"
         android:layout_height="43dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Account Password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/doctorPhoneField"
+        app:layout_constraintBottom_toTopOf="@+id/teacherPhoneField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/doctorPhoneField"
+        android:id="@+id/teacherPhoneField"
         android:layout_width="266dp"
         android:layout_height="43dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Phone Number"
         android:inputType="phone"
-        app:layout_constraintBottom_toTopOf="@+id/doctorAddressField"
+        app:layout_constraintBottom_toTopOf="@+id/teacherAddressField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/doctorAddressField"
+        android:id="@+id/teacherAddressField"
         android:layout_width="266dp"
         android:layout_height="43dp"
         android:layout_marginBottom="20dp"

@@ -3,24 +3,17 @@ package com.example.hamsproject;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Doctor extends Account {
-    public String employeeNum;
+public class Teacher extends Account {
     public Map<String,Boolean> specialties;
     public Map<String, Map<String, Object>> shifts;
     public boolean acceptAllAppointments = false;
     public Integer numRatings = 0;
     public Double totalRating = 0.0;
 
-    public Doctor() {
+    public Teacher() {
         super();
     }
 
-    public String getEmployeeNum() {
-        return employeeNum;
-    }
-    public void setEmployeeNum(String employeeNum) {
-        this.employeeNum = employeeNum;
-    }
     public Map<String,Boolean> getSpecialties() {
         return specialties;
     }
@@ -68,7 +61,7 @@ public class Doctor extends Account {
     }
     @Override
     public String getType() {
-        return "Doctor";
+        return "Teacher";
     }
 }
 

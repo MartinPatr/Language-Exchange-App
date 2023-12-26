@@ -61,33 +61,33 @@ public class ListOfShiftsActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.backButton);
 
-        //Sends user back to main doctor page.
+        //Sends user back to main teacher page.
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(ListOfShiftsActivity.this, DoctorPageActivity.class);
+                Intent intent = new Intent(ListOfShiftsActivity.this, TeacherPageActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         });
 
-        DatabaseReference shifts = FirebaseDatabase.getInstance().getReference("Accounts/Doctor").child(userData.getKey()).child("shifts");
+        DatabaseReference shifts = FirebaseDatabase.getInstance().getReference("Accounts/Teacher").child(userData.getKey()).child("shifts");
 
         shifts.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot shiftsSnapshot){
-                List<Shift> doctorShifts = new ArrayList<>();
+                List<Shift> teacherShifts = new ArrayList<>();
 
                 if (shiftsSnapshot.exists() && shiftsSnapshot.hasChildren()){
                     for (DataSnapshot shiftSnapshot : shiftsSnapshot.getChildren()){
                         Shift shift = shiftSnapshot.getValue(Shift.class);
                         Log.d("ListOfShiftsActivity", "Shift info: " + shift.getDate());
-                        doctorShifts.add(shift);
+                        teacherShifts.add(shift);
                     }
                 }
                 else{
                     Log.d("ListOfShiftsActivity", "No Shifts");
                 }
-                shiftAdapter.setShiftList(doctorShifts);
+                shiftAdapter.setShiftList(teacherShifts);
             }
 
             @Override
@@ -100,7 +100,7 @@ public class ListOfShiftsActivity extends AppCompatActivity {
     private void deleteShift(Shift shift) {
 
         DatabaseReference shiftsRef = FirebaseDatabase.getInstance()
-                .getReference("Accounts/Doctor")
+                .getReference("Accounts/Teacher")
                 .child(userData.getKey())
                 .child("shifts");
 
@@ -108,7 +108,7 @@ public class ListOfShiftsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String doctorKey = userData.getKey();
+                    String teacherKey = userData.getKey();
 
                     int shiftStartHour = dataSnapshot.child("startHour").getValue(Integer.class);
                     int shiftStartMinute = dataSnapshot.child("startMinute").getValue(Integer.class);
@@ -126,7 +126,7 @@ public class ListOfShiftsActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot appointmentsSnapshot) {
                             boolean canDelete = true;
                             for (DataSnapshot appointmentSnapshot : appointmentsSnapshot.getChildren()) {
-                                String appointmentDoctorKey = appointmentSnapshot.child("doctorKey").getValue(String.class);
+                                String appointmentTeacherKey = appointmentSnapshot.child("teacherKey").getValue(String.class);
                                 int appointmentStartHour = appointmentSnapshot.child("startHour").getValue(Integer.class);
                                 int appointmentStartMinute = appointmentSnapshot.child("startMinute").getValue(Integer.class);
                                 int appointmentEndHour = appointmentSnapshot.child("endHour").getValue(Integer.class);
@@ -134,7 +134,7 @@ public class ListOfShiftsActivity extends AppCompatActivity {
                                 String appointmentDate = appointmentSnapshot.child("date").getValue(String.class);
 
 
-                                if (doctorKey.equals(appointmentDoctorKey)) {
+                                if (teacherKey.equals(appointmentTeacherKey)) {
                                     // Check if appointment conflicts with the shift that dr wants to del
                                     if (shiftAppointmentConflictCheck(shiftStartHour, shiftStartMinute, shiftEndHour, shiftEndMinute, shiftDate,
                                             appointmentStartHour, appointmentStartMinute, appointmentEndHour, appointmentEndMinute, appointmentDate)) {

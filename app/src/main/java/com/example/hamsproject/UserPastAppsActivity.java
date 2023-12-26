@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PatientUpcomingAppsActivity extends AppCompatActivity {
+public class UserPastAppsActivity extends AppCompatActivity {
+
     Account userData;
 
     private RecyclerView recyclerView;
@@ -33,7 +34,7 @@ public class PatientUpcomingAppsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_upcoming_apps);
+        setContentView(R.layout.activity_user_past_apps);
 
         userData = (Account)getIntent().getSerializableExtra("userData");
 
@@ -43,21 +44,21 @@ public class PatientUpcomingAppsActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(PatientUpcomingAppsActivity.this, PatientPageActivity.class);
+                Intent intent = new Intent(UserPastAppsActivity.this, UserPageActivity.class);
                 intent.putExtra("userData", userData);
                 startActivity(intent);
             }
         });
 
-        DatabaseReference upcomingAppsRef = FirebaseDatabase.getInstance().getReference("Appointments/AcceptedAppointments");
+        DatabaseReference pastAppsRef = FirebaseDatabase.getInstance().getReference("Appointments/PastAppointments");
 
-        upcomingAppsRef.addValueEventListener(new ValueEventListener() {
+        pastAppsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot requestedAppointmentsSnapshot) {
                 appointmentList = new ArrayList<>();
 
                 if (userData == null) {
-                    Log.e("PatientUpcomingAppsActivity", "userData is null");
+                    Log.e("UserPastAppsActivity", "userData is null");
                     return;
                 }
 
@@ -68,20 +69,19 @@ public class PatientUpcomingAppsActivity extends AppCompatActivity {
                             appointmentIdTemp = appointmentId;
                             Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
 
-                            String appointmentPatientKey = appointmentSnapshot.child("patientKey").getValue(String.class);
+                            String appointmentUserKey = appointmentSnapshot.child("userKey").getValue(String.class);
 
-                            if (Objects.equals(userData.getKey(), appointmentPatientKey)) {
+                            if (Objects.equals(userData.getKey(), appointmentUserKey)) {
                                 appointmentList.add(appointment);
                             }
                         }
                     }
-
                     appointmentAdapter = new AppointmentAdapter(new ArrayList<>(), new AppointmentAdapter.OnAppointmentItemClickListener() {
                         @Override
                         public void onAppointmentItemClick(Appointment appointment) {
-                            Log.d("PatientUpComingAppsActivity", "AppointmentId in list: " + appointmentIdTemp);
+                            Log.d("UserPastAppsActivity", "AppointmentId in list: " + appointmentIdTemp);
 
-                            Intent intent = new Intent(PatientUpcomingAppsActivity.this, PatientUpcomingAppInfoActivity.class);
+                            Intent intent = new Intent(UserPastAppsActivity.this, UserPastAppInfoActivity.class);
                             intent.putExtra("appointmentId", appointment.getAppointmentKey());
                             intent.putExtra("userData", userData);
                             startActivity(intent);
@@ -92,7 +92,7 @@ public class PatientUpcomingAppsActivity extends AppCompatActivity {
                     appointmentAdapters.add(appointmentAdapter);
                 }
                 else {
-                    Log.d("ListOfAcceptedAppointments", "No appointments found for the current doctor");
+                    Log.d("ListOfAcceptedAppointments", "No appointments found for the current teacher");
                 }
 
                 if (appointmentAdapter != null) {
@@ -100,7 +100,6 @@ public class PatientUpcomingAppsActivity extends AppCompatActivity {
                     appointmentAdapter.notifyDataSetChanged();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("ListOfAcceptedAppointments", "Database error: " + databaseError.getMessage());
