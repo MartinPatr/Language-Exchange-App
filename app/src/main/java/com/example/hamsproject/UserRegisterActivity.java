@@ -58,7 +58,6 @@ public class UserRegisterActivity extends AppCompatActivity {
         EditText userPasswordField = findViewById(R.id.userPasswordField);
         EditText userPhoneField = findViewById(R.id.userPhoneField);
         EditText userAddressField = findViewById(R.id.userAddressField);
-        EditText userHealthCardNumField  = findViewById(R.id.healthCardNumField);
 
 
         Map<String, String> userInfo = new HashMap<>();
@@ -68,7 +67,6 @@ public class UserRegisterActivity extends AppCompatActivity {
         userInfo.put("Password", userPasswordField.getText().toString());
         userInfo.put("PhoneNumber", userPhoneField.getText().toString());
         userInfo.put("Address", userAddressField.getText().toString());
-        userInfo.put("HealthCard", userHealthCardNumField.getText().toString());
 
         Log.d("UserRegisterActivity", "User Info getUserInfo: " + userInfo.toString());
 

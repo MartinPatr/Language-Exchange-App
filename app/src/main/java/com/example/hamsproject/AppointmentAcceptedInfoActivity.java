@@ -113,9 +113,6 @@ public class AppointmentAcceptedInfoActivity extends AppCompatActivity {
 
                         TextView addressText = findViewById(R.id.addressField);
                         addressText.setText(address);
-
-                        TextView healthCardNumberText = findViewById(R.id.healthCardNumField);
-                        healthCardNumberText.setText(healthCardNumber);
                     }
                 }
             }

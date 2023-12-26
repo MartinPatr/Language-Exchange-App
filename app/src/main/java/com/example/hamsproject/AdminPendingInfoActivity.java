@@ -150,9 +150,6 @@ public class AdminPendingInfoActivity extends AppCompatActivity {
                             TextView userTypeText = findViewById(R.id.userTypeField);
                             userTypeText.setText(userType);
 
-                            TextView userNumText = findViewById(R.id.idField);
-                            userNumText.setText(userNum);
-
                             TextView specialtiesText = findViewById(R.id.specialtiesField);
                             specialtiesText.setText(specialties.toString());
                         }

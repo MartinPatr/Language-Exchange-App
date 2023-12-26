@@ -67,7 +67,7 @@ public class LogInActivity extends AppCompatActivity {
                                 Log.i("Account Type", authAccount.getType());
                                 if (authAccount.getType().equals("Admin")) {
                                     intent = new Intent(LogInActivity.this, AdminPendingActivity.class);
-                                }else if (authAccount.getType().equals("Doctor")) {
+                                }else if (authAccount.getType().equals("Teacher")) {
                                     intent = new Intent(LogInActivity.this, TeacherPageActivity.class);
                                 }else {
                                     intent = new Intent(LogInActivity.this, UserPageActivity.class);
@@ -113,7 +113,7 @@ public class LogInActivity extends AppCompatActivity {
         
         // Create a list of all the possible types of accounts
         ArrayList<String> accountTypes = new ArrayList<>();
-        accountTypes.add("Admin"); accountTypes.add("Doctor"); accountTypes.add("User");
+        accountTypes.add("Admin"); accountTypes.add("Teacher"); accountTypes.add("User");
 
         // Boolean to check if authentication is successful
         AtomicBoolean authenticationSuccessful = new AtomicBoolean(false);
@@ -134,7 +134,7 @@ public class LogInActivity extends AppCompatActivity {
                                     Log.i("Authentication", accountType);
                                     if ("Admin".equals(accountType)) {
                                         authAccount = (Admin)accountSnapshot.getValue(Admin.class);
-                                    } else if ("Doctor".equals(accountType)) {
+                                    } else if ("Teacher".equals(accountType)) {
                                        authAccount = (Teacher)accountSnapshot.getValue(Teacher.class);
                                     } else if ("User".equals(accountType)) {
                                         authAccount = (User)accountSnapshot.getValue(User.class);
