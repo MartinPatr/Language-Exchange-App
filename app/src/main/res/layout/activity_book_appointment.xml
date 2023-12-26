@@ -20,7 +20,7 @@
         android:id="@+id/SelectSpecialty"
         android:layout_width="271dp"
         android:layout_height="33dp"
-        android:text="Select a Specialty"
+        android:text="Select a Language"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"

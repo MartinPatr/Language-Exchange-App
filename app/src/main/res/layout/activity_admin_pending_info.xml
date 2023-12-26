@@ -7,18 +7,6 @@
     tools:context=".AdminPendingInfoActivity">
 
     <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
-        android:text="Health Card/Employee Number:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        android:textSize="15sp"
-        android:textStyle="bold"/>
-
-    <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -150,17 +138,6 @@
         android:textSize="15sp"/>
 
     <TextView
-        android:id="@+id/idField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userTypeField"
-        android:textSize="15sp"/>
-
-    <TextView
         android:id="@+id/phoneNumberField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -209,23 +186,23 @@
         android:id="@+id/specialtiesField"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="4dp"
         android:text=""
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idField"
-        android:textSize="15sp"/>
+        app:layout_constraintTop_toBottomOf="@+id/userTypeField" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="40dp"
-        android:text="Specialties:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14"
+        android:layout_marginTop="52dp"
+        android:text="Languages:"
+        android:textSize="15sp"
         android:textStyle="bold"
-        android:textSize="15sp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

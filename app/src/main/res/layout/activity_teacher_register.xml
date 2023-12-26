@@ -87,27 +87,13 @@
         android:id="@+id/teacherAddressField"
         android:layout_width="266dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Address"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/doctorEmployeeNumberField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/doctorEmployeeNumberField"
-        android:layout_width="266dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="28dp"
-        android:ems="10"
-        android:hint="Employee Number"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/goToSpecialties"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="519dp" />
 
     <Button
         android:id="@+id/goToSpecialties"

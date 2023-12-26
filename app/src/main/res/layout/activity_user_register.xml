@@ -11,7 +11,7 @@
         android:layout_width="297dp"
         android:layout_height="66dp"
         android:gravity="center_horizontal|center_vertical"
-        android:text="Patient Registration"
+        android:text="User Registration"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/userNameField"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,13 +59,12 @@
         android:id="@+id/userAddressField"
         android:layout_width="266dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="24dp"
         android:ems="10"
         android:hint="Address"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/healthCardNumField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="511dp" />
 
     <EditText
         android:id="@+id/userEmailField"
@@ -87,18 +86,6 @@
         android:text="Register"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/healthCardNumField"
-        android:layout_width="266dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="36dp"
-        android:ems="10"
-        android:hint="Health Card Number"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/registerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
