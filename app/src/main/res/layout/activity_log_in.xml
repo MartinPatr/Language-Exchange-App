@@ -17,7 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.815" />
 
     <Button
         android:id="@+id/logInButton"
@@ -71,4 +72,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.975" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="349dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="60dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Language Exchange "
+        android:textSize="38dp"
+        app:layout_constraintBottom_toTopOf="@+id/logInTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
