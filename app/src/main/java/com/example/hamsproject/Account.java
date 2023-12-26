@@ -13,10 +13,6 @@ public class Account implements Serializable{
 
     public Account() {
     }
-    
-    public String getType() {
-        return "Account";
-    }
 
     public String getFirstName() {
         return firstName;
@@ -68,5 +64,8 @@ public class Account implements Serializable{
             throw new IllegalArgumentException("registrationStatus must be Pending, Approved, or Denied");
         }
         this.registrationStatus = registrationStatus;
+    }
+    public String getType() {
+        return "Account";
     }
 }
